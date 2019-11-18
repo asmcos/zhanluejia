@@ -1,0 +1,182 @@
+
+<html>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!--link rel="stylesheet" href="https://adminlte.io/themes/AdminLTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css"-->
+  <!-- Theme style -->
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect.
+  -->
+  <link rel="stylesheet" href="/static/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/static/css/skins/skin-blue.css">
+  <style>
+ 	table{
+	
+	    font-size: 14px !important;
+    	font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
+
+	}
+  </style>
+
+
+    <body>
+
+        <div class="box" id="list_main" >
+                    <div class="box-header" v-if="data&&column">
+                      <h3 class="box-title">Table -> {{name}}</h3>
+                      <div class="box-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+
+                          <div class="input-group-btn">
+                            <a v-on:click="createPage(name)" class="btn btn-danger pull-right btn-block btn-sm"><b> + 创建</b></a>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body" v-if="data&&column">
+                      <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap"><div class="row"><div class="col-sm-6"><div class="dataTables_length" id="example1_length"><label>Show <select name="example1_length" aria-controls="example1" class="form-control input-sm"><option value="10">10</option><option value="25">25</option>
+                          <option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-6">
+                          <div id="example1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="example1"></label></div></div></div><div class="row"><div class="col-sm-12">
+				
+				<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                        <thead>
+                        <tr role="row" >
+                            <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" style="width: 160px;" v-for="h in header">{{h.label}}</th>
+
+                            <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"  style="width: 100px;" >Opreate</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+
+                        <tr role="row" v-for="l in lists">
+                          <td v-for="h in header">
+							<template v-if=" h.path === 'name'"> {{l[h.path].first}}  {{l[h.path].last}} </template>
+							<template v-else> {{l[h.path]}} </template>
+						  </td>
+						  <td>
+							<a v-on:click="deleteById(l['id'])" style="color:#dd4b39;width: 50%;display: block;float: left;">
+								<span class="glyphicon glyphicon-trash" style="text-align: center;margin: 0 auto;display: block;"> </span></a>
+							<a v-on:click="edit(l['id'])" style="color: #3c8dbc;width: 50%;display: block;float: left;">
+								<span class="glyphicon glyphicon-edit" style="text-align: center;margin: 0 auto;display: block;"></span></a>
+						  </td>
+                        <tr>
+
+
+
+                     </tbody>
+
+                      </table>
+					</div></div>
+						
+					<div class="row"><div class="col-sm-5">
+						<div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing {{pages[0]}} to {{pages[9]}} of {{lastpage}} entries</div>
+                    </div>
+					<div class="col-sm-7">
+						<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+							<ul class="pagination">
+								 <li class="paginate_button previous" id="example2_previous"><a v-on:click="getpage(current_page-1,1)"  aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a></li>
+                 <template v-for="(p,index) in pages">
+                  <li class="paginate_button active" v-if="current_page===p" ><a v-on:click="getpage(p)" aria-controls="example2" v-bind:data-dt-idx="p" tabindex="0">{{p}}</a></li>
+                  <li class="paginate_button"  v-else><a v-on:click="getpage(p)" aria-controls="example2" v-bind:data-dt-idx="p" tabindex="0">{{p}}</a></li>
+              </template>
+                  <li class="paginate_button next" id="example2_next"><a v-on:click="getpage(current_page+1,2)"   aria-controls="example2" data-dt-idx="7" tabindex="0">Next</a></li>
+						    </ul>
+						</div>
+					 </div></div></div>
+                    </div>
+                    <!-- /.box-body -->
+                  </div>
+
+    </body>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="/static/js/vue.js"></script>
+	<script src="/admin/js/lists.js"></script>
+	<script>
+	$( document ).ready(function() {
+		var list = parent.subpage.getAttribute("list");
+		var options = parent.subpage.getAttribute("options");
+		var ifra = parent.subpage
+        var listVue = new Vue({
+             el: '#list_main',
+             data: {
+                lists:[],
+                header:[],
+                name:list,
+                data:false,
+                column:false,
+				xcsrftoken:"",
+				pages: [1,2,3,4,5,6,7,8,9,10],
+          		pagesize:10,
+          		lastpage:1,
+          		current_page: 1
+            },
+			methods:{
+				// name:list ===> name=list
+				createPage: function(list){
+	    	        var timestamp = (new Date()).valueOf();
+	        	    ifra.src = "/admin/forms.html?time="+timestamp;
+				},
+				edit: function(id){
+	    	        var timestamp = (new Date()).valueOf();
+	        	    ifra.src = "/admin/edit.html?id="+id;
+				},
+				deleteById: function(id){
+					 new Lists().delete(list,id,listVue);
+				},
+				getpage:function(page,pn){
+             	 var that = this
+              	 if (page < 1){
+                	page = 1
+              	 }
+              	 if (page > that.lastpage){
+                	return
+              	 }
+              	 if (pn === 1){
+                  if (page < that.pages[0]){
+                      for (i=0;i<10;i++)
+                      {
+                          that.pages[i]=page+i
+                      }
+                  }
+              	 }
+              	 if (pn === 2){
+                  if (page > that.pages[9]){
+                      for (i=9;i>=0;i--)
+                      {
+                          that.pages[i]=page + i - 9
+                      }
+                  }
+              	 }
+              	 that.current_page = page
+				 new Lists().getpage(list,options,listVue, (page - 1)* that.pagesize )
+				} //getpage
+
+			 }, //methods
+
+        });
+
+        listVue.$mount('#list_main')
+
+
+		if (list){
+			var l = new Lists();
+
+            l.get(list,options,listVue);
+
+		}
+	});
+	</script>
+
+
+</html>

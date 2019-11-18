@@ -1,0 +1,93 @@
+ <link rel="stylesheet" href="/admin/css/unsplash.css">
+<script src="/admin/js/image.js"></script>
+<div class="gh-unsplash" id="unsplashImg">
+<div class="gh-unsplash-window">
+            <div class="gh-unsplash-container">
+                <div class="gh-unsplash-close" aria-role="button" data-ember-action="" data-ember-action-1390="1390"><svg version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.707 12L23.854.854a.5.5 0 0 0-.707-.707L12 11.293.854.146a.5.5 0 0 0-.707.707L11.293 12 .146 23.146a.5.5 0 0 0 .708.708L12 12.707l11.146 11.146a.5.5 0 1 0 .708-.706L12.707 12z"></path></svg></div>
+                <header class="gh-unsplash-header">
+					<h3>图片列表来自"Imageupload" model,上传新图片请在 "图片" 菜单操作。</h3>
+				</header>
+
+                    <section class="gh-unsplash-grid">
+                            <div class="gh-unsplash-grid-column" >
+
+
+<template v-for="img in col1">
+  <div class="gh-unsplash-photo" >
+    <div class="gh-unsplash-photo-container" v-bind:style="'background-color: #FDF4F8; padding-bottom:' + img.height / img.width * 100 + '%;'">
+        <img v-bind:src="'/static/uploads/'+img.image.filename">
+        <div class="gh-unsplash-photo-overlay">
+            <div class="gh-unsplash-photo-header">
+            </div>
+            <div class="gh-unsplash-photo-footer">
+                <a class="gh-unsplash-button" @click="selectimg(img.image.filename)">Select image</a>
+            </div>
+        </div>
+    </div>
+</div>
+    
+ </template>
+                            </div> <!-- column -->
+
+                            <div class="gh-unsplash-grid-column" >
+
+ <template v-for="img in col2">
+  <div class="gh-unsplash-photo" >
+    <div class="gh-unsplash-photo-container" v-bind:style="'background-color: #FDF4F8; padding-bottom:' + img.height / img.width * 100 + '%;'">
+        <img v-bind:src="'/static/uploads/'+img.image.filename">
+        <div class="gh-unsplash-photo-overlay">
+            <div class="gh-unsplash-photo-header">
+            </div>
+            <div class="gh-unsplash-photo-footer">
+                <a class="gh-unsplash-button" @click="selectimg(img.image.filename)">Select image</a>
+            </div>
+        </div>
+    </div>
+</div>
+  
+ 
+
+</template>
+
+
+
+
+                            </div> <!-- column -->
+                    </section>
+
+<!---->
+<!---->
+                <div id="ember1392" class="ember-view">
+</div>
+            </div>
+        </div>
+
+</div>
+<!-- jQuery 3.3.1 -->
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+<script src="/static/js/vue.js"></script>
+
+
+<script>
+$( document ).ready(function() {
+	var Img = new ImageDb()
+	
+    var ImageVue = new Vue({
+     el: '#unsplashImg',
+     data: {
+		col1:[],
+		col2:[],
+     },
+	 methods:{
+		selectimg:function(url){
+			parent.backUnsplash(parent.formVue,"/static/uploads/"+url)			
+		}
+	 },
+	});
+
+   	Img.getlist(ImageVue)
+
+
+})
+</script>

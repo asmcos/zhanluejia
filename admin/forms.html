@@ -1,0 +1,111 @@
+
+<html>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect.
+  -->
+  <link rel="stylesheet" href="/static/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/static/css/skins/skin-blue.css">
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+ 
+  <!-- form create -->
+
+ <!-- import Vue -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<!-- import iview -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/iview/dist/styles/iview.css">
+<script src="https://cdn.jsdelivr.net/npm/iview/dist/iview.min.js"></script>
+
+<!-- 省市区三级联动json数据,不使用三级联动不需要引入 -->
+<script src="https://cdn.jsdelivr.net/npm/form-create/district/province_city_area.js"></script>
+
+<!-- import formCreate -->
+<script src="https://cdn.jsdelivr.net/npm/form-create/dist/form-create.min.js"></script>
+
+    <body>
+
+	<div id="app1" class="box box-warning">
+		<div class="box-header with-border">
+              <h3 class="box-title">{{list}}</h3>
+        </div>
+	    <form-create id="createForm" ref="fc" v-model="fApi" :rule="rule" :option="option"></form-create>
+	</div>
+
+	<div id="unsplash1" class="box box-warning" style="display:none;" >
+		<div class="box-header with-border" style="height:800px;">
+              <h3 class="box-title">Image from unsplash.com</h3>
+		      <iframe id="unsplashmain" width="100%" class="content-wrapper" style="margin-left:0px;" src="/admin/unsplash.html" frameborder="0" ></iframe>
+        </div>
+	</div>
+	<div id="upload1" class="box box-warning" style="display:none;">
+		<div class="box-header with-border" style="height:800px;">
+              <h3 class="box-title">Upload Image file</h3>
+		      <iframe id="unsplashmain" width="100%" class="content-wrapper" style="margin-left:0px;" src="/admin/image.html" frameborder="0" ></iframe>
+        </div>
+	</div>
+
+    </body>
+
+	<script src="/admin/js/forms.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.0.4/tinymce.min.js"></script>
+
+	<script>
+	$( document ).ready(function() {
+		var list = parent.subpage.getAttribute("list");
+
+		showApp(); // from form.js
+        $("#unsplash1").hide()
+        $("#upload1").hide()
+
+    	var formVue = new Vue({
+    		el:'#app1',
+    		data:{
+        		fApi:{},
+        		model: {},
+				list:list,
+        		rule:[
+        		],
+				xcsrftoken:"",
+        	   option:{
+            	onSubmit:function (formData) {
+
+					new Forms().post(list,formVue,formData);
+            	},
+				resetBtn:true,
+				submitBtn: {
+        			type: "primary",
+        			size: "large",
+        			icon: "",
+        			shape: "round",
+        			col: {
+          				span: 4,
+          				offset: 10
+        			}
+      			},
+               }, //option
+			
+    		}, // data
+   		 mounted:function () {
+        	this.model = this.fApi.model();
+ 		  },
+		});
+		window.formVue = formVue
+
+		if (list){
+            new Forms().set(list,formVue);
+        }		
+	});
+
+	</script>
+
+
+</html>

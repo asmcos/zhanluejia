@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" style="background: #fff">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>集思星球</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+<body>
+<div id="swiper-container" v-show="shop.length" style="display: none">
+    <div class="proAll"  v-for="n in shop" style="border-bottom: 5.2pt solid #ddd; margin-bottom: 44pt">
+        <div class="proHeader">
+            <div class="proTitle">
+                {{n.title}}
+            </div>
+            <div class="proprice">
+                <div class="proLeft">
+                    特价
+                </div>
+                <div class="prozhekou">
+                    ¥<i>{{n.discount}}</i>元
+                </div>
+                <div class="proRight">
+                    ¥{{n.cost}}
+                </div>
+                <a :href="n.Url" class="Url" v-show="n.Url">去京东</a>
+            </div>
+            <div class="proinfo">
+                <div class="proinfo_li" v-html="n.content">
+                </div>
+            </div>
+        </div>
+        <div class="proPicture">
+            <img :src="n.bgimg" />
+        </div>
+        <div class="proFooter">
+            <img v-bind:src="'/static/uploads/'+n.qrimg.filename"/>
+            <div class="proFooteriphone">
+                <span v-show="n.weixin">微信号：{{n.weixin}}</span>
+                <span v-show="n.QQ">QQ号 ：{{n.QQ}}</span>
+            </div>
+        </div>
+    </div>
+    <footer style="background: url('/static/img/kuang@2x.png'); background-size: cover;">
+        <ul>
+            <li style="height: 43.2pt; margin-top: 9pt;">
+                <span @click="footer_onclick(1)">
+                <img src="/static/img/homea.png" alt="" v-show="icon1">
+                <i v-show="icon1" style="color: #16c4af">首页</i>
+                    </span>
+                <span @click="footer_onclick(2)">
+                <img src="/static/img/home.png" alt="" v-show="icon2">
+                <i v-show="icon2">首页</i>
+                </span>
+            </li>
+            <li style="border-radius: 100%; border: none">
+                <img src="/static/img/more.png" alt="" style="width: 34pt;margin-top: 0pt;margin: 0 auto;">
+
+                <i style="margin-top: 20pt;color: #16c4af">创建信息</i>
+            </li>
+            <li style="height: 43.2pt; margin-top: 9pt">
+                <span @click="footer_onclick(3)">
+                <img src="/static/img/mea.png" alt="" style="width: 16pt" v-show="icon3">
+                <i v-show="icon3" style="color: #16c4af">我的</i>
+                </span>
+                <span @click="footer_onclick(4)">
+                <img src="/static/img/me.png" alt="" style="width: 16pt" v-show="icon4">
+                <i v-show="icon4">我的</i>
+                </span>
+            </li>
+        </ul>
+    </footer>
+</div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="/static/js/swiper.js"></script>
+<script src="/static/js/vue.js"></script>
+<script src="/js/shop.js"></script>
+
+<script>
+  var startY,startX,endX,endY;
+
+  var vm = new Vue({
+    el: "#swiper-container",
+    data: {
+      shop:[],
+      icon1:true,
+      icon2:false,
+      icon3:false,
+      icon4:true
+    },
+    mounted: function(){
+      // console.log(db.getlist1(vm))
+    },
+    methods: {
+      footer_onclick:function(e){
+        if(e==4)
+        {
+          this.icon1=false;
+          this.icon2=true;
+          this.icon3=true;
+          this.icon4=false;
+
+        }
+        else if(e==2)
+        {
+          this.icon1=true;
+          this.icon2=false;
+          this.icon3=false;
+          this.icon4=true;
+
+        }
+      }
+    }
+  }) //vue
+
+  var db = new ShopDb();
+  db.getlist(vm)
+</script>
+</html>

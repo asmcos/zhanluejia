@@ -1,2 +1,4 @@
-# zhanluejia
-http://www.zhanluojia.org website
+zhanluejia.org website base on JSAdmin.
+
+http://www.zhanluejia.org
+

@@ -1,0 +1,78 @@
+{
+  "name": "JSAdmin",
+  "version": "1.0.0",
+  "description": "NodeJS admin",
+  "main": "src/index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "build": "webpack --config build/webpack.conf.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asmcos/JSAdmin"
+  },
+  "keywords": [
+    "JavaScript",
+    "Library"
+  ],
+  "author": "asmcos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/asmcos/JSAdmin/issues"
+  },
+  "homepage": "https://github.com/asmcos/JSAdmin",
+  "dependencies": {
+    "admin-lte": "",
+    "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.0",
+    "babel-loader": "^6.0.0",
+    "babel-plugin-transform-runtime": "^6.0.0",
+    "babel-preset-es2015": "^6.0.0",
+    "babel-preset-stage-2": "^6.0.0",
+    "babel-register": "^6.0.0",
+    "body-parser": "^1.15.2",
+    "casper": "github:tryghost/casper",
+    "connect-history-api-fallback": "^1.3.0",
+    "cookie-parser": "^1.4.3",
+    "css-loader": "^0.26.1",
+    "eslint": "^3.12.2",
+    "eslint-config-standard": "^6.1.0",
+    "eslint-friendly-formatter": "^2.0.5",
+    "eslint-loader": "^1.5.0",
+    "eslint-plugin-html": "^1.3.0",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-standard": "^2.0.1",
+    "eventsource-polyfill": "^0.9.6",
+    "express": "^4.14.0",
+    "express-urlrewrite": "^1.2.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "html": "^1.0.0",
+    "html-webpack-plugin": "^2.26.0",
+    "http-proxy-middleware": "^0.17.3",
+    "keystone": "^4.0.0",
+    "morgan": "^1.7.0",
+    "node-fetch": "^2.6.0",
+    "opn": "^4.0.2",
+    "rollup": "^0.36.3",
+    "style-loader": "^0.13.1",
+    "swiper": "^4.5.0",
+    "uglifyjs": "^2.4.10",
+    "unsplash-js": "^5.0.0",
+    "url-loader": "^0.5.7",
+    "vue": "",
+    "webpack": "",
+    "webpack-dev-middleware": "",
+    "webpack-hot-middleware": "",
+    "webpack-merge": "",
+    "wechat-api": "^1.35.1",
+    "wechat-oauth": "^1.5.0"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^5.0.2",
+    "webpack-cli": "^3.3.1"
+  }
+}

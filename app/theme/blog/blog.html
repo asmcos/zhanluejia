@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>JSAdmin</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/static/css/screen.css?v=0e648b2512" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="http://blog.xiulian.net.cn/supervisor-qi-dong-go/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="http://blog.xiulian.net.cn/supervisor-qi-dong-go/amp/" />
+    
+    <meta property="og:site_name" content="asmcos" />
+    
+
+    <meta name="generator" content="Ghost 1.24" />
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper" id="mainApp">
+
+        
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+                <a class="site-nav-logo" href="/">asmcos</a>
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
+</ul>
+
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+        </div>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="">{{blog.dateTime|DateFormat}}</time>
+                </section>
+                <h1 class="post-full-title">{{blog.title}}</h1>
+            </header>
+
+            <figure class="post-full-image" >
+				<img v-bind:src="blog.bgimg">
+            </figure>
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown"><p v-html="blog.html">
+				</p>
+				</div>
+            </section>
+
+
+            <footer class="post-full-footer">
+
+
+                    
+<section class="author-card">
+        <span class="avatar-wrapper"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</span>
+    <section class="author-card-content">
+        <h4 class="author-card-name"><a href="/author/hejiasheng/">hejiasheng</a></h4>
+            <p>Read <a href="/author/hejiasheng/">more posts</a> by this author.</p>
+    </section>
+</section>
+<div class="post-full-footer-right">
+    <a class="author-card-button" href="/author/hejiasheng/">Read More</a>
+</div>
+
+
+            </footer>
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+
+                <article class="post-card post" v-if="prevblog._id">
+        <a class="post-card-image-link" v-bind:href="'/blog.html?id='+prevblog._id">
+            <div class="post-card-image" v-bind:style="'background-image: url('+prevblog.bgimg+')'"></div>
+        </a>
+    <div class="post-card-content">
+        <a class="post-card-content-link" v-bind:href="'/blog.html?id='+prevblog._id">
+            <header class="post-card-header">
+                <h2 class="post-card-title">{{prevblog.title}}</h2>
+            </header>
+            <section class="post-card-excerpt">
+				<p v-html="prevblog.html"> </p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        hejiasheng
+                    </div>
+
+                        <a href="/author/hejiasheng/" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</a>
+                </li>
+            </ul>
+
+            <span class="reading-time">1 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+                <article class="post-card post" v-if="nextblog._id">
+        <a class="post-card-image-link" v-bind:href="'/blog.html?id='+nextblog._id">
+            <div class="post-card-image" v-bind:style="'background-image: url('+nextblog.bgimg+')'"></div>
+        </a>
+    <div class="post-card-content">
+        <a class="post-card-content-link" v-bind:href="'/blog.html?id='+nextblog._id">
+            <header class="post-card-header">
+                <h2 class="post-card-title">{{nextblog.title}}</h2>
+            </header>
+            <section class="post-card-excerpt">
+				<p v-html="nextblog.html"> </p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        hejiasheng
+                    </div>
+
+                        <a href="/author/hejiasheng/" class="static-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</a>
+                </li>
+            </ul>
+
+            <span class="reading-time">1 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+        </div>
+    </div>
+</aside>
+
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="http://blog.xiulian.net.cn">
+            <span>asmcos</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">{{blog.title}}</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="http://blog.xiulian.net.cn">asmcos</a> &copy; 2019</section>
+                <nav class="site-footer-nav">
+                    <a href="http://blog.xiulian.net.cn">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/static/js/jquery.fitvids.js?v=0e648b2512"></script>
+	<script type="text/javascript" src="/static/js/vue.js"></script>
+	<script type="text/javascript" src="/js/blog.js"></script>
+
+    <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+
+      var db = new blogDb()
+		
+	  Vue.filter('DateFormat',function (val) {
+            if (!val) return ''
+			d = new Date(val)
+            return d.toLocaleDateString()
+
+      });
+
+      var mainVue = new Vue({
+       el: '#mainApp',
+       data: {
+        sysconf:{},
+        blog:{},
+		prevblog:{},
+		nextblog:{}
+       },
+      }) // vue
+
+      db.getBlog(mainVue)
+	  
+
+
+});
+</script>
+
+    
+
+</body>
+</html>
+

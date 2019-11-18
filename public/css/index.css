@@ -1,0 +1,362 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+html {
+    line-height: 1
+}
+
+ol,
+ul {
+    list-style: none
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+caption,
+th,
+td {
+    text-align: left;
+    font-weight: normal;
+    vertical-align: middle
+}
+
+q,
+blockquote {
+    quotes: none
+}
+
+q:before,
+q:after,
+blockquote:before,
+blockquote:after {
+    content: "";
+    content: none
+}
+
+a img {
+    border: none
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+    display: block
+}
+input[type=button], input[type=submit], input[type=file], button { cursor: pointer; -webkit-appearance: none; }
+*{
+    -webkit-appearance:none;
+    -webkit-tap-highlight-color:transparent;
+}
+
+.wrap>.footer>.logo-box,
+.wrap>.footer>.logo-box>img,
+.wrap>.footer>.logo-box>span,
+.tabs-navbox>.tabs-nav>li,
+.tabs-content>.tabs-box,
+.tabs-content>.tabs-box>.tabs-pane,
+.sound-box>.user-box>.user,
+.sound-box>.user-box>.user>span.user-img,
+.sound-box>.sound-progress>span.current,
+.their-album>.item-box>p.item-info>span,
+.reported-list>li>.item-player>span.play-btn,
+.section-inner.article-content>.article-box.article-box-share>.t-share-cover,
+.social-box>.social-header>.uesr-img,
+.social-box>.social-header>.user-information,
+.social-box>.social-img,
+.social-box>.social-special,
+.social-box>.social-special .special-img,
+.social-box>.social-special .special-host {
+    float: left
+}
+.wrap>.footer>.dow-btn,
+.tips-mask>.tips-box>.tips-tit>.close-btn,
+.sound-box>.user-box>.play-vv,
+.sound-box>.sound-progress>span.duration,
+.social-box>.social-footer {
+    float: right
+}
+
+.tips-mask>.tips-box,
+.anchor-box>.anchor-bg,
+.anchor-box>.anchor-bg>img,
+.album-box>.album-bg,
+.album-box>.album-bg>img,
+.sound-box>.sound-bg,
+.sound-box>.sound-bg>img,
+.sound-box>.sound-icon>.play-btn,
+.reported-list>li>.img-box>.img-list>span>img,
+.bigWarp>img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0)
+}
+
+.section-inner.article-content>.article-box.article-box-share,
+.social-box,
+.social-box>.social-header,
+.social-box>.social-special {
+    *zoom: 1
+}
+
+.section-inner.article-content>.article-box.article-box-share:after,
+.social-box:after,
+.social-box>.social-header:after,
+.social-box>.social-special:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden
+}
+
+.anchor-box>p,
+.audio-list li>p.audio-name,
+.album-list li>p.album-name,
+.list-more>.more-btn,
+.sound-box>.user-box>.user,
+.their-album>.item-box>p.item-info>span,
+.comment-box>.comment-list>li>p.user-name,
+.reported-list>li>p.item-time,
+.section-inner.article-content>.article-box.article-box-share>.t-share-info>.t-info-inner>.t-inner-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+:root {
+    font-size: 10px
+}
+
+::placeholder {
+    color: #999;
+}
+
+*,
+*:after,
+*:before {
+    box-sizing: border-box
+}
+
+body,
+html {
+    width:100%;
+    height:100%;
+
+    /*min-height: 100vh;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch*/
+}
+
+body {
+    position: relative;
+    font-size: 100%;
+    font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.6
+}
+
+button,
+input,
+textarea {
+    outline: none !important
+}
+
+a {
+    /*color: #fff;*/
+    text-decoration: none
+}
+
+a:visited {
+    /*color: #fff*/
+}
+
+a:focus {
+    /*color: #fff*/
+}
+
+a:hover {
+    /*color: #fff;*/
+    /*color: #ff2d55;*/
+    transition: none
+}
+
+a:active {
+    color: #fff
+}
+
+a:focus,
+a:hover {
+    text-decoration: none
+}
+
+a>img {
+    vertical-align: middle
+}
+/*产品样式代码开始*/
+.proAll{width:100%; height:auto; overflow:hidden; display:block;padding:0 4.32pt; box-sizing:border-box;}
+.proHeader{width:100%; height:auto; overflow:hidden; display:block;padding:0 10.44pt; box-sizing:border-box;}
+.proTitle{width:100%; height:auto; overflow:hidden; display:block; font-size:12.96pt;color:rgba(0,0,0,1);font-family:PingFang-SC-Medium;font-weight:500; margin-top:18pt;}
+.proprice{width:100%; height:auto; overflow:hidden; display:block; font-size:8.64pt;color:rgba(255,95,88,1);font-family:PingFang-SC-Bold; }
+.proLeft{display:block; float:left;margin-top: 9pt;}
+.prozhekou{display:block; float:left; margin-left:3.6pt}
+.prozhekou i{font-style:normal; font-size:17.28pt;}
+.proRight{display:block; float:left; margin-left:9.36pt;color:rgba(153,153,153,1);text-decoration:line-through;margin-top: 9pt;}
+.proinfo{width:100%; height:auto; overflow:hidden; display:block; font-size:10.08pt;color:rgba(102,102,102,1);font-family:PingFang-SC-Medium;font-weight:500; margin-top:14.4pt}
+.proinfo_li{width:100%; height:auto; overflow:hidden; display:block; margin-bottom:2pt}
+.proinfo_li_left{width:22pt; display:inline-block; float: left;}
+.proinfo_li_right{width: 216.52pt; display:inline-block; float: left; margin-left:7.2pt}
+.proPicture{width:100%; display:block; overflow:hidden; margin-top:14.4pt}
+.proPicture img{width:100%; display:block; overflow:hidden;}
+.proFooter{width:100%; height:auto; overflow:hidden;margin-top:14.4pt; margin-bottom:14.4pt;}
+.proFooter img{width:45.36pt; height:auto; overflow:hidden; display:block; float:left;}
+.proFooteriphone{width:160pt; height:auto; overflow:hidden; font-size:10.8pt;margin-top: 6pt; }
+.proFooteriphone span{width:100%; display:block; overflow:hidden;margin-left:6.48pt;}
+.Url {
+    width: 50pt;
+    display: block;
+    float: right;
+    background: red;
+    border-radius: 6pt;
+    text-align: center;
+    color: #fff;
+    letter-spacing: 1pt;
+    margin-top: 0pt;
+    padding: 2pt 0 0pt 0;
+    font-size: 10.2pt;
+}
+footer{width: 100%; height: 52.2pt; position: fixed; bottom: 0; background: #fefefe;}
+footer ul{width: 100%; height: 100%; overflow: hidden; display: block;}
+footer ul li{width: 33.33%; display: block; float: left; height: 100%; line-height: 40pt; text-align: center; position: relative;}
+footer ul li img{width: 18pt;}
+footer ul li i{width: 100%; display: block; position: absolute;top: 0; margin-top: 12pt}
+@media screen and (max-width: 320px) {
+   footer{background-size: contain !important;
+       background-repeat: no-repeat !important;}
+}
+@media screen and (width: 360px) {
+    .proinfo_li_right {
+        width: 176.52pt;
+        display: inline-block;
+        float: left;
+        margin-left: 7.2pt;
+    }
+    footer ul li:nth-child(2) img{margin-left: 2pt !important;}
+}
+@media screen and (min-width: 751px) {
+    .proAll{ overflow:hidden; display:block;padding:0 4.32pt; box-sizing:border-box;
+        width: 640px;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        margin:0 auto;
+    }
+    .proinfo_li_right {
+        width: 406.52pt;
+        display: inline-block;
+        float: left;
+        margin-left: 7.2pt;
+    }
+}
+
