@@ -28,6 +28,7 @@ Blog.add({
   html:{ type: Types.Html, wysiwyg: true },
   bgimg:{ type: Types.Url, label:"背景图片",collapse:"unsplashimg"},
   published: { type: Boolean ,label:"发布"},
+  author: { type: Types.Relationship, ref: 'User' },
 });
 
 Blog.schema.pre('save', function (next) {

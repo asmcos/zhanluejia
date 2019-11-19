@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="format-detection" content="telephone=no">
+    <title>战略家</title>
+    <style>
+        body{padding: 0; margin: 0}
+		input{outline: none;
+-webkit-tap-highlight-color: rgba(0,0,0,0);}
+		.wendaLoginBox {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-left: -200px;
+			width: 300px;
+			padding: 28px 50px 38px;
+			-webkit-transform: translate(0,-220px);
+			-ms-transform: translate(0,-220px);
+			transform: translate(0,-220px);
+		}
+		input:focus{
+    outline: none;    // 如何把蓝色去掉？
+    border: 1px solid #58b195; // 如何改成别的颜色？
+}
+		.y-wrap .y-box {
+			display: block;
+			}
+			
+		.wendaLoginBox .login-header {
+			font-size: 20px;
+			color: #222;
+			margin-bottom: 10px;
+			}
+			.wendaLoginBox .login-header .item {
+					width: 150px;
+					text-align: center;
+					border-bottom: 1px solid #e8e8e8;
+					position: relative;
+				}
+				.wendaLoginBox .login-header .item>span {
+    position: relative;
+    display: inline-block;
+    width: 112px;
+    padding-bottom: 11px;
+    cursor: default;
+    color: #777;
+    letter-spacing: 2px;
+    line-height: 28px;
+}
+.wendaLoginBox .login-header .active>span {
+    color: #ff6534;
+}
+.wendaLoginBox .login-header .active:after {
+    content: '';
+    width: 100%;
+    position: absolute;
+    height: 2px;
+    background: -webkit-linear-gradient(1deg,#FF973C 0,#FF7E38 100%);
+    background: linear-gradient(89deg,#FF973C 0,#FF7E38 100%);
+    top: 38px;
+    left: 0;
+}
+.y-left{float:left;}
+.login-type{width:100%; height:auto; overflow:hidden; display:block;}
+.LogIn{width:100%; height:auto; overflow:hidden; display:block;}
+.input-field {
+    margin-bottom: 0;
+}
+.input-field {
+    position: relative;
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #666;
+	overflow: hidden;
+}
+
+
+.input-field>input {
+    width: 282px;
+    font-size: 16px;
+    line-height: 32px;
+    height: 32px;
+    padding: 4px 8px;
+    border-bottom: 1px solid #ddd;
+    z-index: 1;
+}
+.input-field>input {
+    border-style: none none solid;
+    border-color: #e8e8e8;
+    height: 28px;
+    font-size: 14px;
+    line-height: 28px;
+    padding: 0;
+    margin-top: 22px;
+    width: 300px;
+}
+.fadeRegister .input-field>input {
+    height: 20px;
+    margin-top: 30px;
+    font-size: 14px;
+    padding-bottom: 4px;
+    line-height: 20px;
+}
+.verification>input {
+    width: 300px;
+	float: left;
+}
+ .captcha-wrap {
+    
+  
+    width: 120px;
+    top: 16px;
+    float: left;
+    position: absolute;
+    right: 0;
+
+}
+.captcha-wrap .captcha {
+    width: 100%;
+    height: 100%;
+	
+}
+.baseLogin .verification .captcha-wrap .tips-bubble {
+    display: none;
+    position: absolute;
+    top: -35px;
+    right: -9px;
+    background-color: #444;
+    width: 115px;
+    text-align: center;
+    font-size: 13px;
+    color: #fff;
+    line-height: 26px;
+    padding: 0 2px;
+}
+.phone-code .code-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #406599;
+    cursor: pointer;
+    font-size: 16px;
+    width: 80px;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 16px;
+    text-align: center;
+}
+ .phone-code .code-btn {
+    color: #ff6735;
+    font-size: 14px;
+    padding: 0 10px 0 14px;
+    height: 20px;
+    line-height: 20px;
+    top: 26px;
+    width: auto;
+}
+ .phone-code .code-btn {
+    padding-left: 6px;
+    padding-right: 5px;
+	border-left:1px solid #ddd !important;
+}
+.action-btn {
+    color: #fff;
+    font-size: 18px;
+    line-height: 42px;
+    width: 300px;
+    text-align: center;
+    background-color: #f85959;
+    margin-bottom: 40px;
+    cursor: pointer;
+}
+.action-btn {
+    height: 34px;
+    line-height: 34px;
+    color: #fff;
+    font-size: 16px;
+    background-image: -webkit-linear-gradient(1deg,#FF973C 0,#FF6534 100%);
+    background-image: linear-gradient(89deg,#FF973C 0,#FF6534 100%);
+    border-radius: 4px;
+    margin-bottom: 50px;
+    letter-spacing: 3px;
+	border:none
+}
+ .action-btn {
+ 
+    margin-bottom: 12px;
+}
+.imgLogin {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    margin-left: -50px;
+    width: 100px;
+}
+.y-box {
+    display: block;
+}
+ .action {
+    font-size: 13px;
+    color: #222;
+    margin-top: 4px;
+    margin-bottom: 24px;
+}
+ .action {
+    margin-top: 12px;
+    margin-bottom: 24px;
+}
+ .action>input, .baseLogin .action>label {
+    vertical-align: middle;
+    line-height: 18px;
+}
+.action .agreement {
+    position: absolute;
+    clip: rect(0,0,0,0);
+}
+label {
+    cursor: pointer;
+}
+ .action>label {
+    vertical-align: middle;
+    line-height: 18px;
+}
+ .action>label {
+    color: #777;
+    font-size: 12px;
+}
+.y-box:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    overflow: hidden;
+}
+.action .agreement+label::before {
+    content: '';
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    box-shadow: inset 0 0 0 1px #e8e8e8;
+    border-radius: 2px;
+    background-color: #fff;
+    vertical-align: -1px;
+    margin-right: 6px;
+}
+.action .agreement:checked+label::before {
+    background-color: #FF6534;
+    border: 0;
+    content: '√';
+    color: #fff;
+    font-size: 13px;
+    width: 20px;
+    height: 20px;
+    -webkit-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    transform: scale(0.5);
+    font-family: yFont;
+    border-radius: 4px;
+    line-height: 20px;
+    text-align: center;
+    vertical-align: -4px;
+    -webkit-transform-origin: left top;
+    -ms-transform-origin: left top;
+    transform-origin: left top;
+    margin: 0 -5px -12px 0;
+    box-shadow: none;
+    font-weight: 700;
+}
+.wendaLogin .phone-mail {
+    margin-bottom: 40px;
+    font-size: 0;
+    color: #406599;
+    cursor: pointer;
+    text-align: center;
+    line-height: 20px;
+}
+.phone-mail span {
+    font-size: 14px;
+	display:block;
+	text-align:center;
+	color: #406599;
+}
+svg {
+    width: 100%;
+    height: 100%;
+    margin-top: -10px;
+
+}
+    </style>
+    <body>
+		<div id="Login">
+		<img src="/zlj/img/logo.jpg" class="imgLogin">
+			<div class="wendaLoginBox">
+				<div class="y-box login-header">
+					<div class="y-left item" :class="{'active':position === 0}" @click="addClass(0)">
+						<span>登录</span>
+					</div>
+					<div class="y-left item " :class="{'active':position === 1}" @click="addClass(1)">
+						<span>注册</span> 
+					</div>
+				</div>
+				<div class="login-type">
+					<div class="LogIn">
+						<form  v-if="nav==1">
+							<div class="input-field"> 
+								<input id="mobile" type="text" name="mobile" autocomplete="off" spellcheck="false" placeholder="手机号"> 
+							</div>	
+							<div class="input-field verification"> 
+								<input id="captcha1" type="text" name="captcha1" autocomplete="off" spellcheck="false" placeholder="验证码"> 
+								<div class="captcha-wrap"> 
+								 <div class="y-right captcha" v-html="capimg"></div>
+								</div> 
+							</div>
+							<div class="input-field phone-code">
+								<input id="code" type="text" name="code" autocomplete="off" spellcheck="false" placeholder="手机验证码"> 
+								<span class="code-btn ">获取验证码</span>
+							</div>
+							<div class="y-box action">
+								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
+								<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
+							</div>
+							<input type="submit" name="submitBtn" class="action-btn" value="注册" v-if="position==1">
+							<input type="submit" name="submitBtn" class="action-btn" value="登录" v-if="position==0">
+						</form>
+						
+						<form  v-if="nav==0">
+							<div class="input-field"> 
+								<input id="mobile" type="text" name="mobile" autocomplete="off" spellcheck="false" placeholder="用户名/手机号"> 
+							</div>	
+							<div class="input-field"> 
+								<input id="mobile" type="text" name="mobile" autocomplete="off" spellcheck="false" placeholder="密码"> 
+							</div>	
+							<div class="input-field verification"> 
+								<input id="captcha1" type="text" name="captcha1" autocomplete="off" spellcheck="false" placeholder="验证码"> 
+								<div class="captcha-wrap"> 
+								  <div class="y-right captcha" v-html="capimg"></div>
+								</div> 
+							</div>
+							<div class="y-box action">
+								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
+								<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
+							</div>
+							<input type="submit" name="submitBtn" class="action-btn" value="注册" v-if="position==1">
+							<input type="submit" name="submitBtn" class="action-btn" value="登录" v-if="position==0">
+						</form>
+						
+						<div  class="phone-mail mail-login">
+							<span @click="tabNav(0)" v-if="nav==1">账号密码登录</span>  
+							<span @click="tabNav(1)" v-if="nav==0">手机验证码登录</span> 
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+    </body>
+
+   <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/static/js/jquery.fitvids.js?v=0e648b2512"></script>
+
+    <script src="/static/js/vue.js"></script>
+    <script src="/zlj/js/captcha.js"></script>
+
+<script>
+   $(document).ready(function(){
+    
+		 $("input").focus(function(){
+			$(this).css("border-bottom","1px solid #ff6534");
+		});
+		 $("input").blur(function(){
+			$(this).css("border-bottom","1px solid #ddd");
+		});
+  })
+</script>
+
+<script>
+  var loginVue = new Vue({
+    el: '#Login',
+    data: {
+      position:0,
+	  nav:1,
+	  capid:'',
+	  capimg:'',
+    },
+    beforeCreate: function(){
+    },
+    mounted: function(){
+      var that = this;
+	  
+      
+    },
+    methods: {
+		addClass:function(e){
+			var that = this;
+			that.position=e;
+			if(e==1)
+			{
+				that.nav=e;
+			}
+		},
+		tabNav:function(e){
+			var that = this;
+			that.nav=e;
+			console.log(e)
+		}
+    }
+  })
+ 
+  new Cha().getNew(loginVue)
+  console.log(loginVue)
+</script>
+</html>

@@ -27,6 +27,7 @@ var routes = {
     views: importRoutes('./views'),
     api: importRoutes('./api'),
     wxmp: importRoutes('../wxmp/api'),
+    zlj: importRoutes('../zlj/api'),
 };
 
 // Setup Route Bindings
@@ -62,6 +63,13 @@ exports = module.exports = function (app) {
 	app.use('/wxmp/', keystone.express.static(path.join(__dirname, '../wxmp/')));
 	app.use('/wxmp/callback', routes.wxmp.api.callback);
 	app.use('/wxmp/my', routes.wxmp.api.my);
+
+	// 战略家 pc,h5
+	app.use('/zlj/', keystone.express.static(path.join(__dirname, '../zlj/www')));
+	app.use('/zlj/register', routes.zlj.user.register);
+	app.use('/zlj/login', routes.zlj.user.login);
+	app.use('/zlj/newcaptcha', routes.zlj.captcha.new);
+
 };
 
 

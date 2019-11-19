@@ -59,6 +59,7 @@
     "opn": "^4.0.2",
     "rollup": "^0.36.3",
     "style-loader": "^0.13.1",
+    "svg-captcha": "^1.4.0",
     "swiper": "^4.5.0",
     "uglifyjs": "^2.4.10",
     "unsplash-js": "^5.0.0",
