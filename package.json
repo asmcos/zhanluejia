@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/asmcos/JSAdmin",
   "dependencies": {
+    "@alicloud/pop-core": "^1.7.7",
     "admin-lte": "",
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.0",

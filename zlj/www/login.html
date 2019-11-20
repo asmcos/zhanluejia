@@ -308,24 +308,24 @@ svg {
 					<div class="LogIn">
 						<form  v-if="nav==1">
 							<div class="input-field"> 
-								<input id="mobile" type="text" name="mobile" autocomplete="off" spellcheck="false" placeholder="手机号"> 
+								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="手机号"> 
 							</div>	
 							<div class="input-field verification"> 
-								<input id="captcha1" type="text" name="captcha1" autocomplete="off" spellcheck="false" placeholder="验证码"> 
+								<input id="captcha1" type="text" name="captcha1" autocomplete="off" v-model="logincap" spellcheck="false" placeholder="验证码"> 
 								<div class="captcha-wrap"> 
 								 <div class="y-right captcha" v-html="capimg"></div>
 								</div> 
 							</div>
 							<div class="input-field phone-code">
-								<input id="code" type="text" name="code" autocomplete="off" spellcheck="false" placeholder="手机验证码"> 
-								<span class="code-btn ">获取验证码</span>
+								<input id="code" type="text" name="code" autocomplete="off" v-model="loginphonecode" spellcheck="false" placeholder="手机验证码"> 
+								<span class="code-btn" @click="getCode(0)" >获取验证码</span>
 							</div>
 							<div class="y-box action">
 								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
 								<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
 							</div>
-							<input type="submit" name="submitBtn" class="action-btn" value="注册" v-if="position==1">
-							<input type="submit" name="submitBtn" class="action-btn" value="登录" v-if="position==0">
+							<input name="submitBtn" class="action-btn" value="注册" v-if="position==1">
+							<input name="submitBtn" class="action-btn" @click="checkCode(0)" value="登录" v-if="position==0">
 						</form>
 						
 						<form  v-if="nav==0">
@@ -391,6 +391,14 @@ svg {
 	  nav:1,
 	  capid:'',
 	  capimg:'',
+
+	  loginphone:'', //login
+	  logincap:'',
+	  loginphonecode:'', 
+
+	  regphone:'', //register
+
+	  phoneid:'', //return
     },
     beforeCreate: function(){
     },
@@ -412,7 +420,44 @@ svg {
 			var that = this;
 			that.nav=e;
 			console.log(e)
-		}
+		},
+		getCode:function(e){
+			var that = this;
+			
+			var datajson = JSON.stringify ({phone:that.loginphone,id:that.capid,code:that.logincap})
+			$.ajax({url:"/zlj/getcode",
+                dataType: "json",
+				type: 'POST',
+				contentType: 'application/json',
+				data:datajson,
+                success: function(data){
+                    that.phoneid=data.phoneid
+                },
+                error : function() {
+                },
+           });
+			
+		},
+	   checkCode:function(e){
+            var that = this;
+
+            var datajson = JSON.stringify ({phone:that.loginphone,id:that.phoneid,code:that.loginphonecode})
+            $.ajax({url:"/zlj/checkcode",
+                dataType: "json",
+                type: 'POST',
+                contentType: 'application/json',
+                data:datajson,
+                success: function(data){
+                   if (data.code == 0){
+						//	
+                   }
+                },
+                error : function() {
+                },
+           });
+        },
+
+
     }
   })
  
