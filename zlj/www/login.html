@@ -30,7 +30,7 @@
 		.y-wrap .y-box {
 			display: block;
 			}
-			
+
 		.wendaLoginBox .login-header {
 			font-size: 20px;
 			color: #222;
@@ -111,8 +111,8 @@
 	float: left;
 }
  .captcha-wrap {
-    
-  
+
+
     width: 120px;
     top: 16px;
     float: left;
@@ -123,7 +123,7 @@
 .captcha-wrap .captcha {
     width: 100%;
     height: 100%;
-	
+
 }
 .baseLogin .verification .captcha-wrap .tips-bubble {
     display: none;
@@ -188,7 +188,7 @@
 	border:none
 }
  .action-btn {
- 
+
     margin-bottom: 12px;
 }
 .imgLogin {
@@ -291,34 +291,36 @@ svg {
     margin-top: -10px;
 
 }
+		.tip_box{width:80%; height:40px; background:#000; display:block; margin:0 auto; border-radius:30px; color:#fff; line-height:40px; text-align:center;}
     </style>
     <body>
 		<div id="Login">
 		<img src="/zlj/img/logo.jpg" class="imgLogin">
 			<div class="wendaLoginBox">
+				<div class="tip_box" v-if="tips==0">{{tisContent}}</div>
 				<div class="y-box login-header">
 					<div class="y-left item" :class="{'active':position === 0}" @click="addClass(0)">
 						<span>登录</span>
 					</div>
 					<div class="y-left item " :class="{'active':position === 1}" @click="addClass(1)">
-						<span>注册</span> 
+						<span>注册</span>
 					</div>
 				</div>
 				<div class="login-type">
 					<div class="LogIn">
 						<form  v-if="nav==1">
-							<div class="input-field"> 
-								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="手机号"> 
-							</div>	
-							<div class="input-field verification"> 
-								<input id="captcha1" type="text" name="captcha1" autocomplete="off" v-model="logincap" spellcheck="false" placeholder="验证码"> 
-								<div class="captcha-wrap"> 
+							<div class="input-field">
+								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="手机号">
+							</div>
+							<div class="input-field verification">
+								<input id="captcha1" type="text" name="captcha1" autocomplete="off" v-model="logincap" spellcheck="false" placeholder="验证码">
+								<div class="captcha-wrap">
 								 <div class="y-right captcha" v-html="capimg"></div>
-								</div> 
+								</div>
 							</div>
 							<div class="input-field phone-code">
-								<input id="code" type="text" name="code" autocomplete="off" v-model="loginphonecode" spellcheck="false" placeholder="手机验证码"> 
-								<span class="code-btn" @click="getCode(0)" >获取验证码</span>
+								<input id="code" type="text" name="code" autocomplete="off" v-model="loginphonecode" spellcheck="false" placeholder="手机验证码">
+								<span class="code-btn" @click="sendcode" >{{content}}</span>
 							</div>
 							<div class="y-box action">
 								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
@@ -327,19 +329,19 @@ svg {
 							<input name="submitBtn" class="action-btn" value="注册" v-if="position==1">
 							<input name="submitBtn" class="action-btn" @click="checkCode(0)" value="登录" v-if="position==0">
 						</form>
-						
+
 						<form  v-if="nav==0">
-							<div class="input-field"> 
-								<input id="mobile" type="text" name="mobile" autocomplete="off" spellcheck="false" placeholder="用户名/手机号"> 
-							</div>	
-							<div class="input-field"> 
-								<input id="mobile" type="text" name="mobile" autocomplete="off" spellcheck="false" placeholder="密码"> 
-							</div>	
-							<div class="input-field verification"> 
-								<input id="captcha1" type="text" name="captcha1" autocomplete="off" spellcheck="false" placeholder="验证码"> 
-								<div class="captcha-wrap"> 
+							<div class="input-field">
+								<input id="mobile" type="text" name="mobile" autocomplete="off" spellcheck="false" placeholder="用户名/手机号">
+							</div>
+							<div class="input-field">
+								<input id="mobile" type="text" name="mobile" autocomplete="off" spellcheck="false" placeholder="密码">
+							</div>
+							<div class="input-field verification">
+								<input id="captcha1" type="text" name="captcha1" autocomplete="off" spellcheck="false" placeholder="验证码">
+								<div class="captcha-wrap">
 								  <div class="y-right captcha" v-html="capimg"></div>
-								</div> 
+								</div>
 							</div>
 							<div class="y-box action">
 								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
@@ -348,14 +350,14 @@ svg {
 							<input type="submit" name="submitBtn" class="action-btn" value="注册" v-if="position==1">
 							<input type="submit" name="submitBtn" class="action-btn" value="登录" v-if="position==0">
 						</form>
-						
+
 						<div  class="phone-mail mail-login">
-							<span @click="tabNav(0)" v-if="nav==1">账号密码登录</span>  
-							<span @click="tabNav(1)" v-if="nav==0">手机验证码登录</span> 
+							<span @click="tabNav(0)" v-if="nav==1">账号密码登录</span>
+							<span @click="tabNav(1)" v-if="nav==0">手机验证码登录</span>
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 
@@ -373,7 +375,7 @@ svg {
 
 <script>
    $(document).ready(function(){
-    
+
 		 $("input").focus(function(){
 			$(this).css("border-bottom","1px solid #ff6534");
 		});
@@ -387,27 +389,71 @@ svg {
   var loginVue = new Vue({
     el: '#Login',
     data: {
-      position:0,
-	  nav:1,
-	  capid:'',
-	  capimg:'',
+		  totalTime: 60,     //记录具体倒计时时间
+		  canClick: true, //添加canClick
+		  tips:1,
+		  tisContent:"",
+    	  content: '获取短信验证码',  // 按钮里显示的内容
+		  position:0,
+		  nav:1,
+		  capid:'',
+		  capimg:'',
 
-	  loginphone:'', //login
-	  logincap:'',
-	  loginphonecode:'', 
+		  loginphone:'', //login
+		  logincap:'',
+		  loginphonecode:'',
 
-	  regphone:'', //register
+		  regphone:'', //register
 
-	  phoneid:'', //return
+		  phoneid:'', //return
     },
     beforeCreate: function(){
     },
     mounted: function(){
       var that = this;
-	  
-      
+
+
     },
     methods: {
+		sendcode(){
+			var reg=11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
+			console.log(this.loginphone);
+			//var url="/nptOfficialWebsite/apply/sendSms?mobile="+this.ruleForm.phone;
+			if(this.phone==''){
+				var e="请输入手机号码"
+				this.tipes(e)
+			}else if(!reg.test(this.loginphone)){
+				var e="手机格式不正确"
+				this.tipes(e)
+			}else{
+				this.countDown();
+			}
+		},
+		tipes:function(e){
+			var that = this;
+			this.tisContent=e;
+			this.tips=0;
+			setTimeout(function(){
+				that.tips=1;
+			},2000)
+		},
+		countDown()
+		{
+			if (!this.canClick) return  //改动的是这两行代码
+			this.canClick = false;
+			this.getCode(0);
+			this.content = this.totalTime + 's后重新发送';
+			let clock = window.setInterval(() => {
+				this.totalTime--
+				this.content = this.totalTime + 's后重新发送'
+				if (this.totalTime < 0) {
+					window.clearInterval(clock)
+					this.content = '重新发送验证码'
+					this.totalTime = 60
+					this.canClick = true  //这里重新开启
+				}  },1000)
+
+		},
 		addClass:function(e){
 			var that = this;
 			that.position=e;
@@ -423,7 +469,7 @@ svg {
 		},
 		getCode:function(e){
 			var that = this;
-			
+
 			var datajson = JSON.stringify ({phone:that.loginphone,id:that.capid,code:that.logincap})
 			$.ajax({url:"/zlj/getcode",
                 dataType: "json",
@@ -436,7 +482,7 @@ svg {
                 error : function() {
                 },
            });
-			
+
 		},
 	   checkCode:function(e){
             var that = this;
@@ -449,7 +495,7 @@ svg {
                 data:datajson,
                 success: function(data){
                    if (data.code == 0){
-						//	
+						//
                    }
                 },
                 error : function() {
@@ -460,7 +506,7 @@ svg {
 
     }
   })
- 
+
   new Cha().getNew(loginVue)
   console.log(loginVue)
 </script>
