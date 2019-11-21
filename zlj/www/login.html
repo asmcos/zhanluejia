@@ -331,8 +331,8 @@ svg {
 								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
 								<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
 							</div>
-							<input name="submitBtn" class="action-btn" value="注册" v-if="position==1">
-							<input name="submitBtn" class="action-btn" @click="checkCode(0)" value="登录" v-if="position==0">
+							<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="checkCode(1)" value="注册" v-if="position==1">
+							<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="checkCode(0)" value="登录" v-if="position==0">
 						</form>
 
 						<form  v-if="nav==0">
@@ -357,7 +357,7 @@ svg {
 						</form>
 
 						<div  class="phone-mail mail-login">
-							<span @click="tabNav(0)" v-if="nav==1">账号密码登录</span>
+							<!--span @click="tabNav(0)" v-if="nav==1">账号密码登录</span-->
 							<span @click="tabNav(1)" v-if="nav==0">手机验证码登录</span>
 						</div>
 					</div>
@@ -408,9 +408,7 @@ svg {
 		  logincap:'',
 		  loginphonecode:'',
 
-		  regphone:'', //register
-
-		  phoneid:'', //return
+		  phoneid:'', //from server
     },
     beforeCreate: function(){
     },
@@ -477,7 +475,7 @@ svg {
 						let clock = window.setInterval(() => {
 						that.totalTime--
 						that.content = that.totalTime + 's后重新发送'
-						if (this.totalTime < 0) {
+						if (that.totalTime < 0) {
 							window.clearInterval(clock)
 							that.content = '重新发送验证码'
 							that.totalTime = 60
@@ -498,7 +496,7 @@ svg {
             var that = this;
 
             var datajson = JSON.stringify ({phone:that.loginphone,id:that.phoneid,code:that.loginphonecode})
-            $.ajax({url:"/zlj/checkcode",
+            $.ajax({url:"/zlj/login",
                 dataType: "json",
                 type: 'POST',
                 contentType: 'application/json',

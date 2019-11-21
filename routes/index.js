@@ -70,7 +70,7 @@ exports = module.exports = function (app) {
 	app.use('/zlj/login', routes.zlj.user.login);
 	app.use('/zlj/newcaptcha', routes.zlj.captcha.new);
 	app.use('/zlj/getcode', routes.zlj.captcha.getCode);
-	app.use('/zlj/checkcode', routes.zlj.aliyunSMS.checkCode);
+	app.use('/zlj/login', routes.zlj.user.login);
 
 };
 

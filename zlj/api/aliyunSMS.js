@@ -61,7 +61,7 @@ function aliyunSMS(phone,code,id,req,res){
 
 }
 
-function checkCode (req,res){
+function checkCode (req,res,callback){
 	var id = req.body.id
     var code = req.body.code
     var phone = req.body.phone
@@ -77,15 +77,15 @@ function checkCode (req,res){
     sms.model.findOneAndUpdate({_id:id,code:code},{$inc: { times: 1 }},{returnNewDocument:true},function(err, result){
 
         if (!result){
-            return res.json({code:-2,message:"验证码错误"})
+            callback({code:-2,message:"验证码错误"})
         }
 
         if (result.times > 2) {
 
-            return res.json({code:-3,message:"验证码失效,请刷新验证码"})
+            callback({code:-3,message:"验证码失效,请刷新验证码"})
         }
 
-		return res.json({code:0,message:"验证成功"})
+		callback({code:0,message:"验证成功"})
 
     })
 	
