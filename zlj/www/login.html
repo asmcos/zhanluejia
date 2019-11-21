@@ -11,7 +11,7 @@
     <style>
         body{padding: 0; margin: 0}
 		input{outline: none;
--webkit-tap-highlight-color: rgba(0,0,0,0);}
+		-webkit-tap-highlight-color: rgba(0,0,0,0);}
 		.wendaLoginBox {
 			position: absolute;
 			top: 50%;
@@ -24,9 +24,9 @@
 			transform: translate(0,-220px);
 		}
 		input:focus{
-    outline: none;    // 如何把蓝色去掉？
-    border: 1px solid #58b195; // 如何改成别的颜色？
-}
+    	  outline: none;    // 如何把蓝色去掉？
+    	  border: 1px solid #58b195; // 如何改成别的颜色？
+		}
 		.y-wrap .y-box {
 			display: block;
 			}
@@ -65,12 +65,17 @@
     top: 38px;
     left: 0;
 }
-.y-left{float:left;}
-.login-type{width:100%; height:auto; overflow:hidden; display:block;}
-.LogIn{width:100%; height:auto; overflow:hidden; display:block;}
-.input-field {
-    margin-bottom: 0;
+.y-left{
+	float:left;
 }
+.login-type{
+	width:100%; height:auto; overflow:hidden; display:block;}
+.LogIn{
+	width:100%; height:auto; overflow:hidden; display:block;}
+.input-field {
+    	margin-bottom: 0;
+}
+
 .input-field {
     position: relative;
     font-size: 16px;
@@ -390,7 +395,7 @@ svg {
     el: '#Login',
     data: {
 		  totalTime: 60,     //记录具体倒计时时间
-		  canClick: true, //添加canClick
+		  canClick: true,    //添加canClick
 		  tips:1,
 		  tisContent:"",
     	  content: '获取短信验证码',  // 按钮里显示的内容
@@ -418,7 +423,6 @@ svg {
 		sendcode(){
 			var reg=11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
 			console.log(this.loginphone);
-			//var url="/nptOfficialWebsite/apply/sendSms?mobile="+this.ruleForm.phone;
 			if(this.phone==''){
 				var e="请输入手机号码"
 				this.tipes(e)
@@ -440,19 +444,7 @@ svg {
 		countDown()
 		{
 			if (!this.canClick) return  //改动的是这两行代码
-			this.canClick = false;
 			this.getCode(0);
-			this.content = this.totalTime + 's后重新发送';
-			let clock = window.setInterval(() => {
-				this.totalTime--
-				this.content = this.totalTime + 's后重新发送'
-				if (this.totalTime < 0) {
-					window.clearInterval(clock)
-					this.content = '重新发送验证码'
-					this.totalTime = 60
-					this.canClick = true  //这里重新开启
-				}  },1000)
-
 		},
 		addClass:function(e){
 			var that = this;
@@ -477,7 +469,25 @@ svg {
 				contentType: 'application/json',
 				data:datajson,
                 success: function(data){
-                    that.phoneid=data.phoneid
+					if (data.code == 0){
+                    	that.phoneid=data.phoneid
+
+						that.canClick = false;
+						that.content = that.totalTime + 's后重新发送';
+						let clock = window.setInterval(() => {
+						that.totalTime--
+						that.content = that.totalTime + 's后重新发送'
+						if (this.totalTime < 0) {
+							window.clearInterval(clock)
+							that.content = '重新发送验证码'
+							that.totalTime = 60
+							that.canClick = true  //这里重新开启
+						}  },1000)
+
+					} else {
+						//提示错误信息
+						that.tipes(data.message)	
+					}
                 },
                 error : function() {
                 },
@@ -495,8 +505,12 @@ svg {
                 data:datajson,
                 success: function(data){
                    if (data.code == 0){
-						//
-                   }
+						//验证码正确
+				   	    that.tipes(data.message)
+                   } else {
+					    //错误信息
+				   	    that.tipes(data.message)
+				   }
                 },
                 error : function() {
                 },
