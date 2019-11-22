@@ -74,7 +74,7 @@ function checkCode (req,res,callback){
 
 	var sms = keystone.list( "Smscode" ) //models
 
-    sms.model.findOneAndUpdate({_id:id,code:code},{$inc: { times: 1 }},{returnNewDocument:true},function(err, result){
+    sms.model.findOneAndUpdate({_id:id,code:code,phone:phone},{$inc: { times: 1 }},{returnNewDocument:true},function(err, result){
 
         if (!result){
             callback({code:-2,message:"验证码错误"})

@@ -1,6 +1,69 @@
 var keystone = require('keystone')
 var aliyunSMS = require('./aliyunSMS')
 var bcrypt = require('bcrypt-nodejs');
+
+
+/*
+ * 给用户分配一个随机头像，图片范围见www/img/icon目录
+ */
+var img = require("./mkjson");
+
+var imglist = img.getImgList(__dirname + "/../www/img/icon/")
+var urlpath = "/zlj/img/icon/"
+
+function randavatar(img){
+	var length = img.length;
+	
+	var rand = Math.floor(Math.random() * Math.floor(length));	
+
+	return img[rand]
+}
+
+
+// login and register user
+exports.login = module.exports.login = function(req,res){
+
+
+	aliyunSMS.checkCode(req,res,function(data){
+		if (data.code != 0 ){
+
+			return res.json(data)
+		}
+
+		//登录或者注册
+		var U = keystone.list( "User" )
+	
+		var hashpw = bcrypt.hashSync(req.body.code)
+
+		var avatar = urlpath + randavatar(imglist)	
+
+		var profile = {
+			phoneNum:req.body.phone,
+			$setOnInsert:{password:hashpw,avatar:avatar}, //only for new user 
+		}	
+
+		U.model.findOneAndUpdate({phoneNum:req.body.phone},profile,{upsert:true,returnNewDocument:true},function(err, updatedObject){
+			 U.model.findOne({phoneNum:req.body.phone},function(err,newU){
+			 	keystone.session.signinWithUser(newU, req, res, function () {
+                        return res.json(data)
+                })
+			})//findOne
+		})//U.model
+
+	})//aliyunSMS
+
+
+}
+exports.register = module.exports.register = function(req,res){
+	
+
+}
+
+
+
+
+
+
 /*
     name: { type: Types.Name, required: true, index: true }, //firstname is weapp nickname
     email: { type: Types.Email, initial: true, required: true },
@@ -51,39 +114,3 @@ var bcrypt = require('bcrypt-nodejs');
  */
 
 
-
-exports.login = module.exports.login = function(req,res){
-
-	aliyunSMS.checkCode(req,res,function(data){
-		if (data.code != 0 ){
-
-			return res.json(data)
-		}
-
-		//登录或者注册
-		var U = keystone.list( "User" )
-	
-
-		var hashpw = bcrypt.hashSync(req.body.code)
-	
-		var profile = {
-			phoneNum:req.body.phone,
-			$setOnInsert:{password:hashpw}, //only create new need a value
-		}	
-
-		U.model.findOneAndUpdate({phoneNum:req.body.phone},profile,{upsert:true,returnNewDocument:true},function(err, updatedObject){
-			 U.model.findOne({phoneNum:req.body.phone},function(err,newU){
-			 	keystone.session.signinWithUser(newU, req, res, function () {
-                        return res.json(data)
-                })
-			})//findOne
-		})//U.model
-
-	})//aliyunSMS
-
-
-}
-exports.register = module.exports.register = function(req,res){
-	
-
-}

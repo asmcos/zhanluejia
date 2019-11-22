@@ -11,7 +11,7 @@ User.add({
 	name: { type: Types.Name, required: true, index: true }, //firstname is weapp nickname
 	email: { type: Types.Email, initial: true, required: true },
 	password: { type: Types.Password, initial: true, required: true },
-	avatar: {type:Types.Url},
+	avatar: {type:Types.Text},
 	weappopenId: {type:Types.Text},                 // weapp openId
 	wxunionId: {type:Types.Text},                   // weapp unionId 
 	phoneNum: {type:Types.Number},

@@ -66,6 +66,7 @@
     "unsplash-js": "^5.0.0",
     "url-loader": "^0.5.7",
     "vue": "",
+    "vue-cropper": "^0.4.9",
     "webpack": "",
     "webpack-dev-middleware": "",
     "webpack-hot-middleware": "",
