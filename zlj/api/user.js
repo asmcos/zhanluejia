@@ -8,21 +8,29 @@ var bcrypt = require('bcrypt-nodejs');
  */
 var img = require("./mkjson");
 
-var imglist = img.getImgList(__dirname + "/../www/img/icon/")
 var urlpath = "/zlj/img/icon/"
 
 function randavatar(img){
-	var length = img.length;
+	var length = img.length - 1;
 	
 	var rand = Math.floor(Math.random() * Math.floor(length));	
 
 	return img[rand]
 }
 
+function randuser(user){
+	var length = user.length - 1;
+	
+	var rand = Math.floor(Math.random() * Math.floor(length));	
+
+	return user[rand]
+}
 
 // login and register user
 exports.login = module.exports.login = function(req,res){
 
+	var imglist = img.getImgList(__dirname + "/../www/img/icon/")
+	var userlist = img.getNick()
 
 	aliyunSMS.checkCode(req,res,function(data){
 		if (data.code != 0 ){
@@ -36,14 +44,18 @@ exports.login = module.exports.login = function(req,res){
 		var hashpw = bcrypt.hashSync(req.body.code)
 
 		var avatar = urlpath + randavatar(imglist)	
+		var nick = randuser(userlist)
 
 		var profile = {
 			phoneNum:req.body.phone,
-			$setOnInsert:{password:hashpw,avatar:avatar}, //only for new user 
+			$setOnInsert:{name:{first:nick},password:hashpw,avatar:avatar}, //only for new user 
 		}	
 
 		U.model.findOneAndUpdate({phoneNum:req.body.phone},profile,{upsert:true,returnNewDocument:true},function(err, updatedObject){
 			 U.model.findOne({phoneNum:req.body.phone},function(err,newU){
+
+				newU.password = ""
+
 			 	keystone.session.signinWithUser(newU, req, res, function () {
                         return res.json(data)
                 })

@@ -15,4 +15,11 @@ function getimglist (pa) {
 	return imglist
 }
 
+function getNick (){
+	var nickdata = fs.readFileSync(__dirname+"/nickname.json")
+	
+	return 	JSON.parse(nickdata).name
+
+}
 exports.getImgList = module.exports.getImgList = getimglist
+exports.getNick = module.exports.getNick = getNick
