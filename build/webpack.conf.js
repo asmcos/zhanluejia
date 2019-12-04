@@ -2,6 +2,7 @@ var path = require('path')
 var projectRoot = path.resolve(__dirname, '../')
 const CopyPlugin = require('copy-webpack-plugin');
 
+
 module.exports = {
   entry:path.resolve(__dirname, './') + '/webpack_entry.js',
   output: {
@@ -21,6 +22,7 @@ module.exports = {
             { from: './node_modules/vue/dist/vue.js',to: '../../public/js/vue.js'},
             { from: './node_modules/swiper/dist/js/swiper.js',to: '../../public/js/swiper.js'},
             { from: './node_modules/swiper/dist/css/swiper.css',to: '../../public/css/swiper.css'},
+            { from: './node_modules/@ckeditor/ckeditor5-build-decoupled-document/build',to: '../../public/js'},
 				
 		], {
             ignore: [
@@ -32,6 +34,10 @@ module.exports = {
             // a watch or webpack-dev-server build. Setting this
             // to `true` copies all files.
             copyUnmodified: true
-        }) //CopyWebpackPlugin
+        }), //CopyWebpackPlugin
+
+
+
+
 	] //plugins
 };

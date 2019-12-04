@@ -42,10 +42,10 @@ exports = module.exports = function (app) {
 
     app.get('/admin/api/unsplashlist', routes.api.unsplashapi);
     app.get('/admin/api/unsplashsearch', routes.api.unsplashapi.search);
- 
+
     app.get('/admin/api/imagelist', routes.api.imageapi);
     app.get('/admin/api/shoplist', routes.api.shop);
-	// use static for admin	
+	// use static for admin
 	app.use('/admin', keystone.express.static(path.join(__dirname, '../admin')))
 
 	//other static ,admin-lte,bootstrap,
@@ -59,6 +59,9 @@ exports = module.exports = function (app) {
     app.get('/views/index', routes.views.index);
     app.get('/views/blog', routes.views.blog);
 
+	//ckeditor
+	app.use('/ckeditor/', keystone.express.static(path.join(__dirname, '../ckeditor')))
+
 	// 微信公众号
 	app.use('/wxmp/', keystone.express.static(path.join(__dirname, '../wxmp/')));
 	app.use('/wxmp/callback', routes.wxmp.api.callback);
@@ -71,7 +74,17 @@ exports = module.exports = function (app) {
 	app.use('/zlj/newcaptcha', routes.zlj.captcha.new);
 	app.use('/zlj/getcode', routes.zlj.captcha.getCode);
 	app.use('/zlj/login', routes.zlj.user.login);
+	app.use('/zlj/my', routes.zlj.user.my);
+    app.use('/zlj/updateuser', routes.zlj.user.updateuser);
 
+	app.use('/zlj/index.html', routes.zlj.html.index);
+	app.use('/zlj/my.html', routes.zlj.html.my);
+    app.use('/zlj/newquestion.html', routes.zlj.html.newquestion);
+    app.use('/zlj/answer.html', routes.zlj.html.answer);
+    app.use('/zlj/uploadimage',routes.zlj.upload.uploadimage);
+
+    //questsion
+    app.use('/zlj/newquestion', routes.zlj.question.create);
+    //answer
+    app.use('/zlj/answer', routes.zlj.answer.create);
 };
-
-

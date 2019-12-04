@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    <title>战略家</title>
+
+<link href="https://cdn.bootcss.com/jquery-jcrop/2.0.4/css/Jcrop.css" rel="stylesheet">
+
+
+
+<body>
+
+
+<div id="myapp" >
+
+	<img v-bind:src="userinfo.avatar" id="preview" style="width:100%; padding:20px;" />
+
+    <p>{{userinfo.nickname}}</p>
+     <form enctype="multipart/form-data" method="POST" lang="zh-cn" id="uploadfile">
+        <div class="weui-uploader__input-box">
+            <input id="uploaderInput" class="weui-uploader__input" type="file" name="upload" accept="image/*" @change="Onchange(this)">
+        </div>
+    </form>
+    <button @click="UploadImage"> 确定 </button>
+
+	<canvas id="myCanvas"  width="500" height="300">     </canvas>
+</div> <!-- id myapp-->
+
+</body>
+   <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/static/js/jquery.fitvids.js?v=0e648b2512"></script>
+
+    <script src="/static/js/vue.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-jcrop/2.0.4/js/Jcrop.js"></script>
+<script>
+$(document).ready(function () {
+  var myVue = new Vue({
+    el: '#myapp',
+	data:{
+	 userinfo: {avatar: '/static/default-img.png',nickname:""},
+
+	  x: 0,
+      y: 0,
+      x2: 0,
+      y2: 0,
+      clip: 0,
+      loadfile: 0,
+
+	},
+
+	created () {
+    	this.getUserInfo()
+  	},
+  	methods: {
+    	getUserInfo () {
+      		var that = this
+			$.ajax({url:"/zlj/my",
+                type: 'GET',
+                success: function(data){
+					console.log(data)
+					that.userinfo.avatar = data.avatar
+					that.userinfo.nickname = data.name.first
+				}
+        	})
+    	},
+		Onchange (f) {
+      		/* eslint-disable */
+      		var that = this
+      		var target = f.target || window.event.srcElement
+      		var reader = new FileReader();
+      		reader.onload = function (e) {
+        		$('#preview').attr('src', e.target.result);
+
+
+    			jQuery(function($) {
+    			  $('#preview').Jcrop({
+    				aspectRatio:1,
+    				minSize:[120,120],
+    				maxSize:[240,240],
+            		onSelect: that.showCoords,
+            		onChange: that.showCoords
+          		  })
+                });
+
+			}
+      		reader.readAsDataURL(target.files[0]);
+
+			this.loadfile = 1
+
+      	/* eslint-enable */
+    	},//onchange
+        UploadImage(){
+             var canvas = document.getElementById('myCanvas');
+             var imgData = canvas.toDataURL();
+
+             console.log(document.getElementById('uploadfile'))
+             const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+             var filename  =document.getElementById('uploadfile')[0].files[0].name
+             $.ajax({url:"/zlj/updateuser",
+                 type: 'POST',
+                 config,
+                 data:{img:imgData,filename:filename},
+                 success: function(data){
+                        console.log(data)
+                 }
+             })
+
+        },
+	  showCoords (c) {
+      	console.log(c)
+      	this.x = c.x
+      	this.y = c.y
+      	this.x2 = c.x2
+      	this.y2 = c.y2
+      	this.clip = 1
+        var w = this.x2 - this.x
+        var h = this.y2 - this.y
+	    var canvas = document.getElementById('myCanvas');
+		var img = document.getElementById('preview')
+		var context = canvas.getContext('2d')
+        canvas.width = w
+        canvas.height = h
+		context.drawImage(img,this.x,this.y,w,h,0,0,w,h)
+       },
+	},//methods
+  })
+console.log(myVue)
+})
+
+
+</script>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+  <head>
+    <meta name="generator" content="Hexo 3.8.0">
+    <title>战略家</title>
+
+    <style>
+    .ck-editor__editable { min-height: 600px; }
+    </style>
+    <body>
+        <div id="myapp">
+        <form action="/zlj/answer" method="POST">
+            <input type=text hidden=true v-model="questionid" name="question">
+
+            <textarea name="content" id="content" rows="20" cols="80">
+
+            </textarea>
+            <button> 确认回答 </button>
+        </form>
+    </div>
+    </body>
+
+
+       <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+        </script>
+        <script type="text/javascript" src="/static/js/jquery.fitvids.js?v=0e648b2512"></script>
+
+        <script src="/static/js/vue.js"></script>
+
+        <script src="/ckeditor/ckeditor.js"></script>
+
+
+        <script>
+
+        function getUrlParam(name){
+
+                var reg=new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r= window.location.search.substr(1).match(reg);
+
+                if(r != null) {
+                    return unescape(r[2]);
+                }
+                return null;
+        }
+
+        $(document).ready(function () {
+          var myVue = new Vue({
+            el: '#myapp',
+        	data:{
+                questionid:""
+            },
+            created () {
+                this.questionid = getUrlParam("questionid")
+            },
+          });// Vue
+
+          CKEDITOR.replace( 'content' ,{
+
+          });
+        })
+
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+
+
+        </script>
+</html>

@@ -31,5 +31,3 @@ Imageupload.add({
 
 Imageupload.defaultColumns = 'image';
 Imageupload.register();
-
-

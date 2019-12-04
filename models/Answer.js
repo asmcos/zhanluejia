@@ -25,13 +25,14 @@ var storage = new keystone.Storage({
 
 
 Answer.add({
+  question: { type: Types.Relationship, ref: 'Question' },
   content:  { type: Types.Html, wysiwyg: true },
   thumbnail: { type:Types.Text }, //image address
   createTime: { type: Types.Date },
   updateTime: { type: Types.Date }, //最后回答的时间
-  tags: {type :Types.Text },  
+  tags: {type :Types.Text },
   author: { type: Types.Relationship, ref: 'User' },
-  hidenStatus: { type: Types.Number }, 
+  hidenStatus: { type: Types.Number },
   commentCount: { type: Types.Number }, //评论数
   likecount: { type:Types.Number } ,//点赞数
 });
@@ -42,5 +43,3 @@ Answer.schema.pre('save', function (next) {
 
 Answer.defaultColumns = 'content';
 Answer.register();
-
-

@@ -1,6 +1,7 @@
 var keystone = require('keystone')
 var aliyunSMS = require('./aliyunSMS')
 var bcrypt = require('bcrypt-nodejs');
+var fs = require('fs')
 
 
 /*
@@ -12,16 +13,16 @@ var urlpath = "/zlj/img/icon/"
 
 function randavatar(img){
 	var length = img.length - 1;
-	
-	var rand = Math.floor(Math.random() * Math.floor(length));	
+
+	var rand = Math.floor(Math.random() * Math.floor(length));
 
 	return img[rand]
 }
 
 function randuser(user){
 	var length = user.length - 1;
-	
-	var rand = Math.floor(Math.random() * Math.floor(length));	
+
+	var rand = Math.floor(Math.random() * Math.floor(length));
 
 	return user[rand]
 }
@@ -40,16 +41,16 @@ exports.login = module.exports.login = function(req,res){
 
 		//登录或者注册
 		var U = keystone.list( "User" )
-	
+
 		var hashpw = bcrypt.hashSync(req.body.code)
 
-		var avatar = urlpath + randavatar(imglist)	
+		var avatar = urlpath + randavatar(imglist)
 		var nick = randuser(userlist)
 
 		var profile = {
 			phoneNum:req.body.phone,
-			$setOnInsert:{name:{first:nick},password:hashpw,avatar:avatar}, //only for new user 
-		}	
+			$setOnInsert:{name:{first:nick},password:hashpw,avatar:avatar}, //only for new user
+		}
 
 		U.model.findOneAndUpdate({phoneNum:req.body.phone},profile,{upsert:true,returnNewDocument:true},function(err, updatedObject){
 			 U.model.findOne({phoneNum:req.body.phone},function(err,newU){
@@ -67,12 +68,46 @@ exports.login = module.exports.login = function(req,res){
 
 }
 exports.register = module.exports.register = function(req,res){
-	
+
 
 }
 
+exports.my = module.exports.my = function(req,res){
+
+	if (req.user){
+		return res.json(req.user)
+	}
+	return res.json({code:0,message:"no login"})
+}
+
+exports.updateuser = module.exports.updateuser = function(req,res){
+
+	if (!req.user){
+		return res.json({code:0,message:"no login"})
+
+	}
+	console.log(req)
+	var uploadpath = __dirname + "/../../public/uploads/"
+	var base64Data = req.body.img.replace(/^data:image\/\w+;base64,/, "");
+	var dataBuffer = new Buffer(base64Data, 'base64');
+	var randname = Math.floor(Math.random() * Math.floor(100)) + "";
+	var filename  = Date.now()+randname+req.body.filename
+	var avatarurl = "/static/uploads/" + filename
+	fs.writeFile(uploadpath+filename, dataBuffer, function(err) {
+		if(err){
+		  res.send(err);
+		}else{
+		  //res.send("保存成功！");
+		  var U = keystone.list( "User" )
+		  U.model.findOneAndUpdate({_id:req.user._id},{avatar:avatarurl},{upsert:true,returnNewDocument:true},function(err, updatedObject){
+			  return res.json(req.user)
+			})
+		}
+	});
 
 
+
+}
 
 
 
@@ -124,5 +159,3 @@ exports.register = module.exports.register = function(req,res){
     });
 
  */
-
-
