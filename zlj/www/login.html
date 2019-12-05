@@ -484,7 +484,7 @@ svg {
 
 					} else {
 						//提示错误信息
-						that.tipes(data.message)	
+						that.tipes(data.message)
 					}
                 },
                 error : function() {
@@ -505,6 +505,7 @@ svg {
                    if (data.code == 0){
 						//验证码正确
 				   	    that.tipes(data.message)
+                        window.location.replace("/zlj/index.html")
                    } else {
 					    //错误信息
 				   	    that.tipes(data.message)

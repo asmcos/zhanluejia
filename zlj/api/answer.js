@@ -31,13 +31,21 @@ function create(req, res) {
       }
       item.createTime = item.updateTime = new Date()
 
-      //item.question = req.body.questionid
-
       answer.updateItem(item,req.body,{},function(err){
           if (err){
               return res.json({code:'-1',message:"save answer error"})
           }
 
+          if (req.user){
+              item.author = req.user
+              item.save(function (err) {
+                  if (err) return res.json(err);
+                  updateQuesionbyNewAnswer(req,res,item,function(){
+                      return res.json({code:0,message:"success"})
+                  })
+              })
+
+          }
           updateQuesionbyNewAnswer(req,res,item,function(){
               return res.json({code:0,message:"success"})
           })

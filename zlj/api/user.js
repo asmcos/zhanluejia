@@ -77,7 +77,7 @@ exports.my = module.exports.my = function(req,res){
 	if (req.user){
 		return res.json(req.user)
 	}
-	return res.json({code:0,message:"no login"})
+	return res.json({code:-1,message:"no login"})
 }
 
 exports.updateuser = module.exports.updateuser = function(req,res){

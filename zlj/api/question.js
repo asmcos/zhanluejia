@@ -26,14 +26,23 @@ function create(req, res) {
       if (thumbnail) {
           item.thumbnail = thumbnail
       }
+
       item.createTime = item.updateTime = new Date()
 
-      question.updateItem(item,req.body,{},function(err){
+      question.updateItem(item,req.body,{author:req.user},function(err){
           if (err){
               return res.json({code:'-1',message:"save question error"})
           }
+          if (req.user){
+              item.author = req.user
+              item.save(function (err) {
+                  if (err) return res.json(err);
+                    return res.json({code:0,message:"success"})
+              })
 
+          }
           return res.json({code:0,message:"success"})
+
       })
 
 }

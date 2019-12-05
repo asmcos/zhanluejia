@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 
 <html lang="zh-CN">
-  <head><meta name="generator" content="Hexo 3.8.0">
+  <head><meta name="generator" content="">
     <title>战略家</title>
 
 <link href="https://cdn.bootcss.com/jquery-jcrop/2.0.4/css/Jcrop.css" rel="stylesheet">
@@ -63,8 +63,12 @@ $(document).ready(function () {
                 type: 'GET',
                 success: function(data){
 					console.log(data)
+                    if (data.code ||data.isAdmin){
+                        window.location.replace("/zlj/login.html")
+                    }
 					that.userinfo.avatar = data.avatar
 					that.userinfo.nickname = data.name.first
+
 				}
         	})
     	},
