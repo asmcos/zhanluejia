@@ -1,0 +1,75 @@
+
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<section id="blog" class="container">
+<div class="blog">
+    <div class="row">
+        <div class="col-md-8"> <!--main-->
+
+            <div class="tab-wrap" v-for= "q in questions">
+            <div class="parrent media-body" >
+                <div class="tab-content">
+                    <div class="tab-pane fade  active in" id="tab1">
+                        <div class="media">
+                           <div class="pull-left">
+                                <img class="img-responsive" v-bind:src="q.thumbnail" style="max-height:240px;">
+                            </div>
+                            <div class="media-body">
+                                 <h2><a v-bind:href="'/zlj/answer.html?questionid='+q._id">{{q.title}}</a></h2>
+                                 <p>{{q.content}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div> <!--/.tab-content-->
+            </div>
+        </div> <!--tab-wrap-->
+
+
+
+
+
+
+        </div> <!-- col-md-8-->
+        <aside class="col-md-4"> <!-- right-->
+        </aside> <!-- col-md-4-->
+    </div> <!--row -->
+</div> <!--blog-->
+
+</section>
+
+{% endblock %}
+
+{% block externjs %}
+<script src="/corlate/js/jquery.prettyPhoto.js"></script>
+<script src="/corlate/js/jquery.isotope.min.js"></script>
+<script src="/corlate/js/main.js"></script>
+<script src="/corlate/js/wow.min.js"></script>
+<script>
+$(document).ready(function () {
+  var myVue = new Vue({
+    el: '#blog',
+	data:{
+        questions:[],
+    },
+    created () {
+    	this.getQuestions()
+  	},
+    methods: {
+        getQuestions(){
+            var that = this
+            $.ajax({url:"/zlj/listquestion",
+                type: 'GET',
+                success: function(data){
+                    that.questions = data
+                }
+            })//ajax
+        },
+    },
+  });
+})
+</script>
+{% endblock %}

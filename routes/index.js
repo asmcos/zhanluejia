@@ -85,6 +85,12 @@ exports = module.exports = function (app) {
 
     //questsion
     app.use('/zlj/newquestion', routes.zlj.question.create);
+    app.get('/zlj/listquestion', routes.zlj.question.list);
+    app.get('/zlj/listanswer', routes.zlj.question.listanswer);
     //answer
     app.use('/zlj/answer', routes.zlj.answer.create);
+
+
+    app.use('/corlate', keystone.express.static(path.join(__dirname, '../theme/corlate')))
+
 };

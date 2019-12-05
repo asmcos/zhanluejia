@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" >
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="applicable-device"content="pc,mobile" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <meta name="description" content="<%= sysconf.description%>">
+  <meta name="keywords" content="<%= sysconf.keywords%>">
+  <title><%= sysconf.title%></title>
+  <!-- Site CSS -->
+  <!-- core CSS -->
+  <link href="/corlate/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/corlate/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/corlate/css/animate.min.css" rel="stylesheet">
+  <link href="/corlate/css/prettyPhoto.css" rel="stylesheet">
+  <link href="/corlate/css/main.css" rel="stylesheet">
+  <link href="/corlate/css/responsive.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="/static/css/site.css">
+
+  {% block head %}
+
+  {% endblock %}
+</head>
+<body class="homepage">
+
+    <header id="header">
+
+
+        <nav class="navbar navbar-inverse" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html"><img src="/static/img/zhanluejia-w.png" alt="logo" style="width:60px;height:60px;"></a>
+                </div>
+
+                <div class="collapse navbar-collapse navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.html">战略家</a></li>
+                        <li><a href="/zlj/newquestion.html">提问</a></li>
+                        <li><a href="/zlj/answer.html">回答</a></li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">热门<i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="blog-item.html">大学生创业</a></li>
+                                <li><a href="pricing.html"> 天使融资 </a></li>
+                                <li><a href="404.html">股权之争</a></li>
+                                <li><a href="shortcodes.html">线下活动</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="blog.html">教程</a></li>
+                        <li><a href="">我的</a></li>
+                    </ul>
+                </div>
+            </div><!--/.container-->
+        </nav><!--/nav-->
+
+    </header><!--/header-->
+
+
+
+
+
+  {% block content %}默认内容{% endblock %}
+
+  <footer id="footer" class="midnight-blue">
+         <div class="container">
+             <div class="row">
+                 <div class="col-sm-6">
+                     &copy; 2019 <a target="_blank" href="" title="">战略家</a>. All Rights Reserved.
+                 </div>
+                 <div class="col-sm-6">
+                     <ul class="pull-right">
+                         <li><a href="#">主页</a></li>
+                         <li><a href="#">关于我们</a></li>
+                         <li><a href="#">问答</a></li>
+                         <li><a href="#">联系我们</a></li>
+                     </ul>
+                 </div>
+             </div>
+         </div>
+     </footer><!--/#footer-->
+
+
+</body>
+<script src="/corlate/js/jquery.js"></script>
+<script src="/corlate/js/bootstrap.min.js"></script>
+ <script type="text/javascript" src="/static/js/jquery.fitvids.js?v=0e648b2512"></script>
+
+ <script src="/static/js/vue.js"></script>
+
+{% block externjs %} {% endblock%}
+</html>

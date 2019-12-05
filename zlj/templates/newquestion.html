@@ -1,31 +1,21 @@
-<!DOCTYPE html>
+{% extends 'layout.html' %}
 
-<html lang="zh-CN">
-  <head><meta name="generator" content="Hexo 3.8.0">
-    <title>战略家</title>
-
-    <style>
-    .ck-editor__editable { min-height: 600px; }
-    </style>
-    <body>
+{% block content %}
         <form action="/zlj/newquestion" method="POST">
-            问题：<input type="text" name="title"></input>
+
+            <div class="input-group">
+              请输入问题：<input type="text" class="form-control"  name="title">
+            </div>
             <textarea name="content" id="content" rows="20" cols="80">
 
             </textarea>
-            <button> 发布问题 </button>
+            <button class="btn btn-primary"> 发布问题 </button>
         </form>
-    </body>
+
+{% endblock %}
 
 
-       <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous">
-        </script>
-        <script type="text/javascript" src="/static/js/jquery.fitvids.js?v=0e648b2512"></script>
-
-        <script src="/static/js/vue.js"></script>
+{% block externjs %}
 
         <script src="/ckeditor/ckeditor.js"></script>
 
@@ -40,4 +30,4 @@
         });
 
         </script>
-</html>
+{% endblock %}

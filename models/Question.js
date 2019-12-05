@@ -34,7 +34,7 @@ Question.add({
   answerCount: { type: Types.Number }, //回答的数目
   tags: {type :Types.Text },
   author: { type: Types.Relationship, ref: 'User' },
-  hidenStatus: { type: Types.Number ,default:1}, //1.正常开放
+  hidenStatus: { type: Types.Number ,default:0}, //0.正常开放,1.隐藏
   isTop: { type:Types.Number,default:0}, //0,未置顶, 1,置顶且排序靠后，2,置顶且排序优先于1
   answers: {type: Types.Relationship, ref: 'Answer' ,many: true}
 });

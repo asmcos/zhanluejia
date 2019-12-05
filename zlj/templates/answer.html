@@ -1,35 +1,65 @@
-<!DOCTYPE html>
+{% extends 'layout.html' %}
 
-<html lang="zh-CN">
-  <head>
-    <meta name="generator" content="Hexo 3.8.0">
-    <title>战略家</title>
+{% block content %}
+<div id="app">
+<section id="blog" class="container">
 
-    <style>
-    .ck-editor__editable { min-height: 600px; }
-    </style>
-    <body>
-        <div id="myapp">
+    <div class="center">
+            <h2>{{question.title}}</h2>
+            <p class="lead"> <div v-html="question.content"></div></p>
+        </div>
+<div class="blog">
+    <div class="row">
+        <div class="col-md-8"> <!--main-->
+
+
+                    <div class="tab-wrap" v-for= "a in question.answers">
+                        <div class="parrent media-body" >
+                            <div class="tab-content">
+                                <div class="tab-pane fade  active in" id="tab1">
+                                    <div class="media">
+                                       <div class="pull-left">
+                                            <img class="img-responsive" v-bind:src="a.thumbnail" style="max-height:240px;">
+                                        </div>
+                                        <div class="media-body">
+
+                                             <p><div v-html="a.content"></div></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div> <!--/.tab-content-->
+                        </div>
+                    </div> <!--tab-wrap-->
+
+
+
+
+
+
+        </div> <!-- col-md-8-->
+        <aside class="col-md-4"> <!-- right-->
+        </aside> <!-- col-md-4-->
+    </div> <!--row -->
+</div> <!--blog-->
+
+</section>
+    <hr>
         <form action="/zlj/answer" method="POST">
             <input type=text hidden=true v-model="questionid" name="question">
 
             <textarea name="content" id="content" rows="20" cols="80">
 
             </textarea>
-            <button> 确认回答 </button>
+            <button  class="btn btn-primary"> 确认回答 </button>
         </form>
-    </div>
-    </body>
+</div>
+{% endblock %}
 
 
-       <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous">
-        </script>
-        <script type="text/javascript" src="/static/js/jquery.fitvids.js?v=0e648b2512"></script>
+{% block externjs %}
 
-        <script src="/static/js/vue.js"></script>
 
         <script src="/ckeditor/ckeditor.js"></script>
 
@@ -49,12 +79,30 @@
 
         $(document).ready(function () {
           var myVue = new Vue({
-            el: '#myapp',
+            el: '#app',
         	data:{
-                questionid:""
+                questionid:"",
+                question:{}
             },
             created () {
                 this.questionid = getUrlParam("questionid")
+
+                if (this.questionid == null){
+                    alert("没有问题？")
+                    window.location.href="/zlj/index.html"
+                }
+                this.getanswers()
+            },
+            methods: {
+                getanswers(){
+                    var that = this
+                    $.ajax({url:"/zlj/listanswer?questionid=" +that.questionid,
+                        type: 'GET',
+                        success: function(data){
+                            that.question = data
+                        }
+                    })//ajax
+                },
             },
           });// Vue
 
@@ -68,4 +116,4 @@
 
 
         </script>
-</html>
+{% endblock %}
