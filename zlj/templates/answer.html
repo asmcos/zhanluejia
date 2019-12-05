@@ -46,8 +46,7 @@
 
 </section>
     <hr>
-        <form action="/zlj/answer" method="POST">
-            <input type=text hidden=true v-model="questionid" name="question">
+        <form  v-on:submit.prevent="sendAnswer">
 
             <textarea name="content" id="content" rows="20" cols="80">
 
@@ -102,6 +101,26 @@
                             that.question = data
                         }
                     })//ajax
+                },
+                sendAnswer () {
+
+                  var content1 =  CKEDITOR.instances.content.getData();
+
+                  var that = this
+                  $.ajax({
+                      type:"POST",
+                      url:"/zlj/answer",
+                      data:{
+                        question:that.questionid,
+                        content: content1
+                        },
+                    success:function(data){
+                        if (data.code == 0){
+                            window.location.reload()
+                        }
+                    }
+                 })
+
                 },
             },
           });// Vue

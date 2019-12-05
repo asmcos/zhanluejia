@@ -1,33 +1,64 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-        <form action="/zlj/newquestion" method="POST">
+<div id="app">
+        <form v-on:submit.prevent="sendQuestion">
 
             <div class="input-group">
-              请输入问题：<input type="text" class="form-control"  name="title">
+              请输入问题：<input type="text" class="form-control"  id="title">
             </div>
             <textarea name="content" id="content" rows="20" cols="80">
 
             </textarea>
             <button class="btn btn-primary"> 发布问题 </button>
         </form>
-
+</div>
 {% endblock %}
 
 
 {% block externjs %}
 
-        <script src="/ckeditor/ckeditor.js"></script>
+    <script src="/ckeditor/ckeditor.js"></script>
 
 
-        <script>
+    <script>
 
 
-        // Replace the <textarea id="editor1"> with a CKEditor
-        // instance, using default configuration.
-        CKEDITOR.replace( 'content' ,{
+        $(document).ready(function () {
+              var myVue = new Vue({
+                el: '#app',
 
-        });
+                methods: {
 
-        </script>
+                    sendQuestion () {
+
+                      var content1 =  CKEDITOR.instances.content.getData();
+                      var title1 = $('#title').val();
+                      var that = this
+                      $.ajax({
+                          type:"POST",
+                          url:"/zlj/newquestion",
+                          data:{
+                            title:title1,
+                            content: content1
+                            },
+                        success:function(data){
+                            if (data.code == 0){
+                                window.location.replace("/zlj/index.html")
+                            }
+                        }
+                      }) //ajax
+
+                    }, //sendQuestion
+                }, //methods
+              });// Vue
+              CKEDITOR.replace( 'content' ,{
+
+              });
+        }) //document
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+
+
+    </script>
 {% endblock %}
