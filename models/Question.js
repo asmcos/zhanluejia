@@ -31,7 +31,7 @@ Question.add({
   type:  { type: Types.Text}, //提问，知识，心得，辩论
   createTime: { type: Types.Date },
   updateTime: { type: Types.Date }, //最后回答的时间
-  answerCount: { type: Types.Number }, //回答的数目
+  answerCount: { type: Types.Number,default:0 }, //回答的数目
   tags: {type :Types.Text },
   author: { type: Types.Relationship, ref: 'User' },
   hidenStatus: { type: Types.Number ,default:0}, //0.正常开放,1.隐藏

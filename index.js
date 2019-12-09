@@ -1,6 +1,7 @@
 
 var keystone = require('keystone');
 
+
 keystone.init({
   'cookie secret': 'zhanluejia is Zhan!',
   'name': 'zhanluejia', // This will also be the name of your database in MongoDB.
@@ -11,8 +12,10 @@ keystone.init({
 
 
 var wxapi = require('./wxmp/wxapi');
-
 global.wxapi = wxapi.wxapi
+
+var redis = require('./redis/index');
+global.redis = redis.redis
 
 keystone.set("signin logo","/static/img/logo.jpg")
 

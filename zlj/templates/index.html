@@ -14,11 +14,12 @@
                     <div class="tab-pane fade  active in" id="tab1">
                         <div class="media">
                            <div class="pull-left">
-                                <img class="img-responsive" v-bind:src="q.thumbnail||'/static/img/avatar2.png'" style="max-height:240px;">
+                                <img class="img-responsive" v-bind:src="q.thumbnail||'/static/img/avatar2.png'" style="max-height:140px;">
                             </div>
                             <div class="media-body">
                                  <h2><a v-bind:href="'/zlj/answer.html?questionid='+q._id">{{q.title}}</a></h2>
-                                 <p>{{q.content}}</p>
+                                 <p>{{q.content|HtmltoText}}</p>
+                                 <p>{{q.answerCount}}</p>
                             </div>
                         </div>
                     </div>
@@ -50,6 +51,7 @@
 <script src="/corlate/js/wow.min.js"></script>
 <script>
 $(document).ready(function () {
+
   var myVue = new Vue({
     el: '#blog',
 	data:{
@@ -70,6 +72,11 @@ $(document).ready(function () {
         },
     },
   });
+
+  function HtmltoText(str){
+      return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+  }
+  Vue.filter('HtmltoText',HtmltoText)
 })
 </script>
 {% endblock %}

@@ -106,7 +106,8 @@ function listanswer(req, res) {
                     .skip(s)
                     .limit(l)
                     .populate({ path: 'answers',
-                        options: {sort: {'updateTime':-1}},
+                        options: {sort: {'updateTime':-1},
+                        limit: 5},
                     })
                     .exec(function (err, questions) {
                         if (err) return res.json(err);

@@ -34,7 +34,8 @@ Answer.add({
   author: { type: Types.Relationship, ref: 'User' },
   hidenStatus: { type: Types.Number },
   commentCount: { type: Types.Number }, //评论数
-  likecount: { type:Types.Number } ,//点赞数
+  likeCount: { type:Types.Number,default:0 } ,//点赞数
+  liked:{ type:Types.Relationship,ref: 'Answerlike' },
 });
 
 Answer.schema.pre('save', function (next) {
@@ -43,3 +44,13 @@ Answer.schema.pre('save', function (next) {
 
 Answer.defaultColumns = 'content';
 Answer.register();
+
+
+var Answerlike = new keystone.List('Answerlike')
+Answerlike.add({
+	user: { type: Types.Relationship, ref: 'User' },
+	createTime: { type: Types.Date, default: Date.now },
+	answer: { type: Types.Relationship, ref: 'Answer' },
+	status: {type:Types.Number,default:0}, //1 点赞， -1，取消
+})
+Answerlike.register();

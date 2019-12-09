@@ -54,32 +54,38 @@ function index (req,res){
 function my (req,res){
 
 
-     var content =  swig.renderFile(temppath + 'my.html', {
+	getData(req,res,function(data){
+        var content =  swig.renderFile(temppath + 'my.html',
+            data
+        );
 
-     });
-
-     res.send(content)
+        res.send(content)
+    })
 }
 
 
 function newquestion (req,res){
 
 
-     var content =  swig.renderFile(temppath + 'newquestion.html', {
+	getData(req,res,function(data){
+        var content =  swig.renderFile(temppath + 'newquestion.html',
+            data
+        );
 
-     });
-
-     res.send(content)
+        res.send(content)
+    })
 }
 
 function answer (req,res){
 
 
-     var content =  swig.renderFile(temppath + 'answer.html', {
+	getData(req,res,function(data){
+        var content =  swig.renderFile(temppath + 'answer.html',
+            data
+        );
 
-     });
-
-     res.send(content)
+        res.send(content)
+    })
 }
 
 
