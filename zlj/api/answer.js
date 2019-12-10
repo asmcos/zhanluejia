@@ -67,33 +67,41 @@ async function like(req, res) {
     var answerid = req.query.answerid
 
 
-    rediscmd.answerlike_hset(req.user._id,answerid)
+
 
     var answer  = keystone.list( "Answer" )
     var like  = keystone.list( "Answerlike" )
+    var count = 1 ;
+
+    //likestatus == 1的时候，count = -1 ,也就是取消点赞
+    //likestatus == null，或者 0的时候 +1,也就是点赞
+    var likestatus = await rediscmd.answerlike_hget (req.user._id,answerid+"")
+
+
+    if( likestatus == 1){
+        count = -1
+        likestatus = -1
+    } else {
+        likestatus = 1
+    }
 
     var updateDocument = {
-        $inc:{"likeCount":1},
+        $inc:{"likeCount":count},
     }
 
-    var likedoc = await like.model.findOne({user:req.user,answer:answerid})
+    rediscmd.answerlike_hset(req.user._id,answerid+"")
 
-
-    if (likedoc){
-        return res.json({code:0,message:"You already liked"})
-    }
-
-    answer.model.findOneAndUpdate({_id:answerid},updateDocument,{},function(err, updatedObject){
+    answer.model.findOneAndUpdate({_id:answerid},updateDocument,{returnNewDocument:true,new:true},function(err, updatedObject){
 
 
             if (err){
                 return res.json({code:-1,message:"update answer err"})
             }
 
-            var l = new like.model({user:req.user,answer:answerid,status:1})
+            var l = new like.model({user:req.user,answer:answerid,status:likestatus})
 
             l.save(function(err){
-                return res.json({code:0,message:"like ok"})
+                return res.json({code:0,message:"like ok",updatedObject})
             })
     })
 

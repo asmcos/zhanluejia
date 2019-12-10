@@ -13,7 +13,7 @@ function answerlike_hset(userid,answerid){
 
     redis.hget(hash,field,function(err,liked){
 
-        if (!liked || liked == 0 ){
+        if (liked != 1 ){
             redis.hset(hash,field,1)
         } else {
             redis.hset(hash,field,0)
@@ -36,7 +36,6 @@ async function answerlike_hmget(userid,answeridlist){
     var hash = "Answerlike"+userid
     var field = answeridlist
 
-
     var liked = await hmgetAsync(hash,field)
 
     return liked
@@ -49,9 +48,8 @@ exports = module.exports={
 }
 /*test*/
 /*answerlike_hset (432,678)
-answerlike_hget (432,678).then((liked)=> {
-    console.log(liked);
-})
+var likestatus = await answerlike_hget (req.user._id,answerid)
+await answerlike_hget (432,678)
 
 answerlike_hmget (432,[678,321]).then((liked)=> {
     console.log(liked);

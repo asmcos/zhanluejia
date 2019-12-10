@@ -1,6 +1,6 @@
 
 var keystone = require('keystone')
-
+var rediscmd =  require('../../redis/command')
 
 var imgUrlFun = function(str){
         var data = '';
@@ -107,11 +107,18 @@ function listanswer(req, res) {
                     .limit(l)
                     .populate({ path: 'answers',
                         options: {sort: {'updateTime':-1},
-                        limit: 5},
+                        limit: 20},
                     })
-                    .exec(function (err, questions) {
+                    .exec(async function (err, question) {
                         if (err) return res.json(err);
-                        res.json(questions)
+                        var userlikes = []
+                        if (req.user){
+                            answerlist = question.answers.map(a => a._id+"")
+                            userlikes = await rediscmd.answerlike_hmget(req.user._id,answerlist)
+
+                        }
+
+                        res.json({question,userlikes})
                     })
 
 }

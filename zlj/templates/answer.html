@@ -13,7 +13,7 @@
         <div class="col-md-8"> <!--main-->
 
 
-                    <div class="tab-wrap" v-for= "a in question.answers">
+                    <div class="tab-wrap" v-for= "(a,index) in question.answers">
                         <div class="parrent media-body" >
                             <div class="tab-content">
                                 <div class="tab-pane fade  active in" id="tab1">
@@ -24,7 +24,7 @@
                                         <div class="media-body">
 
                                              <p><div v-html="a.content"></div></p>
-                                            <p class="btn btn-primary" @click=answerlike(a._id)>{{a.likeCount}}</p>
+                                            <p :class="mylikes[index]?'btn btn-primary':'btn btn-success'"  @click=answerlike(a)>{{a.likeCount|Countfilter}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -82,7 +82,8 @@
             el: '#app',
         	data:{
                 questionid:"",
-                question:{}
+                question:{},
+                mylikes:[]
             },
             created () {
                 this.questionid = getUrlParam("questionid")
@@ -99,15 +100,19 @@
                     $.ajax({url:"/zlj/listanswer?questionid=" +that.questionid,
                         type: 'GET',
                         success: function(data){
-                            that.question = data
+                            that.question = data.question
+                            that.mylikes = data.userlikes
+
                         }
                     })//ajax
                 },
-                answerlike (id) {
-                    $.ajax({url:"/zlj/answerlike?answerid=" +id,
+                answerlike (a) {
+                    var that = this
+                    $.ajax({url:"/zlj/answerlike?answerid=" +a._id,
                         type: 'GET',
                         success: function(data){
-                            console.log(data)
+                            console.log(that)
+                            a.likeCount = data.updatedObject.likeCount
                         }
                     })//ajax
                 },
@@ -141,7 +146,13 @@
 
         // Replace the <textarea id="editor1"> with a CKEditor
         // instance, using default configuration.
-
+        Vue.filter('Countfilter',function(count){
+            if (count < 0){
+                return 0
+            } else {
+                return count
+            }
+        })
 
         </script>
 {% endblock %}
