@@ -2,16 +2,21 @@
 
 {% block content %}
 <div id="app">
-        <form v-on:submit.prevent="sendQuestion">
+        <div class="contentwen container">
 
-            <div class="input-group">
-              请输入问题：<input type="text" class="form-control"  id="title">
+
+        <form v-on:submit.prevent="sendQuestion" style="margin-top: 20px;">
+
+            <div class="input-group" style="width: 100%; margin-bottom: 20px;">
+              <i style="font-style: normal;display: block; float: left;width: 10%; line-height: 30px;">请输入问题：</i><input type="text" class="form-control"  id="title" style="float: left; width: 90%;">
             </div>
             <textarea name="content" id="content" rows="20" cols="80">
 
             </textarea>
-            <button class="btn btn-primary"> 发布问题 </button>
+            <i class="wenzi">分享你的真实观点和经验，通过汇编、洗稿的等方式拼凑的回答将会被折叠</i>
+            <button  class="btn btn-primary" style="float: right"> 确认回答 </button>
         </form>
+        </div>
 </div>
 {% endblock %}
 

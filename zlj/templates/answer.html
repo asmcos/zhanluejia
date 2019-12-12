@@ -1,30 +1,44 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div id="app">
+<div id="app" style="background: #fff">
 <section id="blog" class="container">
 
-    <div class="center">
-            <h2>{{question.title}}</h2>
-            <p class="lead"> <div v-html="question.content"></div></p>
-        </div>
+
 <div class="blog">
     <div class="row">
         <div class="col-md-8"> <!--main-->
+            <div class="center">
+                <h2>{{question.title}}</h2>
+                <!--<p class="lead"> <div v-html="question.content"></div></p>-->
+                <form  v-on:submit.prevent="sendAnswer" style="margin-top: 20px;">
 
+            <textarea name="content" id="content" rows="20" cols="80">
 
+            </textarea>
+                    <i class="wenzi">分享你的真实观点和经验，通过汇编、洗稿的等方式拼凑的回答将会被折叠</i>
+                    <button  class="btn btn-primary" style="float: right"> 确认回答 </button>
+                </form>
+            </div>
+            <h3 class="answer-count-h" v-if="question.answers"><span>{{question.answers.length}}个回答</span></h3>
                     <div class="tab-wrap" v-for= "(a,index) in question.answers">
+                        <div class="huidalist">
+                            <div class="huidalistimg">
+                                <img :src="a.author.avatar" alt="">
+                            </div>
+                            <div class="huidalistinfo">
+                                <span>{{a.author.name.first}}</span>
+                                <span>{{a.createTime}}</span>
+                            </div>
+                        </div>
                         <div class="parrent media-body" >
                             <div class="tab-content">
                                 <div class="tab-pane fade  active in" id="tab1">
                                     <div class="media">
-                                       <div class="pull-left">
-                                            <img class="img-responsive" v-bind:src="a.thumbnail||'/static/img/avatar5.png'" style="max-height:140px;">
-                                        </div>
                                         <div class="media-body">
-
-                                             <p><div v-html="a.content"></div></p>
-                                            <p :class="mylikes[index]?'btn btn-primary':'btn btn-success'"  @click=answerlike(a)>{{a.likeCount|Countfilter}}</p>
+                                            <div v-html="a.content"></div>
+                                            <img class="img-responsive" v-bind:src="a.thumbnail||'/static/img/avatar5.png'" style="max-height:140px;">
+                                            <p :class="mylikes"  @click="answerlike(a)" style="margin-top: 20px;">{{a.likeCount|Countfilter}}赞</p>
                                         </div>
                                     </div>
                                 </div>
@@ -47,13 +61,7 @@
 
 </section>
     <hr>
-        <form  v-on:submit.prevent="sendAnswer">
 
-            <textarea name="content" id="content" rows="20" cols="80">
-
-            </textarea>
-            <button  class="btn btn-primary"> 确认回答 </button>
-        </form>
 </div>
 {% endblock %}
 
@@ -107,7 +115,8 @@
                     })//ajax
                 },
                 answerlike (a) {
-                    var that = this
+                    var that = this;
+                    console.log(a._id);
                     $.ajax({url:"/zlj/answerlike?answerid=" +a._id,
                         type: 'GET',
                         success: function(data){
