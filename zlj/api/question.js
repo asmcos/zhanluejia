@@ -71,7 +71,7 @@ function list(req, res) {
                     .limit(l)
                     .sort('-updateTime')
                     .populate({ path: 'answers',
-                        options: {sort: 'likeCount',
+                        options: {sort: {'likeCount':-1},
                         limit: 1},
                         populate: {path: 'author', select: {'name':1,'avatar':1}}
                     })
