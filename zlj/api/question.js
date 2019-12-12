@@ -70,6 +70,11 @@ function list(req, res) {
                     .skip(s)
                     .limit(l)
                     .sort('-updateTime')
+                    .populate({ path: 'answers',
+                        options: {sort: 'likeCount',
+                        limit: 1},
+                        populate: {path: 'author', select: {'name':1,'avatar':1}}
+                    })
                     .exec(function (err, questions) {
                         if (err) return res.json(err);
                         res.json(questions)
@@ -108,6 +113,7 @@ function listanswer(req, res) {
                     .populate({ path: 'answers',
                         options: {sort: {'updateTime':-1},
                         limit: 20},
+                        populate: {path: 'author',select: {'name':1,'avatar':1}}
                     })
                     .exec(async function (err, question) {
                         if (err) return res.json(err);
