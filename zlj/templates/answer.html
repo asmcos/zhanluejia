@@ -37,7 +37,7 @@
                                     <div class="media">
                                         <div class="media-body">
                                             <div v-html="a.content"></div>
-                                            <img class="img-responsive" v-bind:src="a.thumbnail||'/static/img/avatar5.png'" style="max-height:140px;">
+                                            <!--<img class="img-responsive" v-bind:src="a.thumbnail||'/static/img/avatar5.png'" style="max-height:140px;">-->
                                             <p :class="mylikes"  @click="answerlike(a)" style="margin-top: 20px;">{{a.likeCount|Countfilter}}赞</p>
                                         </div>
                                     </div>
