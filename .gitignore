@@ -1,0 +1,4 @@
+node_modules/
+*.lock
+*.log
+zlj/api/aliconfig.js
