@@ -62,6 +62,9 @@ exports = module.exports = function (app) {
 	//ckeditor
 	app.use('/ckeditor/', keystone.express.static(path.join(__dirname, '../ckeditor')))
 
+    //wangEditor
+    app.use('/wangEditor/',keystone.express.static(path.join(__dirname,'../wangEditor/release/')))
+
 	// 微信公众号
 	app.use('/wxmp/', keystone.express.static(path.join(__dirname, '../wxmp/')));
 	app.use('/wxmp/callback', routes.wxmp.api.callback);
