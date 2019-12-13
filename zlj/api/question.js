@@ -75,9 +75,20 @@ function list(req, res) {
                         limit: 1},
                         populate: {path: 'author', select: {'name':1,'avatar':1}}
                     })
-                    .exec(function (err, questions) {
+                    .exec(async function (err, questions) {
                         if (err) return res.json(err);
-                        res.json(questions)
+
+                        var userlikes = []
+                        if (req.user){
+                            answerlist = questions.map(function(a){                              if (a.answers.length > 0){
+                                    return a.answers[0]._id + ""
+                                }
+                                return "0"
+                            })
+                            userlikes = await rediscmd.answerlike_hmget(req.user._id,answerlist)
+                        }
+
+                        return res.json({questions,userlikes})
                     })
 
 }
@@ -124,7 +135,7 @@ function listanswer(req, res) {
 
                         }
 
-                        res.json({question,userlikes})
+                        return res.json({question,userlikes})
                     })
 
 }

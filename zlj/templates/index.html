@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-8"> <!--main-->
 
-            <div class="tab-wrap" v-for= "q in questions" :key="q.index">
+            <div class="tab-wrap" v-for= "(q,index) in questions">
             <div class="parrent media-body" >
                 <div class="tab-content" style="padding: 0">
                     <div class="tab-pane fade  active in" id="tab1">
@@ -27,9 +27,9 @@
                                 </div>
                             </div>
                             <div :class="mylikes"   style="margin: 0;margin-top: 20px; background: #eee; height: 40px;line-height: 40px;">
-                                <p @click="answerlike(item)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;" class="yiding">
-                                    <img :src="'/static/img/x.png'" alt="" v-if="item.likeCount != 1" class="xinzan">
-                                    <img :src="'/static/img/x1.png'" alt="" class="xinzan" v-else>{{item.likeCount|Countfilter}}个赞
+                                <p @click="answerlike(item,index)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;" class="yiding">
+                                    <img :src="'/static/img/x1.png'" alt="" v-if="mylikes[index]==1" class="xinzan">
+                                    <img :src="'/static/img/x.png'" alt="" class="xinzan" v-else>{{item.likeCount|Countfilter}}个赞
                                 </p>
 
 
@@ -71,6 +71,7 @@ $(document).ready(function () {
     el: '#blog',
 	data:{
         questions:[],
+        mylikes:[],
     },
     created () {
     	this.getQuestions()
@@ -81,14 +82,22 @@ $(document).ready(function () {
             $.ajax({url:"/zlj/listquestion",
                 type: 'GET',
                 success: function(data){
-                    that.questions = data
+                    that.questions = data.questions
+                    that.mylikes = data.userlikes
                     console.log(that.questions)
                 }
             })//ajax
         },
-        answerlike (a) {
+        answerlike (a,index) {
             var that = this;
             console.log(a._id);
+
+            if (that.mylikes[index] == 1){
+                that.mylikes[index] = 0
+            } else {
+                that.mylikes[index] = 1
+            }
+
             $.ajax({url:"/zlj/answerlike?answerid=" +a._id,
                 type: 'GET',
                 success: function(data){
