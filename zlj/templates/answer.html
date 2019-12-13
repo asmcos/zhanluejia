@@ -14,7 +14,7 @@
                 <form  v-on:submit.prevent="sendAnswer" style="margin-top: 20px;">
 
                     <div id="content">
- 
+
                     </div>
                     <i class="wenzi">分享你的真实观点和经验，通过汇编、洗稿的等方式拼凑的回答将会被折叠</i>
                     <button  class="btn btn-primary" style="float: right"> 确认回答 </button>
@@ -38,7 +38,7 @@
                                         <div class="media-body">
                                             <div v-html="a.content"></div>
                                             <!--<img class="img-responsive" v-bind:src="a.thumbnail||'/static/img/avatar5.png'" style="max-height:140px;">-->
-                                            <p :class="mylikes"  @click="answerlike(a)" style="margin-top: 20px;">{{a.likeCount|Countfilter}}赞</p>
+                                            <p :class="mylikes"  @click="answerlike(a)" style="margin-top: 20px; background: #eee; height: 40px;line-height: 40px;"><img :src="'/static/img/x.png'" alt="" v-if="a.likeCount != 1" class="xinzan"><img :src="'/static/img/x1.png'" alt="" class="xinzan" v-else>{{a.likeCount|Countfilter}}个人点赞</p>
                                         </div>
                                     </div>
                                 </div>
