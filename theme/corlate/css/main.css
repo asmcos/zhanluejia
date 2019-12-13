@@ -2596,7 +2596,14 @@ shortcodes page css
   color: #999;
 }
 .contentwen{min-height: calc(100vh - 165px);}
-.xinzan{width: 20px; height: 20px; margin: 0 10px;}
+.xinzan{width: 15px; height: 15px; margin: 0 5px 0 10px;}
+.yiding:hover{color: #999;}
+.tup{width: 100%; margin-top: 14px;}
+.w-e-text {
+  padding: 0 10px;
+  overflow-y: scroll;
+  text-align: left;
+}
 
 
 
