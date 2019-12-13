@@ -26,6 +26,7 @@
 
                                 </div>
                             </div>
+                            <p :class="mylikes"  @click="answerlike(item)" style="margin-top: 20px; background: #eee; height: 40px;line-height: 40px;"><img :src="'/static/img/x.png'" alt="" v-if="item.likeCount != 1" class="xinzan"><img :src="'/static/img/x1.png'" alt="" class="xinzan" v-else>{{item.likeCount|Countfilter}}个人点赞</p>
                         </div>
 
                     </div>
@@ -74,6 +75,17 @@ $(document).ready(function () {
                 success: function(data){
                     that.questions = data
                     console.log(that.questions)
+                }
+            })//ajax
+        },
+        answerlike (a) {
+            var that = this;
+            console.log(a._id);
+            $.ajax({url:"/zlj/answerlike?answerid=" +a._id,
+                type: 'GET',
+                success: function(data){
+                    console.log(that)
+                    a.likeCount = data.updatedObject.likeCount
                 }
             })//ajax
         },
