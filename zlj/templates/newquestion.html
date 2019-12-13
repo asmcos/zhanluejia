@@ -11,7 +11,7 @@
               <i style="font-style: normal;display: block; float: left;width: 10%; line-height: 30px;">请输入问题：</i><input type="text" class="form-control"  id="title" style="float: left; width: 90%;">
             </div>
             <div id="content">
-                <p> </p>
+            
             </div>
 
             </textarea>
@@ -63,11 +63,12 @@
               });// Vue
               var E = window.wangEditor
                var editor = new E('#content')
+               editor.customConfig.uploadFileName = "image"
+               editor.customConfig.uploadImgServer = '/zlj/uploadimage?responseType=json';
 
                editor.create()
-        }) //document
-            // Replace the <textarea id="editor1"> with a CKEditor
-            // instance, using default configuration.
+
+        })
 
 
     </script>

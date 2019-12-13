@@ -14,7 +14,7 @@
                 <form  v-on:submit.prevent="sendAnswer" style="margin-top: 20px;">
 
                     <div id="content">
-                        <p> </p>
+ 
                     </div>
                     <i class="wenzi">分享你的真实观点和经验，通过汇编、洗稿的等方式拼凑的回答将会被折叠</i>
                     <button  class="btn btn-primary" style="float: right"> 确认回答 </button>
@@ -149,13 +149,15 @@
           });// Vue
 
           var E = window.wangEditor
-          var editor = new E('#content')
+          var editor = new E('#content');
 
-          editor.create()
+          editor.customConfig.uploadImgServer = '/zlj/uploadimage?responseType=json';
+          editor.customConfig.uploadFileName = "image"
+          editor.create();
+
         })
 
-        // Replace the <textarea id="editor1"> with a CKEditor
-        // instance, using default configuration.
+
         Vue.filter('Countfilter',function(count){
             if (count < 0){
                 return 0
