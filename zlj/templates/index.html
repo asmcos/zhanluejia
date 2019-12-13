@@ -10,13 +10,13 @@
 
             <div class="tab-wrap" v-for= "q in questions" :key="q.index">
             <div class="parrent media-body" >
-                <div class="tab-content">
+                <div class="tab-content" style="padding: 0">
                     <div class="tab-pane fade  active in" id="tab1">
-                        <h2><a v-bind:href="'/zlj/answer.html?questionid='+q._id">{{q.title}}</a></h2>
-                        <p class="huida">{{q.answerCount}}回答</p>
+                        <h2 style="padding: 0 20px; box-sizing: border-box; margin-top: 20px;"><a v-bind:href="'/zlj/answer.html?questionid='+q._id">{{q.title}}</a></h2>
+                        <p class="huida" style="padding: 0 20px; box-sizing: border-box">{{q.answerCount}}回答</p>
                         <div v-for="item in q.answers" class="anwersuser">
-                           <div class="userinfo"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0">{{item.createTime}}</i>  </div>
-                            <div class="media">
+                           <div class="userinfo" style="padding: 0 20px; box-sizing: border-box"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0">{{item.createTime}}</i>  </div>
+                            <div class="media" style="padding: 0 20px; box-sizing: border-box">
                                 <div class="pull-left" style="width:124px;height:124px; no-repeat center center">
                                     <img class="img-responsive" v-bind:src="q.thumbnail||'/static/img/132465.jpg'" style="width: 190px; height: 124px;margin-left: 10px;">
                                 </div>
@@ -26,7 +26,14 @@
 
                                 </div>
                             </div>
-                            <p :class="mylikes"  @click="answerlike(item)" style="margin-top: 20px; background: #eee; height: 40px;line-height: 40px;"><img :src="'/static/img/x.png'" alt="" v-if="item.likeCount != 1" class="xinzan"><img :src="'/static/img/x1.png'" alt="" class="xinzan" v-else>{{item.likeCount|Countfilter}}个人点赞</p>
+                            <div :class="mylikes"   style="margin: 0;margin-top: 20px; background: #eee; height: 40px;line-height: 40px;">
+                                <p @click="answerlike(item)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;" class="yiding">
+                                    <img :src="'/static/img/x.png'" alt="" v-if="item.likeCount != 1" class="xinzan">
+                                    <img :src="'/static/img/x1.png'" alt="" class="xinzan" v-else>{{item.likeCount|Countfilter}}个赞
+                                </p>
+
+
+                            </div>
                         </div>
 
                     </div>
@@ -43,6 +50,7 @@
 
         </div> <!-- col-md-8-->
         <aside class="col-md-4"> <!-- right-->
+            <img src="/static/img/987654.jpg" alt="" class="tup">
         </aside> <!-- col-md-4-->
     </div> <!--row -->
 </div> <!--blog-->
