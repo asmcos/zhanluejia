@@ -27,6 +27,7 @@ var storage = new keystone.Storage({
 Imageupload.add({
   image: { type: Types.File, storage: storage, collapse:"image" },
   dateTime:{ type: Types.Datetime, default: Date.now } ,
+  status: {type: Number,default:1} //1 正常，0 删除
 });
 
 Imageupload.defaultColumns = 'image';

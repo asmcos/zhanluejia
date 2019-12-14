@@ -81,10 +81,12 @@ exports = module.exports = function (app) {
     app.use('/zlj/updateuser', routes.zlj.user.updateuser);
 
 	app.use('/zlj/index.html', routes.zlj.html.index);
+    app.use('/zlj/gather.html', routes.zlj.html.gather);
 	app.use('/zlj/my.html', routes.zlj.html.my);
     app.use('/zlj/newquestion.html', routes.zlj.html.newquestion);
     app.use('/zlj/answer.html', routes.zlj.html.answer);   //list question and answers
     app.use('/zlj/answers.html', routes.zlj.html.answers); //list all answers
+
     app.use('/zlj/uploadimage',routes.zlj.upload.uploadimage);
 
     //questsion

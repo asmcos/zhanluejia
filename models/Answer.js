@@ -30,12 +30,13 @@ Answer.add({
   thumbnail: { type:Types.Text }, //image address
   createTime: { type: Types.Date },
   updateTime: { type: Types.Date }, //最后回答的时间
-  tags: {type :Types.Text },
+  tags: {type: Types.Relationship, ref: 'Tag' ,many: true},
   author: { type: Types.Relationship, ref: 'User' },
   hidenStatus: { type: Types.Number },
   commentCount: { type: Types.Number }, //评论数
   likeCount: { type:Types.Number,default:0 } ,//点赞数
   liked:{ type:Types.Relationship,ref: 'Answerlike' },
+  status: {type: Number,default:1} //1 正常，0 删除
 });
 
 Answer.schema.pre('save', function (next) {

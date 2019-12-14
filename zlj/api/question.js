@@ -52,10 +52,11 @@ function create(req, res) {
 
 }
 
-function list(req, res) {
+async function list(req, res) {
 
 
     var question  = keystone.list( "Question" )
+    var tag  = keystone.list( "Tag" )
 
     var l = 10
     var s = 0
@@ -70,31 +71,74 @@ function list(req, res) {
     }
     s = parseInt(s)
 
+    var tagname = req.query.tag
 
-      question.model.find()
-                    .skip(s)
-                    .limit(l)
-                    .sort('-updateTime')
-                    .populate({ path: 'answers',
-                        options: {sort: {'likeCount':-1},
-                        limit: 1},
-                        populate: {path: 'author', select: {'name':1,'avatar':1}}
-                    })
-                    .exec(async function (err, questions) {
-                        if (err) return res.json(err);
+    if (tagname){
+        tagname = decodeURI(tagname)
+        var tagid = await tag.model.findOne({name:tagname})
 
-                        var userlikes = []
-                        if (req.user){
-                            answerlist = questions.map(function(a){                              if (a.answers.length > 0){
-                                    return a.answers[0]._id + ""
-                                }
-                                return "0"
-                            })
-                            userlikes = await rediscmd.answerlike_hmget(req.user._id,answerlist)
-                        }
+        // 查找的 标签 不存在
+        if (!tagid){
+            return res.json({questions:[],userlikes:[]})
+        }
 
-                        return res.json({questions,userlikes})
-                    })
+        question.model.find()
+                      .skip(s)
+                      .limit(l)
+                      .populate('tags')
+                      .where('tags').in([tagid])
+                      .sort('-updateTime')
+                      .populate({ path: 'answers',
+                          options: {sort: {'likeCount':-1},
+                          limit: 1},
+                          populate: {path: 'author', select: {'name':1,'avatar':1}}
+                      })
+                      .exec(async function (err, questions) {
+                          if (err) return res.json(err);
+
+                          var userlikes = []
+                          if (req.user && questions.length > 0){
+                              answerlist = questions.map(function(a){                              if (a.answers.length > 0){
+                                      return a.answers[0]._id + ""
+                                  }
+                                  return "0"
+                              })
+                              userlikes = await rediscmd.answerlike_hmget(req.user._id,answerlist)
+                          }
+
+                          return res.json({questions,userlikes})
+                      })
+
+
+    } else {
+        question.model.find()
+                      .skip(s)
+                      .limit(l)
+                      .sort('-updateTime')
+                      .populate({ path: 'answers',
+                          options: {sort: {'likeCount':-1},
+                          limit: 1},
+                          populate: {path: 'author', select: {'name':1,'avatar':1}}
+                      })
+                      .exec(async function (err, questions) {
+                          if (err) return res.json(err);
+
+                          var userlikes = []
+                          if (req.user&& questions.length > 0){
+                              answerlist = questions.map(function(a){                              if (a.answers.length > 0){
+                                      return a.answers[0]._id + ""
+                                  }
+                                  return "0"
+                              })
+                              userlikes = await rediscmd.answerlike_hmget(req.user._id,answerlist)
+                          }
+
+                          return res.json({questions,userlikes})
+                      })
+
+    }
+
+
 
 }
 

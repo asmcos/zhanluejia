@@ -20,6 +20,7 @@ User.add({
 	score:{ type:Types.Number,default:0}, //用户积分
 	intro:{ type:Types.Text }, //介绍
 	levelnick:{type:Types.Text},//等级昵称
+	status: {type: Number,default:1} //1 正常，0 被封
 }, 'Permissions', {
 	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true },
 });

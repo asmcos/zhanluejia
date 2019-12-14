@@ -2605,8 +2605,12 @@ shortcodes page css
   text-align: left;
 }
 
-
-
-
-
-
+.w-e-text blockquote {
+    display: block;
+    border-left: 8px solid #f1053e;
+    padding: 5px 10px;
+    margin: 10px 0;
+    line-height: 1.4;
+    font-size: 100%;
+    background-color: #f1f1f1;
+}

@@ -32,11 +32,12 @@ Question.add({
   createTime: { type: Types.Date },
   updateTime: { type: Types.Date }, //最后回答的时间
   answerCount: { type: Types.Number,default:0 }, //回答的数目
-  tags: {type :Types.Text },
+  tags: {type: Types.Relationship, ref: 'Tag' ,many: true},
   author: { type: Types.Relationship, ref: 'User' },
   hidenStatus: { type: Types.Number ,default:0}, //0.正常开放,1.隐藏
   isTop: { type:Types.Number,default:0}, //0,未置顶, 1,置顶且排序靠后，2,置顶且排序优先于1
-  answers: {type: Types.Relationship, ref: 'Answer' ,many: true}
+  answers: {type: Types.Relationship, ref: 'Answer' ,many: true},
+  status: {type: Number,default:1} //1 正常，0 删除
 });
 
 Question.schema.pre('save', function (next) {
