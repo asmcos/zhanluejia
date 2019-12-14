@@ -17,6 +17,11 @@ var imgUrlFun = function(str){
 function create(req, res) {
 
 
+    if (!req.user){
+        return res.json({code:-1,message:"Your need login"})
+    }
+
+
       var question  = keystone.list( "Question" )
 
       thumbnail = imgUrlFun(req.body.content)

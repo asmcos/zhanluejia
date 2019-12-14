@@ -1,0 +1,148 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div id="app">
+<section id="blog" class="container">
+
+
+<div class="blog">
+    <div class="row">
+        <div class="col-md-8"> <!--main-->
+
+
+                    <div class="tab-wrap" v-for= "(a,index) in answers">
+                        <div class="huidalist" style="padding: 20px">
+                            <div class="huidalistimg">
+                                <img :src="a.author.avatar" alt="">
+                            </div>
+                            <div class="huidalistinfo">
+                                <span>{{a.author.name.first}}</span>
+                                <span>{{a.createTime}}</span>
+                            </div>
+                        </div>
+                        <div class="parrent media-body"  >
+                            <div class="tab-content" style="padding: 0;">
+                                <div class="tab-pane fade  active in" id="tab1">
+                                    <div class="media" style="padding: 0 20px; box-sizing: border-box;overflow: hidden">
+                                        <div class="media-body" >
+                                            <div v-html="a.content" ></div>
+                                            <!--<img class="img-responsive" v-bind:src="a.thumbnail||'/static/img/avatar5.png'" style="max-height:140px;">-->
+
+                                        </div>
+
+                                    </div>
+                                    <div :class="mylikes"   style="margin: 0;margin-top: 20px; background: #eee; height: 40px;line-height: 40px;">
+                                        <p @click="answerlike(a,index)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;" class="yiding">
+                                            <img :src="'/static/img/x1.png'" alt="" v-if="mylikes[index]==1" class="xinzan">
+                                            <img :src="'/static/img/x.png'" alt="" class="xinzan" v-else>{{a.likeCount|Countfilter}}个赞
+                                        </p>
+
+
+                                    </div>
+                                </div>
+
+
+                            </div> <!--/.tab-content-->
+                        </div>
+                    </div> <!--tab-wrap-->
+
+
+
+
+
+
+        </div> <!-- col-md-8-->
+        <aside class="col-md-4"> <!-- right-->
+            <img src="/static/img/987654.jpg" alt="" class="tup" style="margin-top: 80px;">
+        </aside> <!-- col-md-4-->
+    </div> <!--row -->
+</div> <!--blog-->
+
+</section>
+    <hr>
+
+</div>
+{% endblock %}
+
+
+{% block externjs %}
+
+
+
+
+        <script>
+
+        function getUrlParam(name){
+
+                var reg=new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r= window.location.search.substr(1).match(reg);
+
+                if(r != null) {
+                    return unescape(r[2]);
+                }
+                return null;
+        }
+
+        $(document).ready(function () {
+          var myVue = new Vue({
+            el: '#app',
+        	data:{
+
+                answers:[],
+                mylikes:[]
+            },
+            created () {
+                this.getanswers()
+            },
+            methods: {
+                getanswers(){
+                    var that = this
+                    $.ajax({url:"/zlj/answers",
+                        type: 'GET',
+                        success: function(data){
+                            that.answers = data.answers
+                            that.mylikes = data.userlikes
+
+                        }
+                    })//ajax
+                },
+                answerlike (a,index) {
+                    var that = this;
+                    console.log(a._id);
+                    if (that.mylikes[index] == 1){
+                        that.mylikes[index] = 0
+                    } else {
+                        that.mylikes[index] = 1
+                    }
+                    $.ajax({url:"/zlj/answerlike?answerid=" +a._id,
+                        type: 'GET',
+                        success: function(data){
+                            console.log(that)
+                            a.likeCount = data.updatedObject.likeCount
+                        }
+                    })//ajax
+                },
+
+            },
+          });// Vue
+
+          var E = window.wangEditor
+          var editor = new E('#content');
+
+          editor.customConfig.uploadImgServer = '/zlj/uploadimage?responseType=json';
+          editor.customConfig.uploadFileName = "image"
+          editor.create();
+
+        })
+
+
+        Vue.filter('Countfilter',function(count){
+            if (count < 0){
+                return 0
+            } else {
+                return count
+            }
+        })
+
+        </script>
+{% endblock %}

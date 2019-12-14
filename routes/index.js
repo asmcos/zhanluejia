@@ -83,7 +83,8 @@ exports = module.exports = function (app) {
 	app.use('/zlj/index.html', routes.zlj.html.index);
 	app.use('/zlj/my.html', routes.zlj.html.my);
     app.use('/zlj/newquestion.html', routes.zlj.html.newquestion);
-    app.use('/zlj/answer.html', routes.zlj.html.answer);
+    app.use('/zlj/answer.html', routes.zlj.html.answer);   //list question and answers
+    app.use('/zlj/answers.html', routes.zlj.html.answers); //list all answers
     app.use('/zlj/uploadimage',routes.zlj.upload.uploadimage);
 
     //questsion
@@ -92,6 +93,7 @@ exports = module.exports = function (app) {
     app.get('/zlj/listanswer', routes.zlj.question.listanswer);
     //answer
     app.use('/zlj/answer', routes.zlj.answer.create);
+    app.use('/zlj/answers', routes.zlj.answer.list);
     app.use('/zlj/answerlike', routes.zlj.answer.like); //点赞
 
 

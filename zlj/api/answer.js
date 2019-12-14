@@ -22,6 +22,10 @@ function create(req, res) {
 
       var answer  = keystone.list( "Answer" )
 
+      if (!req.user){
+          return res.json({code:-1,message:"Your need login"})
+      }
+
       thumbnail = imgUrlFun(req.body.content)
 
       var item = answer.model()
@@ -51,6 +55,42 @@ function create(req, res) {
 
       })
 
+
+}
+
+function list(req,res){
+    var answer  = keystone.list( "Answer" )
+
+    var l = 10
+    var s = 0
+    if (req.query.limit){
+      l = req.query.limit
+    }
+
+    l = parseInt(l)
+
+    if (req.query.skip){
+      s = req.query.skip
+    }
+    s = parseInt(s)
+
+    answer.model.find()
+                .skip(s)
+                .limit(l)
+                .sort('-updateTime')
+                .populate({path: 'author', select: {'name':1,'avatar':1}})
+                .exec(async function (err, answers) {
+                    if (err) return res.json(err);
+                    var userlikes = []
+                    if (req.user){
+                        answerlist = answers.map(function(a){
+                            return a._id + ""
+                        })
+                        userlikes = await rediscmd.answerlike_hmget(req.user._id,answerlist)
+                    }
+
+                    return res.json({answers,userlikes})
+                })
 
 }
 
@@ -110,6 +150,7 @@ async function like(req, res) {
 
 module.exports = {
 	create:create,
+    list:list,
     like:like,
 
 }
