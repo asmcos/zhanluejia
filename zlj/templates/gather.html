@@ -66,6 +66,16 @@
 <script src="/corlate/js/wow.min.js"></script>
 <script>
 $(document).ready(function () {
+    function getUrlParam(name){
+
+            var reg=new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r= window.location.search.substr(1).match(reg);
+
+            if(r != null) {
+                return r[2];
+            }
+            return null;
+    }
 
   var myVue = new Vue({
     el: '#blog',
@@ -78,8 +88,10 @@ $(document).ready(function () {
   	},
     methods: {
         getQuestions(){
+            var tag = decodeURI(getUrlParam("tag"))
+
             var that = this
-            $.ajax({url:"/zlj/listquestion",
+            $.ajax({url:"/zlj/listquestion?tag="+tag,
                 type: 'GET',
                 success: function(data){
                     that.questions = data.questions
