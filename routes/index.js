@@ -54,7 +54,7 @@ exports = module.exports = function (app) {
 
 	//client app routers
 	app.use('/js/', keystone.express.static(path.join(__dirname, '../app/js')))
-	app.use('/', keystone.express.static(path.join(__dirname, '../app/theme/blog')))
+	/*app.use('/', keystone.express.static(path.join(__dirname, '../app/theme/blog')))*/
 	app.use('/shop/', keystone.express.static(path.join(__dirname, '../app/theme/shop')))
     app.get('/views/index', routes.views.index);
     app.get('/views/blog', routes.views.blog);
@@ -81,6 +81,7 @@ exports = module.exports = function (app) {
     app.use('/zlj/updateuser', routes.zlj.user.updateuser);
     app.use('/zlj/uploadavatar', routes.zlj.user.uploadavatar);
 
+    app.use('/index.html', routes.zlj.html.index);
 	app.use('/zlj/index.html', routes.zlj.html.index);
     app.use('/zlj/gather.html', routes.zlj.html.gather);
 	app.use('/zlj/my.html', routes.zlj.html.my);
