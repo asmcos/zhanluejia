@@ -1,44 +1,69 @@
-
-<!DOCTYPE html>
-
-<html lang="zh-CN">
-  <head><meta name="generator" content="">
-    <title>战略家</title>
-
+{% extends 'layout.html' %}
+{% block head %}
 <link href="https://cdn.bootcss.com/jquery-jcrop/2.0.4/css/Jcrop.css" rel="stylesheet">
 
 
+{% endblock %}
+{% block content %}
 
-<body>
+<div id="myapp">
+    <div class="contentwen container">
 
 
-<div id="myapp" >
 
-	<img v-bind:src="userinfo.avatar" id="preview" style="width:100%; padding:20px;" />
 
-    <p>{{userinfo.nickname}}</p>
-     <form enctype="multipart/form-data" method="POST" lang="zh-cn" id="uploadfile">
-        <div class="weui-uploader__input-box">
-            <input id="uploaderInput" class="weui-uploader__input" type="file" name="upload" accept="image/*" @change="Onchange(this)">
+         <form enctype="multipart/form-data" method="POST" lang="zh-cn" id="uploadfile">
+            <div class="weui-uploader__input-box" style="padding:10px;">
+                <label  class="btn btn-default" for="uploaderInput">    	<img v-bind:src="userinfo.avatar"  style="max-width:100%; padding:20px;" /></label>
+                <input id="uploaderInput" class="weui-uploader__input" type="file" name="upload"  style="display:none;" accept="image/*" @change="Onchange(this)">
+            </div>
+        </form>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="padding:10px;"> </span>
+            </div>
+            <input type="text" class="form-control" placeholder="Username" v-model="userinfo.nickname">
         </div>
-    </form>
-    <button @click="UploadImage"> 确定 </button>
 
-	<canvas id="myCanvas"  width="500" height="300">     </canvas>
+
+    	<canvas id="myCanvas"  width="500" height="300" style="display:none;">     </canvas>
+        <button @click="updateuser" class="btn btn-primary" > 修改用户资料 </button>
+    </div>
+
+
+
+<div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"> 裁剪头像</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <img id="preview1" style="max-width:100%; padding:20px;"  />
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        <button @click="UploadImage" class="btn btn-primary" > 确认上传 </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div> <!-- id myapp-->
 
-</body>
-   <script
-        src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous">
-    </script>
-    <script type="text/javascript" src="/static/js/jquery.fitvids.js?v=0e648b2512"></script>
+{%endblock%}
 
-    <script src="/static/js/vue.js"></script>
+{% block externjs %}
+
     <script src="https://cdn.bootcss.com/jquery-jcrop/2.0.4/js/Jcrop.js"></script>
 <script>
 $(document).ready(function () {
+    $("#modifyinfo").hide()
   var myVue = new Vue({
     el: '#myapp',
 	data:{
@@ -78,11 +103,12 @@ $(document).ready(function () {
       		var target = f.target || window.event.srcElement
       		var reader = new FileReader();
       		reader.onload = function (e) {
-        		$('#preview').attr('src', e.target.result);
-
+        		$('#preview1').attr('src', e.target.result);
+                $("#modifyinfo").show()
+                $('#mymodal').modal('show')
 
     			jQuery(function($) {
-    			  $('#preview').Jcrop({
+    			  $('#preview1').Jcrop({
     				aspectRatio:1,
     				minSize:[120,120],
     				maxSize:[240,240],
@@ -101,19 +127,31 @@ $(document).ready(function () {
         UploadImage(){
              var canvas = document.getElementById('myCanvas');
              var imgData = canvas.toDataURL();
+             var that = this
 
-             console.log(document.getElementById('uploadfile'))
              const config = { headers: { 'Content-Type': 'multipart/form-data' } };
              var filename  =document.getElementById('uploadfile')[0].files[0].name
-             $.ajax({url:"/zlj/updateuser",
+             $.ajax({url:"/zlj/uploadavatar",
                  type: 'POST',
                  config,
                  data:{img:imgData,filename:filename},
                  success: function(data){
-                        console.log(data)
+                        that.userinfo.avatar = data.avatarurl
+                        $('#mymodal').modal('hide')
                  }
              })
 
+        },
+        updateuser(){
+                var that = this
+                $.ajax({url:"/zlj/updateuser",
+                    type: 'POST',
+                    data:{avatarurl:that.userinfo.avatar,firstname:that.userinfo.nickname},
+                    success: function(data){
+                           console.log(data)
+                           alert("修改完成")
+                    }
+                })
         },
 	  showCoords (c) {
       	console.log(c)
@@ -125,7 +163,7 @@ $(document).ready(function () {
         var w = this.x2 - this.x
         var h = this.y2 - this.y
 	    var canvas = document.getElementById('myCanvas');
-		var img = document.getElementById('preview')
+		var img = document.getElementById('preview1')
 		var context = canvas.getContext('2d')
         canvas.width = w
         canvas.height = h
@@ -135,7 +173,5 @@ $(document).ready(function () {
   })
 console.log(myVue)
 })
-
-
 </script>
-</html>
+{%endblock%}

@@ -79,6 +79,7 @@ exports = module.exports = function (app) {
 	app.use('/zlj/login', routes.zlj.user.login);
 	app.use('/zlj/my', routes.zlj.user.my);
     app.use('/zlj/updateuser', routes.zlj.user.updateuser);
+    app.use('/zlj/uploadavatar', routes.zlj.user.uploadavatar);
 
 	app.use('/zlj/index.html', routes.zlj.html.index);
     app.use('/zlj/gather.html', routes.zlj.html.gather);

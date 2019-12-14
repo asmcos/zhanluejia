@@ -80,7 +80,7 @@ exports.my = module.exports.my = function(req,res){
 	return res.json({code:-1,message:"no login"})
 }
 
-exports.updateuser = module.exports.updateuser = function(req,res){
+exports.uploadavatar = module.exports.uploadavatar = function(req,res){
 
 	if (!req.user){
 		return res.json({code:0,message:"no login"})
@@ -95,22 +95,34 @@ exports.updateuser = module.exports.updateuser = function(req,res){
 	var avatarurl = "/static/uploads/" + filename
 	fs.writeFile(uploadpath+filename, dataBuffer, function(err) {
 		if(err){
-		  res.send(err);
-		}else{
-		  //res.send("保存成功！");
-		  var U = keystone.list( "User" )
-		  U.model.findOneAndUpdate({_id:req.user._id},{avatar:avatarurl},{upsert:true,returnNewDocument:true},function(err, updatedObject){
-			  return res.json(req.user)
-			})
+		  return res.send(err);
 		}
+
+		return res.json({avatarurl:avatarurl})
+
+
 	});
-
-
 
 }
 
+exports.updateuser = module.exports.updateuser = function(req,res){
 
+	if (!req.user){
+		return res.json({code:0,message:"no login"})
+	}
 
+	var U = keystone.list( "User" )
+
+	var userinfo = {
+		avatar:req.body.avatarurl,
+		name:{first:req.body.firstname}
+	}
+
+	U.model.findOneAndUpdate({_id:req.user._id},userinfo,{upsert:true,returnNewDocument:true},function(err, updatedObject){
+		return res.json(req.user)
+	  })
+
+}
 /*
     name: { type: Types.Name, required: true, index: true }, //firstname is weapp nickname
     email: { type: Types.Email, initial: true, required: true },
