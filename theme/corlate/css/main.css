@@ -2614,3 +2614,52 @@ shortcodes page css
     font-size: 100%;
     background-color: #f1f1f1;
 }
+@media (max-width: 640px){
+  body > section {
+    padding: 0px 0;
+    min-height: calc(100vh - 165px);
+  }
+  .tab-wrap .media .pull-left {
+    clear: both;
+    width: 30% !important;
+    height: auto !important;
+    margin-right: 0 !important;
+    overflow: hidden;
+  }
+  .tab-wrap .media .pull-left img{
+    clear: both;
+    width: 100% !important;
+    height: 100% !important;
+    margin-left: 0 !important;
+  }
+  .tab-wrap .media .media-body {
+   width: 68%;
+    clear: none !important;
+  }
+  .input-group i{
+    font-style: normal;
+    display: block;
+    float: left;
+    width: 25% !important;
+    line-height: 30px;
+  }
+  .input-group input{
+    width: 75% !important;
+  }
+  .wenzi {
+    font-size: 14px;
+    color: #999;
+    height: 34px;
+    line-height: 32px !important;
+    font-style: normal;
+    text-align: left !important;
+    float: left;
+  }
+
+  .media-body p img{
+    width: 100% !important;
+    height: auto !important;
+  }
+
+}
+
