@@ -6,6 +6,7 @@ const hmgetAsync = promisify(redis.hmget).bind(redis);
 
 /*
     answerlike:"Answerlike" + userid (hash)| answerid (field)= like status 0 or 1
+    commentlike:"Commentlike" + userid (hash)| answerid (field)= like status 0 or 1
 */
 function answerlike_hset(userid,answerid){
     var hash = "Answerlike"+userid
@@ -41,10 +42,50 @@ async function answerlike_hmget(userid,answeridlist){
     return liked
 }
 
+
+
+function commentlike_hset(userid,commentid){
+    var hash = "Commentlike"+userid
+    var field = commentid
+
+    redis.hget(hash,field,function(err,liked){
+
+        if (liked != 1 ){
+            redis.hset(hash,field,1)
+        } else {
+            redis.hset(hash,field,0)
+        }
+    })
+
+}
+
+async function commentlike_hget(userid,commentid){
+    var hash = "Commentlike"+userid
+    var field = commentid
+
+
+    var liked = await hgetAsync(hash,field)
+
+    return liked
+}
+
+async function commentlike_hmget(userid,commentidlist){
+    var hash = "Commentlike"+userid
+    var field = commentidlist
+
+    var liked = await hmgetAsync(hash,field)
+
+    return liked
+}
+
+
 exports = module.exports={
     answerlike_hset:answerlike_hset,
     answerlike_hget:answerlike_hget,
     answerlike_hmget:answerlike_hmget,
+    commentlike_hset:commentlike_hset,
+    commentlike_hget:commentlike_hget,
+    commentlike_hmget:commentlike_hmget,
 }
 /*test*/
 /*answerlike_hset (432,678)

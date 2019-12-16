@@ -148,9 +148,28 @@ async function like(req, res) {
 }
 
 
+
+function updateAnswerbyNewComment(req,res,comment,callback){
+    var answer  = keystone.list( "Answer" )
+    var updateDocument = {
+        $inc:{"commentCount":1},
+        updateTime: new Date(),
+        $push:{"comments":comment},
+    }
+    answer.model.findOneAndUpdate({_id:comment.answer},updateDocument,{},function(err, updatedObject){
+            if (err){
+                return res.json({code:-1,message:"update answer err"})
+            }
+
+            callback()
+    })
+}
+
+
 module.exports = {
 	create:create,
     list:list,
     like:like,
+    updateAnswerbyNewComment:updateAnswerbyNewComment,
 
 }

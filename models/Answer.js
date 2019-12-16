@@ -34,6 +34,7 @@ Answer.add({
   author: { type: Types.Relationship, ref: 'User' },
   hidenStatus: { type: Types.Number },
   commentCount: { type: Types.Number }, //评论数
+  comments: {type:Types.Relationship,ref:'Comment',many:true},
   likeCount: { type:Types.Number,default:0 } ,//点赞数
   liked:{ type:Types.Relationship,ref: 'Answerlike' },
   status: {type: Number,default:1} //1 正常，0 删除
