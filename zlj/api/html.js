@@ -27,7 +27,18 @@ function getsysconf(data,cb){
 }
 
 function getData(req,res,setData) {
-    var data = {}
+    var data = {
+
+	}
+	if (req.user){
+		var user = {
+			id:req.user._id+"",
+			name:req.user.name.first,
+			avatar:req.user.avatar
+		}
+
+		data.user = user
+	}
     async.parallel([
 
         function(callback){
@@ -42,6 +53,7 @@ function getData(req,res,setData) {
 function index (req,res){
 
     getData(req,res,function(data){
+		
         var content =  swig.renderFile(temppath + 'index.html',
             data
         );

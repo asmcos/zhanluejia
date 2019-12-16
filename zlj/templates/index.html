@@ -82,7 +82,8 @@ $(document).ready(function () {
 	data:{
         questions:[],
         mylikes:[],
-        loading:1
+        loading:1,
+        user:{'id':'<%= user.id%>','avatar':'<%=user.avatar%>','name':'<%=user.name%>',}, //swig templates by express
     },
     created () {
     	this.getQuestions()

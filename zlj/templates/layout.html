@@ -58,7 +58,11 @@
                             </ul>
                         </li>
                         <li><a href="/zlj/gather.html?tag=教程">教程</a></li>
+                        {%if user%}
                         <li><a href="/zlj/my.html">我的</a></li>
+                        {%else%}
+                        <li><a href="/zlj/login.html">登录/注册</a></li>
+                        {%endif%}
                     </ul>
                 </div>
             </div><!--/.container-->
