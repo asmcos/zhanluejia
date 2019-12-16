@@ -43,10 +43,10 @@
 
                                     </div>
                                     <div :class="mylikes"   style="margin: 0;margin-top: 20px; background: #eee; height: 40px;line-height: 40px;">
-                                        <p @click="answerlike(a,index)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;" class="yiding">
+                                        <div @click="answerlike(a,index)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;" class="yiding">
                                             <img :src="'/static/img/x1.png'" alt="" v-if="mylikes[index]==1" class="xinzan">
                                             <img :src="'/static/img/x.png'" alt="" class="xinzan" v-else>{{a.likeCount|Countfilter}}个赞
-                                        </p>
+                                        </div>
 
 
                                     </div>
