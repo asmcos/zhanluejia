@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="white">
     <meta name="format-detection" content="telephone=no">
+	<link href="/corlate/css/animation.css" rel="stylesheet">
     <title>战略家</title>
     <style>
         body{padding: 0; margin: 0}
@@ -298,7 +299,7 @@ svg {
 }
 		.tip_box{width:80%; height:40px; background:#000; display:block; margin:0 auto; border-radius:30px; color:#fff; line-height:40px; text-align:center;}
     </style>
-    <body>
+    <body style="background: #fff !important;">
 		<div id="Login">
 		<img src="/zlj/img/logo.jpg" class="imgLogin">
 			<div class="wendaLoginBox">
@@ -364,6 +365,16 @@ svg {
 				</div>
 
 			</div>
+			<div class="loader" style="background: #fff; z-index: 99999;margin: 0; width: 100%; height: 100%; position: fixed; left: 0; top: 0" v-if="loading==1">
+
+				<div class="loading-2">
+					<i></i>
+					<i></i>
+					<i></i>
+					<i></i>
+					<i></i>
+				</div>
+			</div>
 		</div>
 
     </body>
@@ -409,13 +420,16 @@ svg {
 		  loginphonecode:'',
 
 		  phoneid:'', //from server
+		loading:1
     },
     beforeCreate: function(){
     },
     mounted: function(){
       var that = this;
-
-
+      console.log(99)
+      setTimeout(function(){
+		  that.loading=0
+	  },3000)
     },
     methods: {
 		sendcode(){

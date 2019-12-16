@@ -68,7 +68,16 @@
         </aside> <!-- col-md-4-->
     </div> <!--row -->
 </div> <!--blog-->
+    <div class="loader" style="background: #fff; z-index: 99999;margin: 0;" v-if="loading==1">
 
+        <div class="loading-2">
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+        </div>
+    </div>
 </section>
     <hr>
 
@@ -101,7 +110,8 @@
         	data:{
                 questionid:"",
                 question:{},
-                mylikes:[]
+                mylikes:[],
+                loading:1
             },
             created () {
                 this.questionid = getUrlParam("questionid")
@@ -120,7 +130,7 @@
                         success: function(data){
                             that.question = data.question
                             that.mylikes = data.userlikes
-
+                            that.loading=0
                         }
                     })//ajax
                 },

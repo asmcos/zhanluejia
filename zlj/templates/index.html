@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<section id="blog" class="container">
+<section id="blog" class="container" style="padding: 20px 0">
 <div class="blog">
     <div class="row">
         <div class="col-md-8"> <!--main-->
@@ -27,10 +27,10 @@
                                 </div>
                             </div>
                             <div :class="mylikes"   style="margin: 0;margin-top: 20px; background: #eee; height: 40px;line-height: 40px;">
-                                <p @click="answerlike(item,index)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;" class="yiding">
+                                <div @click="answerlike(item,index)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;" class="yiding">
                                     <img :src="'/static/img/x1.png'" alt="" v-if="mylikes[index]==1" class="xinzan">
                                     <img :src="'/static/img/x.png'" alt="" class="xinzan" v-else>{{item.likeCount|Countfilter}}个赞
-                                </p>
+                                </div>
 
 
                             </div>
@@ -54,8 +54,18 @@
         </aside> <!-- col-md-4-->
     </div> <!--row -->
 </div> <!--blog-->
+    <div class="loader" style="background: #fff; z-index: 99999;margin: 0;" v-if="loading==1">
 
+        <div class="loading-2">
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+        </div>
+    </div>
 </section>
+
 
 {% endblock %}
 
@@ -72,6 +82,7 @@ $(document).ready(function () {
 	data:{
         questions:[],
         mylikes:[],
+        loading:1
     },
     created () {
     	this.getQuestions()
@@ -84,7 +95,8 @@ $(document).ready(function () {
                 success: function(data){
                     that.questions = data.questions
                     that.mylikes = data.userlikes
-                    console.log(that.questions)
+                    console.log(that.questions);
+                    that.loading=0
                 }
             })//ajax
         },
