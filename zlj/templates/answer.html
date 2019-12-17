@@ -57,9 +57,9 @@
                                     <div class="pl_content" v-if="1">
                                         <div class="item-list" v-if="user">
                                             <div class="item-list-avatar"><img :src="user.avatar" alt=""></div>
-                                            <div class="item-list-content" @click="sendComment(a)">
+                                            <div class="item-list-content" >
                                                 <input data-node="comment-edit" name="name" placeholder="写下你的评论..." rows="8" :id="'writecomment'+a._id" ></input>
-                                                <div class="fabiao">
+                                                <div class="fabiao" @click="sendComment(a)">
                                                     <span>发表</span>
                                                 </div>
                                             </div>
@@ -162,7 +162,7 @@
                     var that = this;
                     if (a.commentLoad == 1){
                         a.commentLoad = 0
-                        return 
+                        return
                     }
                     $.ajax({url:"/zlj/listcomment?answerid=" +a._id,
                         type: 'GET',
@@ -185,6 +185,8 @@
                           },
                         success: function(data){
                             console.log(data)
+                            $("#writecomment"+a._id).val("")
+
                         }
                     })//ajax
                 },
