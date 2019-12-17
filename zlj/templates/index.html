@@ -33,7 +33,7 @@
                                 </div>
                                 <div @click="answerlike(item,index)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;margin-left: 10px;" class="yiding">
                                     <img :src="'/static/img/pl.png'" alt=""  class="xinzan" style="width: 20px; height: 20px;">
-                                   {{item.likeCount|Countfilter}}评论
+                                   {{item.commentCount|Countfilter}}评论
                                 </div>
 
 
@@ -126,6 +126,14 @@ $(document).ready(function () {
     },
   });
 
+  Vue.filter('Countfilter',function(count){
+      if (count < 0){
+          return 0
+      } else {
+          return count
+      }
+  })
+  
   function HtmltoText(str){
       return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
   }

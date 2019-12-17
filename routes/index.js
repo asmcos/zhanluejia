@@ -100,6 +100,9 @@ exports = module.exports = function (app) {
     app.use('/zlj/answers', routes.zlj.answer.list);
     app.use('/zlj/answerlike', routes.zlj.answer.like); //点赞
 
+    //comment
+    app.use('/zlj/comment', routes.zlj.comment.create);
+    app.use('/zlj/listcomment', routes.zlj.comment.list);
 
     app.use('/corlate', keystone.express.static(path.join(__dirname, '../theme/corlate')))
 

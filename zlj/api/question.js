@@ -147,29 +147,13 @@ function listanswer(req, res) {
 
     var question  = keystone.list( "Question" )
 
-    var l = 10
-    var s = 0
     var questionid = req.query.questionid
 
     if (!questionid) {
         return res.json({code:-1,message:"no questionid"})
     }
 
-    if (req.query.limit){
-      l = req.query.limit
-    }
-
-    l = parseInt(l)
-
-    if (req.query.skip){
-      s = req.query.skip
-    }
-    s = parseInt(s)
-
-
       question.model.findOne({_id:questionid})
-                    .skip(s)
-                    .limit(l)
                     .populate({ path: 'answers',
                         options: {sort: {'updateTime':-1},
                         limit: 20},
@@ -178,7 +162,7 @@ function listanswer(req, res) {
                     .exec(async function (err, question) {
                         if (err) return res.json(err);
                         var userlikes = []
-                        if (req.user){
+                        if (req.user&&question.answers.length>0){
                             answerlist = question.answers.map(a => a._id+"")
                             userlikes = await rediscmd.answerlike_hmget(req.user._id,answerlist)
 

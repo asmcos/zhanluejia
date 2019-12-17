@@ -82,7 +82,7 @@ function list(req,res){
                 .exec(async function (err, answers) {
                     if (err) return res.json(err);
                     var userlikes = []
-                    if (req.user){
+                    if (req.user&&answers.length>0){
                         answerlist = answers.map(function(a){
                             return a._id + ""
                         })
@@ -156,7 +156,7 @@ function updateAnswerbyNewComment(req,res,comment,callback){
         updateTime: new Date(),
         $push:{"comments":comment},
     }
-    answer.model.findOneAndUpdate({_id:comment.answer},updateDocument,{},function(err, updatedObject){
+    answer.model.findOneAndUpdate({_id:comment.Answer},updateDocument,{},function(err, updatedObject){
             if (err){
                 return res.json({code:-1,message:"update answer err"})
             }

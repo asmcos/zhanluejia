@@ -15,13 +15,17 @@ function create(req, res) {
           return res.json({code:-1,message:"Your need login"})
       }
 
+      var answerid = req.body.answerid
 
+      if (!answerid){
+          return res.json({code:-1,message:"no answerid"})
+      }
 
       var item = comment.model()
 
 
       item.createTime = new Date()
-
+      item.Answer = answerid
       comment.updateItem(item,req.body,{},function(err){
           if (err){
               return res.json({code:'-1',message:"save answer error"})
@@ -44,6 +48,44 @@ function create(req, res) {
 
 }
 
+function list(req,res){
+    var l = 10
+    var s = 0
+    if (req.query.limit){
+      l = req.query.limit
+    }
+
+    l = parseInt(l)
+
+    if (req.query.skip){
+      s = req.query.skip
+    }
+    s = parseInt(s)
+
+    var answerid = req.query.answerid
+
+    if (!answerid){
+        return res.json({code:-1,message:"no answerid"})
+    }
+
+    var comment  = keystone.list( "Comment" )
+
+    comment.model.find({Answer:answerid})
+           .skip(s)
+           .limit(l)
+           .sort('-createTime')
+           .populate({path: 'author',select: {'name':1,'avatar':1}})
+           .exec(async function (err, lists) {
+               if (err) return res.json(err);
+               var userlikes = []
+               if (req.user && lists.length>0){
+                   var commentlist = lists.map(a => a._id+"")
+
+                   userlikes = await rediscmd.commentlike_hmget(req.user._id,commentlist)
+               }
+               return res.json({lists,userlikes})
+           })
+}
 
 async function like(req, res) {
 
@@ -102,5 +144,6 @@ async function like(req, res) {
 module.exports = {
 	create:create,
     like:like,
+    list:list,
 
 }
