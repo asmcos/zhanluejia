@@ -31,6 +31,10 @@
                                     <img :src="'/static/img/x1.png'" alt="" v-if="mylikes[index]==1" class="xinzan">
                                     <img :src="'/static/img/x.png'" alt="" class="xinzan" v-else>{{item.likeCount|Countfilter}}个赞
                                 </div>
+                                <div @click="answerlike(item,index)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;margin-left: 10px;" class="yiding">
+                                    <img :src="'/static/img/pl.png'" alt=""  class="xinzan" style="width: 20px; height: 20px;">
+                                   {{item.likeCount|Countfilter}}评论
+                                </div>
 
 
                             </div>

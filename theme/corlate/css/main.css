@@ -22,7 +22,15 @@ h6 {
   font-family: 'Open Sans', sans-serif;
   color:#4e4e4e;
 }
-
+input, button, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+textarea {
+  overflow: auto;
+  vertical-align: top;
+}
 h1{
   font-size: 36px;
   color:#fff;
@@ -2615,6 +2623,20 @@ shortcodes page css
     background-color: #f1f1f1;
 }
 .loader{width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 9999}
+.pl_content{width: 100%; height: auto; background: #fff}
+.item-list{width: 100%; height: auto; overflow: hidden; display: block; margin-top: 24px; margin-bottom: 10px;}
+.item-list-avatar{width: 42px; height: 42px; border-radius: 100%; display: block; float: left; margin-left: 24px;}
+.item-list-avatar img{width: 100%; height: 100%; border-radius: 100%; display: block}
+.item-list-content{width: 630px; height: auto;  float: left; margin-left: 20px; border:1px solid #ddd;}
+.item-list-content input{width: 80%; height: 42px; display: block; border:none; padding: 0 0 0 20px; float: left;outline: none}
+.fabiao{width: 20%; height: 42px; float: right}
+.fabiao span{width: 112px; height: 100%; display: block; float: right; text-align: center; line-height: 42px;background-color: #7091ce; color: #fff}
+.userinfoname{
+  width: 100%;
+  color: #406599;
+  font-size: 14px;
+  display: block;
+}
 @media (max-width: 640px){
   body > section {
     padding: 0px 0;

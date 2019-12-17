@@ -47,8 +47,70 @@
                                             <img :src="'/static/img/x1.png'" alt="" v-if="mylikes[index]==1" class="xinzan">
                                             <img :src="'/static/img/x.png'" alt="" class="xinzan" v-else>{{a.likeCount|Countfilter}}个赞
                                         </div>
+                                        <div @click="pinglunStart(0)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;margin-left: 10px;" class="yiding">
+                                            <img :src="'/static/img/pl.png'" alt=""  class="xinzan" style="width: 20px; height: 20px;">
+                                            {{a.likeCount|Countfilter}}评论
+                                        </div>
 
-
+                                    </div>
+                                    <div class="pl_content" v-if="pinglun==0">
+                                        <div class="item-list">
+                                            <div class="item-list-avatar"><img :src="'/static/img/132465.jpg'" alt=""></div>
+                                            <div class="item-list-content">
+                                                <input data-node="comment-edit" name="name" placeholder="写下你的评论..." rows="8"></input>
+                                                <div class="fabiao">
+                                                    <span>发表</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-list">
+                                            <div class="item-list-avatar"><img :src="'/static/img/132465.jpg'" alt=""></div>
+                                            <div class="item-list-content" style="border: none">
+                                                <div class="userinfoname">
+                                                    才高八斗帅小王
+                                                </div>
+                                                <div>
+                                                    宁夏回族确实有美女！
+                                                    宁夏回族确实有美女！
+                                                    宁夏回族确实有美女！
+                                                </div>
+                                                <div>
+                                                    11-11 12:16
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-list">
+                                            <div class="item-list-avatar"><img :src="'/static/img/132465.jpg'" alt=""></div>
+                                            <div class="item-list-content" style="border: none">
+                                                <div class="userinfoname">
+                                                    才高八斗帅小王
+                                                </div>
+                                                <div>
+                                                    宁夏回族确实有美女！
+                                                    宁夏回族确实有美女！
+                                                    宁夏回族确实有美女！
+                                                </div>
+                                                <div>
+                                                    11-11 12:16
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-list">
+                                            <div class="item-list-avatar"><img :src="'/static/img/132465.jpg'" alt=""></div>
+                                            <div class="item-list-content" style="border: none">
+                                                <div class="userinfoname">
+                                                    才高八斗帅小王
+                                                </div>
+                                                <div>
+                                                    宁夏回族确实有美女！
+                                                    宁夏回族确实有美女！
+                                                    宁夏回族确实有美女！
+                                                </div>
+                                                <div>
+                                                    11-11 12:16
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -111,7 +173,8 @@
                 questionid:"",
                 question:{},
                 mylikes:[],
-                loading:1
+                loading:1,
+                pinglun:-1
             },
             created () {
                 this.questionid = getUrlParam("questionid")
@@ -123,6 +186,13 @@
                 this.getanswers()
             },
             methods: {
+                pinglunStart(e){
+                    var that = this;
+                    console.log(e);
+
+                    that.pinglun=e
+
+                },
                 getanswers(){
                     var that = this
                     $.ajax({url:"/zlj/listanswer?questionid=" +that.questionid,
