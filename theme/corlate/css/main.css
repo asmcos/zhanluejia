@@ -278,9 +278,10 @@ input.search-form:hover {
 .navbar {
   border-radius: 0;
   margin-bottom: 0;
-  background: #151515;
+  background: #fff;
   padding: 15px 0;
   padding-bottom: 0;
+  border-bottom: 1px solid #eee !important;
 }
 
  .navbar-nav{
@@ -296,14 +297,14 @@ input.search-form:hover {
   padding: 5px 12px;
   margin: 0;
   border-radius: 3px;
-  color: #fff;
+  color: #000;
   line-height: 24px;
   display: inline-block;
 }
 
 .navbar-inverse .navbar-nav > li > a:hover{
-	background-color: #c52d2f;
-  color: #fff;
+  color: rgb(133,107,255);
+  background: #fff;
 }
 
 .navbar-inverse {
@@ -322,12 +323,12 @@ input.search-form:hover {
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,
 .navbar-inverse .navbar-nav > .open > a:focus {
-  background-color: #c52d2f;
-  color: #fff;
+  color: rgb(133,107,255);
+  background: #fff;
 }
 
 .navbar-inverse .navbar-nav .dropdown-menu {
-  background-color: rgba(0,0,0,.85);
+  background-color: #fff;
   -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
   -moz-box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125);
@@ -346,13 +347,13 @@ input.search-form:hover {
 
 .navbar-inverse .navbar-nav .dropdown-menu > li > a {
   padding: 8px 15px;
-  color: #fff;
+  color: #333;
 }
 
 .navbar-inverse .navbar-nav .dropdown-menu > li:hover > a,
 .navbar-inverse .navbar-nav .dropdown-menu > li:focus > a,
 .navbar-inverse .navbar-nav .dropdown-menu > li.active > a {
-  background-color: #c52d2f;
+  background-color: rgb(133,107,255);;
   color: #fff;
 }
 
@@ -898,7 +899,7 @@ a.accordion-toggle  i{
 .nav-tabs>li.active>a:focus {
   border: 0;
   color:#fff;
-  background: #1f1f20;
+  background:rgb(133,107,255);
   position: relative;
 }
 
@@ -2605,7 +2606,7 @@ shortcodes page css
 }
 .contentwen{min-height: calc(100vh - 165px);}
 .xinzan{width: 15px; height: 15px; margin: 0 5px 0 10px;}
-.yiding:hover{color: #999;}
+.yiding:hover{color: #999;background: rgb(133,107,255)}
 .tup{width: 100%; margin-top: 14px;}
 .w-e-text {
   padding: 0 10px;
