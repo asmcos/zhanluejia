@@ -279,7 +279,7 @@ input.search-form:hover {
   border-radius: 0;
   margin-bottom: 0;
   background: #fff;
-  padding: 15px 0;
+  /*padding: 15px 0;*/
   padding-bottom: 0;
   border-bottom: 1px solid #eee !important;
 }
@@ -323,8 +323,8 @@ input.search-form:hover {
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,
 .navbar-inverse .navbar-nav > .open > a:focus {
-  color: rgb(133,107,255);
-  background: #fff;
+  color: #fff;
+  background: #FF6534;
 }
 
 .navbar-inverse .navbar-nav .dropdown-menu {
@@ -2638,6 +2638,7 @@ shortcodes page css
   font-size: 14px;
   display: block;
 }
+#tab1 h2 a:hover{color: #4173af;}
 @media (max-width: 640px){
   body > section {
     padding: 0px 0;
