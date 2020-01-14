@@ -593,7 +593,7 @@ $(document).ready(function () {
         mylikes:[],
         loading:1,
         user:{'id':'<%= user.id%>','avatar':'<%=user.avatar%>','name':'<%=user.name%>',}, //swig templates by express
-        tanceng:1
+        tanceng:0//控制弹层显示隐藏
     },
     created () {
     	this.getQuestions()
