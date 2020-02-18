@@ -1,6 +1,24 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<style>
+    @font-face {
+        font-family: 'iconfont';  /* project id 1595395 */
+        src: url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.eot');
+        src: url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.eot?#iefix') format('embedded-opentype'),
+        url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.woff2') format('woff2'),
+        url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.woff') format('woff'),
+        url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.ttf') format('truetype'),
+        url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.svg#iconfont') format('svg');
+    }
+    .iconfont{ font-family:"iconfont"
+    !important; font-size:14px;font-style:normal; -webkit-font-smoothing: antialiased; -webkit-text-stroke-width: 0.2px; -moz-osx-font-smoothing: grayscale;}
+    .yiding:hover {
+        color: #999;
+       opacity: 0.5;
+        background: none;
+    }
+</style>
 <div id="app">
 <section id="blog" class="container">
 
@@ -43,13 +61,14 @@
                                         </div>
 
                                     </div>
-                                    <div :class="mylikes"   style="margin: 0;margin-top: 20px; background: #eee; height: 40px;line-height: 40px;">
-                                        <div @click="answerlike(a,index)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;" class="yiding">
-                                            <img :src="'/static/img/x1.png'" alt="" v-if="mylikes[index]==1" class="xinzan">
-                                            <img :src="'/static/img/x.png'" alt="" class="xinzan" v-else>{{a.likeCount|Countfilter}}个赞
+                                    <div :class="mylikes"   style="margin: 0;margin-top: 20px;  height: 40px;line-height: 40px;">
+                                        <div @click="answerlike(a,index)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;margin-left: 20px;" class="yiding">
+                                            <!--<img :src="'/static/img/x1.png'" alt="" v-if="mylikes[index]==1" class="xinzan">-->
+                                            <i class="iconfont" style="color: #FF6534!important;margin-right: 5px;" v-if="mylikes[index]==1">&#xe616;</i>
+                                            <i class="iconfont" style="color: #cacaca;margin-right: 5px;"  v-else>&#xe616;</i>{{a.likeCount|Countfilter}}个赞
                                         </div>
                                         <div @click="commentStart(a)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;margin-left: 10px;" class="yiding">
-                                            <img :src="'/static/img/pl.png'" alt=""  class="xinzan" style="width: 20px; height: 20px;">
+                                            <i class="iconfont" style="color: #cacaca;line-height: 10px; float: left; margin-top: 6px; margin-right: 5px;">&#xe63a;</i>
                                             {{a.commentCount|Countfilter}}评论
                                         </div>
 
