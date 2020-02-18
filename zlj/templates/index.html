@@ -503,7 +503,10 @@
 
                     </div> <!---->
                     <!--评论信息-->
-                    <div class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;" @click="answerlike(fastwindata.a,fastwindata.index)"><i class="iconfont" style="color: rgb(202, 202, 202);"></i>
+                    <div class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;" @click="answerlike(fastwindata.a,fastwindata.index)">
+                        <i class="iconfont" style="color: #FF6534!important;" v-if="mylikes[fastwindata.index]==1">&#xe616;</i>
+                        <i class="iconfont" style="color: #cacaca;"  v-else>&#xe616;</i>
+                        <!--<i class="iconfont" style="color: rgb(202, 202, 202);"></i>-->
                         {{fastwindata.a.likeCount|Countfilter}}赞
                     </div>
                     <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px;float: left" class="yiding" id="pl">
