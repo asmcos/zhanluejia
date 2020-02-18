@@ -410,8 +410,8 @@
                                     <img class="img-responsive" v-bind:src="item.thumbnail||'/static/img/132465.jpg'" style="width: 190px; height: 124px;margin-left: 10px;">
                                 </div>
                                 <div class="media-body" style="margin-bottom: 10px; min-height: 150px;">
-                                    <div class="userinfo" @click="openOrclose(0)" style="margin-bottom: 10px;box-sizing: border-box"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{item.createTime|LocaleTime}}</i>  </div>
-                                    <p class="neirong" @click="openOrclose(0)" style="color: #7f7d8e;">{{item.content|HtmltoText}}</p>
+                                    <div class="userinfo" @click="qafastwindow(q,item)" style="margin-bottom: 10px;box-sizing: border-box"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{item.createTime|LocaleTime}}</i>  </div>
+                                    <p class="neirong" @click="qafastwindow(q,item)" style="color: #7f7d8e;">{{item.content|HtmltoText}}</p>
                                     <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left" class="yiding">
 
                                         <i class="iconfont" style="color: #FF6534!important;" v-if="mylikes[index]==1">&#xe616;</i>
@@ -470,12 +470,12 @@
             <div class="main">
                 <div class="header">
                     <a href="">
-                        <h2 class="title">你与自己的邻居发生过什么事？</h2>
+                        <h2 class="title">{{fastwindata.q.title}}</h2>
                     </a>
-                    <div class="abstract">16年的某夜凌晨2半点左右，我做完报表困到极致，刚躺下不到十分钟，突然哐仓一声摔家具的声音传入耳朵！我一个机灵坐了起来，我以为家里进贼了，这时候紧接着又传来了女人的呼救声，孩子的惊叫声，男人的打骂声，锅碗瓢盆砸地的声音……我顿时明白了，又是楼上这厮喝醉酒打老婆骂孩子，被打扰休息你们都知道是什么感觉。劳资顿时火冒三丈，穿上衣服跑上楼一脚踹开他家的门，他老婆抱着孩子夺门而出，我上去对他就是一顿胖揍，一点都不带客气的！这么没公德心，你不是能打吗，来我陪你！在派出所我才知道，这家伙是常客，喝醉酒连他爸爸都敢打。这都是惯的，他以为谁都会惯着他！</div>
+                    <div class="abstract" v-html="fastwindata.q.content"></div>
 
                     <div class="question-bottom">
-                        <a href="" target="_blank" data-log="Visit_Question|From_" class="answer-count"><span>查看全部 1186个回答></span>
+                        <a href="" target="_blank" data-log="Visit_Question|From_" class="answer-count"><span>全部 {{fastwindata.q.answerCount}}个回答></span>
 
                         </a>
                     </div>
@@ -483,61 +483,45 @@
                 <div class="answer">
                     <div class="answer-user user-action">
                         <div class="self-info">
-                            64万阅读<i> · </i>
-                            838赞
+                            <i> · </i>
+                            {{fastwindata.a.likeCount|Countfilter}}赞
                         </div>
                         <a href="/user/?uid=54006082193" target="_blank" data-log="Visit_Profile|From_" class="answer-user-avatar">
-                            <img src="http://p9.pstatp.com/thumb/6ee300055175a0cfc0f2" alt="">
+                            <img v-bind:src="fastwindata.a.author.avatar" alt="">
                         </a>
-                        <a href="/user/?uid=54006082193" target="_blank" data-log="Visit_Profile|From_" class="answer-user-name"><span class="name">
-                        胡洋
+                        <a href="" target="_blank" data-log="Visit_Profile|From_" class="answer-user-name"><span class="name">
+                        {{fastwindata.a.author.name.first}}
                         <i class="iconfont icon-all_newv" style="font-size: 13px; color: rgb(255, 196, 28);"></i>
                     </span>
-                            <span class="intro">上海三甲医院呼吸内科副主任医师</span>
+                            <span class="intro"></span>
                         </a>
-                        <span class="create-time">10-03 14:42</span>
+                        <span class="create-time">{{fastwindata.a.createTime|LocaleTime}}</span>
                     </div>
-                    <div class="content rich-text">
-                        <p>老家有个远房叔叔，今年六十岁，两个月前查出食管中段癌，CT没有发现其他脏器的转移。按照规范治疗，这种情况应该首选尽快手术，解决吃饭梗阻的问题，而且现在有微创技术，不用开胸。但表兄认为一动手术伤了元气，人就不行了，坚决拒绝手术或者放疗。于是带老人去北京玩了一周，爬长城，看鸟巢，回来后两天进食梗阻加重，一吃就吐，而且开始咳嗽，发烧，连走路的力气都没有。如果不去医院输液，这样每天不吃不喝，估计很难撑过十天。表兄打电话问我怎么办，除了静脉输营养液和抗生素，还能有什么办法呢，这些办法只能是延长极其有限的时间而已。</p>
-                        <div>
-                            <div>
-                                <img src="http://p1.pstatp.com/large/dfic-imagehandler/b6b89a73-95fc-4f0d-b13b-4a1f4bd068d5" web_uri="dfic-imagehandler/b6b89a73-95fc-4f0d-b13b-4a1f4bd068d5" img_width="768" img_height="1024" fold="0" onerror="javascript:errorimg.call(this);" class="small">
-                            </div>
-                            <div>
+                    <div class="content rich-text" v-html="fastwindata.a.content">
 
-                            </div>
-                        </div>
-                        <p>
 
-                        </p>
-                        <p>很多人不相信医院和医生，觉得无论什么癌症都是治不好的，一去医院就被医生忽悠开刀、放疗、化疗。他们只愿意听他们想听的，比如某某人开了刀没几个月就转移了，比如某某人化疗之后身体就越来越不行了，而对那些治好了，长期存活的癌症病人视而不见。如果真的有这样的根深蒂固的想法，就像我的表兄一样，病情急转直下了打电话求助我，我也是无能为力的。</p>
-                        <div>
-                            <div>
-                                <img src="http://p1.pstatp.com/large/dfic-imagehandler/1efe9ed2-e8a9-4a53-8853-3f8d7fed78b2" web_uri="dfic-imagehandler/1efe9ed2-e8a9-4a53-8853-3f8d7fed78b2" img_width="1200" img_height="801" fold="0" onerror="javascript:errorimg.call(this);"><div><div><div></div></div><div><div></div></div></div></div><div></div></div><p></p><p>言归正传，55岁的年纪查出肝癌晚期，应该说是比较不幸的，年龄不大，还没到退休年纪，如果这时候直接放弃治疗，未免有点可惜，毕竟晚期不代表终末期，并不意味着生命就开始倒计时了。肝癌虽然恶性程度高，进展快，晚期患者1年生存率约为44%。但现实中，确实有一些晚期肝癌病人活过了三五年，虽然不多，但没有努力治疗过就轻言放弃，对亲人来说也是不公平的。肝癌晚期治疗虽然相对困难，但近几年还是有不少的新药问世，比如靶向药仑伐替尼、瑞戈非尼，比如PD1/PDL1抑制剂，PD1抑制剂O药在2017年9月就被美国FDA批准用于晚期肝癌的二线治疗。研究显示，没有使用过索拉非尼（多吉美）的患者一线使用O药的12个月生存比率达到73%。O药在这两年时间里让不少晚期肝癌病人延长了生存时间。</p><div><div><img src="http://p1.pstatp.com/large/dfic-imagehandler/ea0f2c60-21bd-40ad-9723-987d866ef668" web_uri="dfic-imagehandler/ea0f2c60-21bd-40ad-9723-987d866ef668" img_width="1200" img_height="751" fold="0" onerror="javascript:errorimg.call(this);"><div><div><div></div></div><div><div></div></div></div></div><div></div></div><p></p><p>很多人说，我生了癌症坚决不去医院，有钱就出去旅游，看看精彩的世界，追求生命的宽度而不是长度。周游世界，想起来就是无限美好的事情，可是现实或许会给你重重的一击，一旦生病，你确定有体力到处游山玩水吗，很多人可能去趟一公里外的公园都极其困难。出去旅游是一件极其消耗体力和精力的事情，外出吃不好睡不好，即便健康人出去旅游一趟也要好多天才能缓过劲来。所以，有时候理想很丰满，现实却很骨感。如果说，病人精神状态和体力都不错，间断的短时间旅游是提倡的，但也要做好后勤保障工作，不可长途跋涉。实际上，抗癌治疗和出去旅游并不是两件冲突的事，治疗间期完全可以适当出门散散心。</p></div> <!---->
+                    </div> <!---->
                     <!--评论信息-->
                     <div class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;"><i class="iconfont" style="color: rgb(202, 202, 202);"></i>
-                        1赞
+                        {{fastwindata.a.likeCount|Countfilter}}赞
                     </div>
                     <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px;float: left" class="yiding" id="pl">
                         <i class="iconfont" style="color: #cacaca;font-size: 10px; line-height: 15px; float: left; margin-top: 6px; margin-right: 5px;">&#xe63a;</i>
-                        1评论
-                    </div>
-                    <div class="other-answer">
-                        <a href="#" target="_blank" data-log="Visit_Question|From_">
-                            其他 6141个回答<i class="iconfont icon-forward"></i></a>
+                        {{fastwindata.a.commentCount|Countfilter}}评论
                     </div>
 
+
                 </div>
-                <div class="goto-question">
+                <!-- div class="goto-question">
                     <div class="line"></div>
-                    <a href="javascript:;" class="goto-question-title">我爸爸今年55岁，前几天查出肝癌晚期，是继续治疗还是带他出去旅游？</a>
+                    <a href="javascript:;" class="goto-question-title">其他标题</a>
                     <a href="javascript:;" class="goto-question-btn">
                         <div class="box">
                             <i class="iconfont icon-ask_write pen"></i>
                             <span>我要回答</span>
                         </div>
                     </a>
-                </div>
+                </div-->
                 <!--评论区-->
                 <div class="comment">
                     <div>
@@ -567,12 +551,7 @@
                                     </div>
                                     <div class="comment-content">
                                         <a href="/user/?uid=91984070449899" target="_blank" class="uname">用户9175010978900</a>
-                                        <!--<div class="digg-box">-->
-                                        <!--<a href="javascript:;" class="digg">-->
-                                        <!--<i class="iconfont"></i>-->
-                                        <!--<span>36</span>-->
-                                        <!--</a>-->
-                                        <!--</div>-->
+
                                         <div class="content-text">
                                             我的老爸，一六年检查为肝癌，是在做体检是发现的，以前没有一点征状，知道以后，我的哥哥马上去石家庄医院，医生让作，手术，同屋的病友们说这么大岁数了(老爸那年八十四岁)作了对身体之程'不住，哥哥就让爸爸去旅游两回，四个月就离开了我们，到现在还想念我的爸爸，唉，
                                         </div>
@@ -611,7 +590,8 @@ $(document).ready(function () {
         mylikes:[],
         loading:1,
         user:{'id':'<%= user.id%>','avatar':'<%=user.avatar%>','name':'<%=user.name%>',}, //swig templates by express
-        tanceng:0//控制弹层显示隐藏
+        tanceng:0,//控制弹层显示隐藏
+        fastwindata:{q:""},
     },
     created () {
     	this.getQuestions()
@@ -669,6 +649,14 @@ $(document).ready(function () {
                 window.location.href= "/zlj/answer.html?questionid=" + q._id
             }
         }, //answercomment
+        qafastwindow(q,a){ //question and answer
+            var that = this;
+            console.log(q)
+            that.fastwindata.q = q
+            that.fastwindata.a = a
+
+            that.openOrclose(0)
+        },
     },
   });
 
