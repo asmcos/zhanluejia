@@ -530,34 +530,34 @@
                             <div class="comment-info with-comment">
                             <span class="comment-count">
                                 <i class="iconfont icon-ask_comment"></i>
-                                <span>246</span>
-                                <span>评论</span>
+                                <span></span>
+                                <span></span>
                             </span> <!---->
                             </div> <!---->
                             <div class="my-comment">
                                 <div class="comment-avatar">
-                                    <img src="http://p3.pstatp.com/thumb/9fd3000c1c54da3a5f0c" alt="">
+                                    <img v-bind:src="user.avatar" alt="">
                                 </div>
                                 <div class="comment-area">
-                                    <textarea data-node="comment-edit" name="name" placeholder="写下你的评论..." rows="8"></textarea>
-                                    <a href="javascript:;" data-node="post" class="submit-button disabled">发表</a>
+                                    <input data-node="comment-edit" name="name" placeholder="写下你的评论..." rows="8" :id="'writecomment'+fastwindata.a._id"></input>
+                                    <a @click="sendComment(fastwindata.a)" data-node="post" class="submit-button disabled">发表</a>
                                 </div>
                             </div>
                             <ul class="comment-list">
-                                <li class="comment-item">
+                                <li class="comment-item" v-for="c in fastwindata.a.comments">
                                     <div class="comment-avatar">
                                         <a href="" target="_blank">
-                                            <img src="http://sf1-ttcdn-tos.pstatp.com/img/mosaic-legacy/3793/3131589739~120x256.image" alt="">
+                                            <img v-bind:src="c.author.avatar" alt="">
                                         </a>
                                     </div>
                                     <div class="comment-content">
-                                        <a href="/user/?uid=91984070449899" target="_blank" class="uname">用户9175010978900</a>
+                                        <a href="" target="_blank" class="uname">{{c.author.name.first}}</a>
 
                                         <div class="content-text">
-                                            我的老爸，一六年检查为肝癌，是在做体检是发现的，以前没有一点征状，知道以后，我的哥哥马上去石家庄医院，医生让作，手术，同屋的病友们说这么大岁数了(老爸那年八十四岁)作了对身体之程'不住，哥哥就让爸爸去旅游两回，四个月就离开了我们，到现在还想念我的爸爸，唉，
+                                            {{c.content}}
                                         </div>
                                         <div class="tools">
-                                            <span>10-03 23:16</span>
+                                            <span>{{c.createTime|LocaleTime}}</span>
 
                                         </div>
                                     </div>
@@ -657,6 +657,39 @@ $(document).ready(function () {
             that.fastwindata.a = a
 
             that.openOrclose(0)
+            that.commentStart(a)
+        },
+        commentStart(a){
+            var that = this;
+            if (a.commentLoad == 1){
+                a.commentLoad = 0
+                return
+            }
+            $.ajax({url:"/zlj/listcomment?answerid=" +a._id,
+                type: 'GET',
+                success: function(data){
+                    that.fastwindata.a.comments = data.lists
+                    a.commentLoad = 1
+
+                }
+            })//ajax
+
+        },
+        sendComment(a){
+            var content1 = $("#writecomment"+a._id).val()
+            $.ajax({
+                type:"POST",
+                url:"/zlj/comment",
+                data:{
+                  answerid:a._id+"",
+                  content: content1
+                  },
+                success: function(data){
+                    console.log(data)
+                    $("#writecomment"+a._id).val("")
+
+                }
+            })//ajax
         },
     },
   });
