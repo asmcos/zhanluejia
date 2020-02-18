@@ -539,7 +539,7 @@
                                     <img v-bind:src="user.avatar" alt="">
                                 </div>
                                 <div class="comment-area">
-                                    <input data-node="comment-edit" name="name" placeholder="写下你的评论..." rows="8" :id="'writecomment'+fastwindata.a._id"></input>
+                                    <input data-node="comment-edit" name="name" placeholder="写下你的评论..." rows="8" :id="'writecomment'+fastwindata.a._id" style="width: 100%;height: 100%;padding: 0 10px;border: none;"></input>
                                     <a @click="sendComment(fastwindata.a)" data-node="post" class="submit-button disabled">发表</a>
                                 </div>
                             </div>
