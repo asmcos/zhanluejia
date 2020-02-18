@@ -398,7 +398,7 @@
                                     <img class="img-responsive" v-bind:src="item.thumbnail||'/static/img/132465.jpg'" style="width: 190px; height: 124px;margin-left: 10px;">
                                 </div>
                                 <div class="media-body" style="margin-bottom: 10px; min-height: 150px;">
-                                    <div class="userinfo" style="margin-bottom: 10px;box-sizing: border-box"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{item.createTime}}</i>  </div>
+                                    <div class="userinfo" style="margin-bottom: 10px;box-sizing: border-box"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{item.createTime|LocaleTime}}</i>  </div>
                                     <p class="neirong" style="color: #7f7d8e;">{{item.content|HtmltoText}}</p>
                                     <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left" class="yiding">
 
@@ -654,6 +654,12 @@ $(document).ready(function () {
       return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
   }
   Vue.filter('HtmltoText',HtmltoText)
+
+  function toLocaleString(str){
+      var d = new Date(str)
+      return d.toLocaleString()
+  }
+   Vue.filter('LocaleTime',toLocaleString)
 
   var VueMenu = new Vue({
     el: '#header',
