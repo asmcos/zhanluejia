@@ -677,6 +677,7 @@ $(document).ready(function () {
         },
         sendComment(a){
             var content1 = $("#writecomment"+a._id).val()
+            var that = this
             $.ajax({
                 type:"POST",
                 url:"/zlj/comment",
@@ -687,6 +688,7 @@ $(document).ready(function () {
                 success: function(data){
                     console.log(data)
                     $("#writecomment"+a._id).val("")
+                    that.commentStart(a)
 
                 }
             })//ajax
