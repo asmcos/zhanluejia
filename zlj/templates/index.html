@@ -401,13 +401,12 @@
                                     <div class="userinfo" style="margin-bottom: 10px;box-sizing: border-box"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{item.createTime}}</i>  </div>
                                     <p class="neirong" style="color: #7f7d8e;">{{item.content|HtmltoText}}</p>
                                     <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left" class="yiding">
-                                        <!--<img :src="'/static/img/x1.png'" alt=""  class="xinzan" style="width: 15px; height: 15px; margin-right: 3px;">-->
-                                        <!--<img :src="'/static/img/x.png'" alt="" class="xinzan" style="width: 15px; height: 15px;margin-right: 3px;" v-else>-->
+
                                         <i class="iconfont" style="color: #FF6534!important;" v-if="mylikes[index]==1">&#xe616;</i>
                                         <i class="iconfont" style="color: #cacaca;"  v-else>&#xe616;</i>
                                         {{item.likeCount|Countfilter}}赞
                                     </div>
-                                    <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px;float: left" class="yiding" id="pl">
+                                    <div @click="answercomment(item,index,q)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px;float: left" class="yiding" id="pl">
                                        <i class="iconfont" style="color: #cacaca;font-size: 10px; line-height: 15px; float: left; margin-top: 6px; margin-right: 5px;">&#xe63a;</i>
                                         {{item.commentCount|Countfilter}}评论
                                     </div>
@@ -613,7 +612,9 @@ $(document).ready(function () {
         },
         answerlike (a,index) {
             var that = this;
-            console.log(a._id);
+            if (!that.user.id){
+                window.location.href = "/zlj/login.html"
+            }
 
             if (that.mylikes[index] == 1){
                 that.mylikes[index] = 0
@@ -628,7 +629,16 @@ $(document).ready(function () {
                     a.likeCount = data.updatedObject.likeCount
                 }
             })//ajax
-        },
+        }, //answerlike
+        answercomment(a,index,q){
+            var that = this;
+            if (!that.user.id){
+                window.location.href = "/zlj/login.html"
+            }
+            else {
+                window.location.href= "/zlj/answer.html?questionid=" + q._id
+            }
+        }, //answercomment
     },
   });
 

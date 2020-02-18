@@ -22,6 +22,10 @@ function getsysconf(data,cb){
 		})
 
 		data.sysconf = convertdata
+
+		var d = new Date()
+		data.sysconf.year = d.getFullYear()
+
 		cb(null,"sysconf")
 	})
 }
@@ -53,7 +57,7 @@ function getData(req,res,setData) {
 function index (req,res){
 
     getData(req,res,function(data){
-		
+
         var content =  swig.renderFile(temppath + 'index.html',
             data
         );
