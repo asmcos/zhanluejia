@@ -410,8 +410,8 @@
                                     <img class="img-responsive" v-bind:src="item.thumbnail||'/static/img/132465.jpg'" style="width: 190px; height: 124px;margin-left: 10px;">
                                 </div>
                                 <div class="media-body" style="margin-bottom: 10px; min-height: 150px;">
-                                    <div class="userinfo" @click="qafastwindow(q,item)" style="margin-bottom: 10px;box-sizing: border-box"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{item.createTime|LocaleTime}}</i>  </div>
-                                    <p class="neirong" @click="qafastwindow(q,item)" style="color: #7f7d8e;">{{item.content|HtmltoText}}</p>
+                                    <div class="userinfo" @click="qafastwindow(q,item,index)" style="margin-bottom: 10px;box-sizing: border-box"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{item.createTime|LocaleTime}}</i>  </div>
+                                    <p class="neirong" @click="qafastwindow(q,item,index)" style="color: #7f7d8e;">{{item.content|HtmltoText}}</p>
                                     <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left" class="yiding">
 
                                         <i class="iconfont" style="color: #FF6534!important;" v-if="mylikes[index]==1">&#xe616;</i>
@@ -483,11 +483,11 @@
                 </div>
                 <div class="answer">
                     <div class="answer-user user-action">
-                        <div class="self-info">
+                        <div class="self-info" @click="answerlike(fastwindata.a,fastwindata.index)">
                             <i> · </i>
                             {{fastwindata.a.likeCount|Countfilter}}赞
                         </div>
-                        <a href="/user/?uid=54006082193" target="_blank" data-log="Visit_Profile|From_" class="answer-user-avatar">
+                        <a href="" target="_blank" data-log="Visit_Profile|From_" class="answer-user-avatar">
                             <img v-bind:src="fastwindata.a.author.avatar" alt="">
                         </a>
                         <a href="" target="_blank" data-log="Visit_Profile|From_" class="answer-user-name"><span class="name">
@@ -503,7 +503,7 @@
 
                     </div> <!---->
                     <!--评论信息-->
-                    <div class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;"><i class="iconfont" style="color: rgb(202, 202, 202);"></i>
+                    <div class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;" @click="answerlike(fastwindata.a,fastwindata.index)"><i class="iconfont" style="color: rgb(202, 202, 202);"></i>
                         {{fastwindata.a.likeCount|Countfilter}}赞
                     </div>
                     <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px;float: left" class="yiding" id="pl">
@@ -650,12 +650,12 @@ $(document).ready(function () {
                 window.location.href= "/zlj/answer.html?questionid=" + q._id
             }
         }, //answercomment
-        qafastwindow(q,a){ //question and answer
+        qafastwindow(q,a,index){ //question and answer
             var that = this;
             console.log(q)
             that.fastwindata.q = q
             that.fastwindata.a = a
-
+            that.fastwindata.index = index
             that.openOrclose(0)
             that.commentStart(a)
         },
