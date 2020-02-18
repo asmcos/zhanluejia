@@ -379,6 +379,17 @@
         color: gray;
         position: relative;
     }
+    .closeTanceng {
+        width: 50px;
+        height: 50px;
+        background: #000;
+        position: absolute;
+        left: 1170px;
+        top: 20px;
+        color: #fff;
+        text-align: center;
+        line-height: 50px;
+    }
 </style>
 <section id="blog" class="container" style="padding: 20px 0;">
 <div class="blog">
@@ -398,8 +409,8 @@
                                     <img class="img-responsive" v-bind:src="item.thumbnail||'/static/img/132465.jpg'" style="width: 190px; height: 124px;margin-left: 10px;">
                                 </div>
                                 <div class="media-body" style="margin-bottom: 10px; min-height: 150px;">
-                                    <div class="userinfo" style="margin-bottom: 10px;box-sizing: border-box"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{item.createTime|LocaleTime}}</i>  </div>
-                                    <p class="neirong" style="color: #7f7d8e;">{{item.content|HtmltoText}}</p>
+                                    <div class="userinfo" @click="openOrclose(0)" style="margin-bottom: 10px;box-sizing: border-box"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{item.createTime|LocaleTime}}</i>  </div>
+                                    <p class="neirong" @click="openOrclose(0)" style="color: #7f7d8e;">{{item.content|HtmltoText}}</p>
                                     <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left" class="yiding">
 
                                         <i class="iconfont" style="color: #FF6534!important;" v-if="mylikes[index]==1">&#xe616;</i>
@@ -450,6 +461,9 @@
     <!--详情页弹层-->
     <div class="moreRelitivity" v-if="tanceng==1">
         <div class="moreRelitivityBg"></div>
+        <div class="closeTanceng" @click="openOrclose(1)">
+            关闭
+        </div>
         <div class="main">
             <div class="header">
                 <a href="">
@@ -598,6 +612,17 @@ $(document).ready(function () {
     	this.getQuestions()
   	},
     methods: {
+        //控制首页弹层开启和关闭
+        openOrclose(e){
+            if(e==0)
+            {
+                this.tanceng=1
+            }
+            else if(e == 1)
+            {
+                this.tanceng=0
+            }
+        },
         getQuestions(){
             var that = this
             $.ajax({url:"/zlj/listquestion",
