@@ -654,6 +654,14 @@ $(document).ready(function () {
       return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
   }
   Vue.filter('HtmltoText',HtmltoText)
+
+  var VueMenu = new Vue({
+    el: '#header',
+   data:{
+       active_index : "active",
+    },
+  })
+
 })
 </script>
 {% endblock %}

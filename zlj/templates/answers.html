@@ -155,7 +155,7 @@
           editor.customConfig.uploadFileName = "image"
           editor.create();
 
-        })
+      }) //ready
 
 
         Vue.filter('Countfilter',function(count){
@@ -165,6 +165,14 @@
                 return count
             }
         })
+
+        var VueMenu = new Vue({
+          el: '#header',
+         data:{
+             active_a :"active",
+          },
+        })
+
 
         </script>
 {% endblock %}

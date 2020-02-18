@@ -45,11 +45,11 @@
 
                 <div class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">战略家</a></li>
-                        <li><a href="/zlj/newquestion.html">提问</a></li>
-                        <li><a href="/zlj/answers.html">回答</a></li>
+                        <li v-bind:class="active_index"><a href="index.html">战略家</a></li>
+                        <li v-bind:class="active_q"><a href="/zlj/newquestion.html">提问</a></li>
+                        <li v-bind:class="active_a"><a href="/zlj/answers.html">回答</a></li>
 
-                        <li class="dropdown">
+                        <li v-bind:class="active_h" class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">热门<i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/zlj/gather.html?tag=创业故事汇">创业故事汇</a></li>
@@ -60,7 +60,7 @@
                         </li>
                         <li><a href="/zlj/gather.html?tag=教程">教程</a></li>
                         {%if user%}
-                        <li><a href="/zlj/my.html">我的</a></li>
+                        <li v-bind:class="active_m"><a href="/zlj/my.html">我的</a></li>
                         {%else%}
                         <li><a href="/zlj/login.html">未登录</a></li>
                         {%endif%}
