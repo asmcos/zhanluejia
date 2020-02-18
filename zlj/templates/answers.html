@@ -54,6 +54,10 @@
                                             <i class="iconfont" style="color: #FF6534!important;margin-right: 5px;" v-if="mylikes[index]==1">&#xe616;</i>
                                             <i class="iconfont" style="color: #cacaca;margin-right: 5px;"  v-else>&#xe616;</i>{{a.likeCount|Countfilter}}个赞
                                         </p>
+                                        <p @click="answerlike(a,index)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;" class="yiding">
+                                            <i class="iconfont" style="color: #cacaca;line-height: 10px; float: left; margin-top: 6px; margin-right: 5px;">&#xe63a;</i>
+                                            {{a.commentCount|Countfilter}}评论
+                                        </p>
 
 
                                     </div>
