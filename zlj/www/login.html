@@ -314,39 +314,44 @@ svg {
 				</div>
 				<div class="login-type">
 					<div class="LogIn">
-						<form  v-if="nav==0">
+						<!--账号密码登录-->
+						<form  v-if="nav==1 && loginpw==1">
+
 							<div class="input-field">
-								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="手机号"  v-if="loginpw==0">
-							</div>
-							<div class="input-field" v-if="loginpw==1">
 								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="账号" >
 							</div>
-							<div class="input-field" v-if="loginpw==1">
+							<div class="input-field">
 								<input id="mobile" type="password" v-model="password" name="mobile" autocomplete="off" spellcheck="false" placeholder="密码" >
 							</div>
-							<div class="input-field verification" v-if="loginpw==0">
+							<!--<div class="y-box action">-->
+								<!--<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">-->
+								<!--<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>-->
+							<!--</div>-->
+
+						</form>
+						<!--手机号登录-->
+						<form  v-if="nav==1 && loginpw==0">
+							<div class="input-field">
+								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="手机号">
+							</div>
+							<div class="input-field verification">
 								<input id="captcha1" type="text" name="captcha1" autocomplete="off" v-model="logincap" spellcheck="false" placeholder="验证码" >
 								<div class="captcha-wrap">
 								 <div class="y-right captcha" v-html="capimg"></div>
 								</div>
 							</div>
-							<div class="input-field phone-code" v-if="loginpw==0">
+							<div class="input-field phone-code">
 								<input id="code" type="text" name="code" autocomplete="off" v-model="loginphonecode" spellcheck="false" placeholder="手机验证码">
 								<span class="code-btn" @click="sendcode" >{{content}}</span>
 							</div>
 
-							<div class="y-box action">
-								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
-								<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
-							</div>
-							<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="register(1)" value="注册" v-if="position==1">
-							<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="checkCode(0)" value="登录" v-if="position==0 && loginpw==0">
-
-                            <input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="loginPW(0)" value="登录" v-if="position==0 && loginpw==1">
-
+							<!--<div class="y-box action">-->
+								<!--<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">-->
+								<!--<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>-->
+							<!--</div>-->
 						</form>
-
-						<form  v-if="nav==1">
+						<!--注册-->
+						<form  v-if="nav==2">
 							<div class="input-field">
 								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="手机号">
 							</div>
@@ -363,14 +368,16 @@ svg {
 								<input id="code" type="text" name="code" autocomplete="off" v-model="loginphonecode" spellcheck="false" placeholder="手机验证码">
 								<span class="code-btn" @click="sendcode" >{{content}}</span>
 							</div>
-							<div class="y-box action">
-								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
-								<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
-							</div>
-							<input type="submit" name="submitBtn" @click="register(0)" class="action-btn" value="注册" v-if="position==1">
-							<input type="submit" name="submitBtn" class="action-btn" @click="checkCode(0)" value="登录" v-if="position==0">
-						</form>
 
+						</form>
+						<div class="y-box action">
+							<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
+							<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
+						</div>
+						<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="register(1)" value="注册" v-if="position==1">
+						<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="checkCode(0)" value="登录" v-if="position==0 && loginpw==0">
+
+						<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="loginPW(0)" value="登录" v-if="position==0 && loginpw==1">
 						<div  class="phone-mail mail-login">
 							<!--span @click="tabNav(0)" v-if="nav==1">账号密码登录</span-->
 							<span @click="tabNav(1)" v-if="loginpw==0">账号密码登录</span>
@@ -426,7 +433,7 @@ svg {
 		  tisContent:"",
     	  content: '获取短信验证码',  // 按钮里显示的内容
 		  position:0,
-		  nav:0,
+		  nav:1,
 		  capid:'',
 		  capimg:'',
 		  loginphone:'', //login
@@ -477,13 +484,25 @@ svg {
 			var that = this;
 			that.position=e;
 			console.log(e);
+			if (e==1)
+			{
+				that.nav=2;
+			}
+			else
+			{
+				that.nav=1;
+			}
 
-			that.nav=e;
+
+
 
 		},
 		tabNav:function(e){
 			var that = this;
 			that.loginpw=e;
+			that.position=0;
+			that.nav=1;
+
 		},
 		getCode:function(e){
 			var that = this;
