@@ -47,7 +47,7 @@
                             </div>
                             <div class="huidalistinfo">
                                 <span>{{a.author.name.first}}</span>
-                                <span>{{a.createTime}}</span>
+                                <span>{{a.createTime|LocaleTime}}</span>
                             </div>
                         </div>
 
@@ -67,7 +67,7 @@
                                             <i class="iconfont" style="color: #FF6534!important;margin-right: 5px;" v-if="mylikes[index]==1">&#xe616;</i>
                                             <i class="iconfont" style="color: #cacaca;margin-right: 5px;"  v-else>&#xe616;</i>{{a.likeCount|Countfilter}}个赞
                                         </div>
-                                        <div @click="commentStart(a)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;margin-left: 10px;" class="yiding">
+                                        <div @click="clickComment(a)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;margin-left: 10px;" class="yiding">
                                             <i class="iconfont" style="color: #cacaca;line-height: 10px; float: left; margin-top: 6px; margin-right: 5px;">&#xe63a;</i>
                                             {{a.commentCount|Countfilter}}评论
                                         </div>
@@ -94,7 +94,7 @@
                                                     {{c.content}}
                                                 </div>
                                                 <div>
-                                                    {{c.createTime}}
+                                                    {{c.createTime|LocaleTime}}
                                                 </div>
                                             </div>
                                         </div>
@@ -179,21 +179,29 @@
             methods: {
                 commentStart(a){
                     var that = this;
-                    if (a.commentLoad == 1){
-                        a.commentLoad = 0
-                        return
-                    }
+
                     $.ajax({url:"/zlj/listcomment?answerid=" +a._id,
                         type: 'GET',
                         success: function(data){
                             a.comments = data.lists
-                            a.commentLoad = 1
+
 
                         }
                     })//ajax
 
                 },
+                clickComment(a){
+                    var that = this;
+                    if (a.commentLoad == 1){
+                        a.commentLoad = 0
+                        return
+                    } else {
+                        a.commentLoad = 1
+                        that.commentStart(a)
+                    }
+                },
                 sendComment(a){
+                    var that = this
                     var content1 = $("#writecomment"+a._id).val()
                     $.ajax({
                         type:"POST",
@@ -205,6 +213,8 @@
                         success: function(data){
                             console.log(data)
                             $("#writecomment"+a._id).val("")
+                            a.commentCount += 1
+                            that.commentStart(a)
 
                         }
                     })//ajax
@@ -267,6 +277,12 @@
           editor.create();
 
         })
+
+        function toLocaleString(str){
+            var d = new Date(str)
+            return d.toLocaleString()
+        }
+        Vue.filter('LocaleTime',toLocaleString)
 
 
         Vue.filter('Countfilter',function(count){
