@@ -192,12 +192,15 @@
                 },
                 clickComment(a){
                     var that = this;
+                    console.log(a)
+                    console.log(a.commentLoad)
                     if (a.commentLoad == 1){
-                        a.commentLoad = 0
+                        that.$set(a, `commentLoad`, 0)
                         return
                     } else {
-                        a.commentLoad = 1
+                        that.$set(a, `commentLoad`, 1)
                         that.commentStart(a)
+                        return
                     }
                 },
                 sendComment(a){
