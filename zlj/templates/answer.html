@@ -28,7 +28,7 @@
         <div class="col-md-8"> <!--main-->
             <div class="center">
                 <h2>{{question.title}}</h2>
-                <!--<p class="lead"> <div v-html="question.content"></div></p>-->
+                <p> <div v-html="question.content"></div></p>
                 <form  v-on:submit.prevent="sendAnswer" style="margin-top: 20px;">
 
                     <div id="content">
