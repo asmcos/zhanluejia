@@ -314,20 +314,27 @@ svg {
 				</div>
 				<div class="login-type">
 					<div class="LogIn">
-						<form  v-if="nav==1">
+						<form  v-if="nav==0">
 							<div class="input-field">
-								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="手机号">
+								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="手机号"  v-if="newkongzhi==0">
 							</div>
-							<div class="input-field verification">
-								<input id="captcha1" type="text" name="captcha1" autocomplete="off" v-model="logincap" spellcheck="false" placeholder="验证码">
+							<div class="input-field" v-if="newkongzhi==1">
+								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="账号" >
+							</div>
+							<div class="input-field" v-if="newkongzhi==1">
+								<input id="mobile" type="password" v-model="mima" name="mobile" autocomplete="off" spellcheck="false" placeholder="密码" >
+							</div>
+							<div class="input-field verification" v-if="newkongzhi==0">
+								<input id="captcha1" type="text" name="captcha1" autocomplete="off" v-model="logincap" spellcheck="false" placeholder="验证码" >
 								<div class="captcha-wrap">
 								 <div class="y-right captcha" v-html="capimg"></div>
 								</div>
 							</div>
-							<div class="input-field phone-code">
+							<div class="input-field phone-code" v-if="newkongzhi==0">
 								<input id="code" type="text" name="code" autocomplete="off" v-model="loginphonecode" spellcheck="false" placeholder="手机验证码">
 								<span class="code-btn" @click="sendcode" >{{content}}</span>
 							</div>
+
 							<div class="y-box action">
 								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
 								<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
@@ -336,18 +343,22 @@ svg {
 							<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="checkCode(0)" value="登录" v-if="position==0">
 						</form>
 
-						<form  v-if="nav==0">
+						<form  v-if="nav==1">
 							<div class="input-field">
-								<input id="mobile" type="text" name="mobile" autocomplete="off" spellcheck="false" placeholder="用户名/手机号">
-							</div>
-							<div class="input-field">
-								<input id="mobile" type="text" name="mobile" autocomplete="off" spellcheck="false" placeholder="密码">
+								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="手机号">
 							</div>
 							<div class="input-field verification">
-								<input id="captcha1" type="text" name="captcha1" autocomplete="off" spellcheck="false" placeholder="验证码">
+								<input id="captcha1" type="text" name="captcha1" autocomplete="off" v-model="logincap" spellcheck="false" placeholder="验证码" >
 								<div class="captcha-wrap">
-								  <div class="y-right captcha" v-html="capimg"></div>
+									<div class="y-right captcha" v-html="capimg"></div>
 								</div>
+							</div>
+							<div class="input-field">
+								<input id="mobile" type="password" v-model="mima" name="mobile" autocomplete="off" spellcheck="false" placeholder="密码" >
+							</div>
+							<div class="input-field phone-code">
+								<input id="code" type="text" name="code" autocomplete="off" v-model="loginphonecode" spellcheck="false" placeholder="手机验证码">
+								<span class="code-btn" @click="sendcode" >{{content}}</span>
 							</div>
 							<div class="y-box action">
 								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
@@ -359,7 +370,8 @@ svg {
 
 						<div  class="phone-mail mail-login">
 							<!--span @click="tabNav(0)" v-if="nav==1">账号密码登录</span-->
-							<span @click="tabNav(1)" v-if="nav==0">手机验证码登录</span>
+							<span @click="tabNav(1)" v-if="newkongzhi==0">账号密码登录</span>
+							<span @click="tabNav(0)" v-if="newkongzhi==1">手机验证码登录</span>
 						</div>
 					</div>
 				</div>
@@ -411,16 +423,16 @@ svg {
 		  tisContent:"",
     	  content: '获取短信验证码',  // 按钮里显示的内容
 		  position:0,
-		  nav:1,
+		  nav:0,
 		  capid:'',
 		  capimg:'',
-
 		  loginphone:'', //login
 		  logincap:'',
 		  loginphonecode:'',
-
 		  phoneid:'', //from server
-		loading:1
+		loading:1,
+		mima:'',
+		newkongzhi:0
     },
     beforeCreate: function(){
     },
@@ -461,15 +473,14 @@ svg {
 		addClass:function(e){
 			var that = this;
 			that.position=e;
-			if(e==1)
-			{
-				that.nav=e;
-			}
+			console.log(e);
+
+			that.nav=e;
+
 		},
 		tabNav:function(e){
 			var that = this;
-			that.nav=e;
-			console.log(e)
+			that.newkongzhi=e;
 		},
 		getCode:function(e){
 			var that = this;
