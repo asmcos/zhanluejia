@@ -1,6 +1,6 @@
 var keystone = require('keystone')
 var aliyunSMS = require('./aliyunSMS')
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcryptjs');
 var fs = require('fs')
 
 
@@ -49,7 +49,7 @@ exports.login = module.exports.login = function(req,res){
 
 		var profile = {
 			phoneNum:req.body.phone,
-			$setOnInsert:{name:{first:nick},password:hashpw,avatar:avatar}, //only for new user
+			$setOnInsert:{name:{first:nick},password:hashpw,avatar:avatar}, //only for new user,don't update for old user
 		}
 
 		U.model.findOneAndUpdate({phoneNum:req.body.phone},profile,{upsert:true,returnNewDocument:true},function(err, updatedObject){
@@ -67,8 +67,62 @@ exports.login = module.exports.login = function(req,res){
 
 
 }
-exports.register = module.exports.register = function(req,res){
 
+exports.loginpw = module.exports.loginpw = function(req,res){
+
+	var U = keystone.list( "User" )
+
+	U.model.findOne({phoneNum:req.body.phone},function(err,newU){
+
+		//比较密码
+	   if (bcrypt.compareSync(req.body.password,newU.password)){
+		   newU.password = ""
+		   keystone.session.signinWithUser(newU, req, res, function () {
+				   return res.json(data)
+		   })
+   		}
+		return res.json({code:-1,message:"密码或者账号不存在"})
+   })//findOne
+}
+
+exports.register = module.exports.register = function(req,res){
+	var imglist = img.getImgList(__dirname + "/../www/img/icon/")
+	var userlist = img.getNick()
+
+	/*aliyunSMS.checkCode(req,res,function(data){
+		if (data.code != 0 ){
+
+			return res.json(data)
+		}
+*/
+		var data = {code:0,message:""}
+		//注册
+		var U = keystone.list( "User" )
+
+		var hashpw = bcrypt.hashSync(req.body.password)
+
+		var avatar = urlpath + randavatar(imglist)
+		var nick = randuser(userlist)
+
+		var profile = {
+			phoneNum:req.body.phone,
+			password:hashpw, //only update password
+			$setOnInsert:{name:{first:nick},avatar:avatar}, //only for new user,don't update for old user
+		}
+
+		U.model.findOneAndUpdate({phoneNum:req.body.phone},profile,{upsert:true,returnNewDocument:true},function(err, updatedObject){
+
+			 U.model.findOne({phoneNum:req.body.phone},function(err,newU){
+
+				newU.password = ""
+				keystone.session.signinWithUser(newU, req, res, function () {
+						return res.json(data)
+				})
+
+			})//findOne
+		})//U.model
+
+	//})//aliyunSMS
 
 }
 

@@ -316,21 +316,21 @@ svg {
 					<div class="LogIn">
 						<form  v-if="nav==0">
 							<div class="input-field">
-								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="手机号"  v-if="newkongzhi==0">
+								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="手机号"  v-if="loginpw==0">
 							</div>
-							<div class="input-field" v-if="newkongzhi==1">
+							<div class="input-field" v-if="loginpw==1">
 								<input id="mobile" type="text" v-model="loginphone" name="mobile" autocomplete="off" spellcheck="false" placeholder="账号" >
 							</div>
-							<div class="input-field" v-if="newkongzhi==1">
-								<input id="mobile" type="password" v-model="mima" name="mobile" autocomplete="off" spellcheck="false" placeholder="密码" >
+							<div class="input-field" v-if="loginpw==1">
+								<input id="mobile" type="password" v-model="password" name="mobile" autocomplete="off" spellcheck="false" placeholder="密码" >
 							</div>
-							<div class="input-field verification" v-if="newkongzhi==0">
+							<div class="input-field verification" v-if="loginpw==0">
 								<input id="captcha1" type="text" name="captcha1" autocomplete="off" v-model="logincap" spellcheck="false" placeholder="验证码" >
 								<div class="captcha-wrap">
 								 <div class="y-right captcha" v-html="capimg"></div>
 								</div>
 							</div>
-							<div class="input-field phone-code" v-if="newkongzhi==0">
+							<div class="input-field phone-code" v-if="loginpw==0">
 								<input id="code" type="text" name="code" autocomplete="off" v-model="loginphonecode" spellcheck="false" placeholder="手机验证码">
 								<span class="code-btn" @click="sendcode" >{{content}}</span>
 							</div>
@@ -339,8 +339,11 @@ svg {
 								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
 								<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
 							</div>
-							<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="checkCode(1)" value="注册" v-if="position==1">
-							<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="checkCode(0)" value="登录" v-if="position==0">
+							<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="register(1)" value="注册" v-if="position==1">
+							<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="checkCode(0)" value="登录" v-if="position==0 && loginpw==0">
+
+                            <input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="loginPW(0)" value="登录" v-if="position==0 && loginpw==1">
+
 						</form>
 
 						<form  v-if="nav==1">
@@ -354,7 +357,7 @@ svg {
 								</div>
 							</div>
 							<div class="input-field">
-								<input id="mobile" type="password" v-model="mima" name="mobile" autocomplete="off" spellcheck="false" placeholder="密码" >
+								<input id="mobile" type="password" v-model="password" name="mobile" autocomplete="off" spellcheck="false" placeholder="密码" >
 							</div>
 							<div class="input-field phone-code">
 								<input id="code" type="text" name="code" autocomplete="off" v-model="loginphonecode" spellcheck="false" placeholder="手机验证码">
@@ -364,14 +367,14 @@ svg {
 								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
 								<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
 							</div>
-							<input type="submit" name="submitBtn" class="action-btn" value="注册" v-if="position==1">
-							<input type="submit" name="submitBtn" class="action-btn" value="登录" v-if="position==0">
+							<input type="submit" name="submitBtn" @click="register(0)" class="action-btn" value="注册" v-if="position==1">
+							<input type="submit" name="submitBtn" class="action-btn" @click="checkCode(0)" value="登录" v-if="position==0">
 						</form>
 
 						<div  class="phone-mail mail-login">
 							<!--span @click="tabNav(0)" v-if="nav==1">账号密码登录</span-->
-							<span @click="tabNav(1)" v-if="newkongzhi==0">账号密码登录</span>
-							<span @click="tabNav(0)" v-if="newkongzhi==1">手机验证码登录</span>
+							<span @click="tabNav(1)" v-if="loginpw==0">账号密码登录</span>
+							<span @click="tabNav(0)" v-if="loginpw==1">手机验证码登录</span>
 						</div>
 					</div>
 				</div>
@@ -431,17 +434,17 @@ svg {
 		  loginphonecode:'',
 		  phoneid:'', //from server
 		loading:1,
-		mima:'',
-		newkongzhi:0
+		password:'',
+		loginpw:0  //password login
     },
     beforeCreate: function(){
     },
     mounted: function(){
       var that = this;
-      console.log(99)
+
       setTimeout(function(){
 		  that.loading=0
-	  },3000)
+	  },500)
     },
     methods: {
 		sendcode(){
@@ -480,7 +483,7 @@ svg {
 		},
 		tabNav:function(e){
 			var that = this;
-			that.newkongzhi=e;
+			that.loginpw=e;
 		},
 		getCode:function(e){
 			var that = this;
@@ -540,6 +543,57 @@ svg {
                 },
            });
         },
+        loginPW:function(e){
+             var that = this;
+
+             var datajson = JSON.stringify ({phone:that.loginphone,id:that.phoneid,password:that.password})
+             $.ajax({url:"/zlj/loginpw",
+                 dataType: "json",
+                 type: 'POST',
+                 contentType: 'application/json',
+                 data:datajson,
+                 success: function(data){
+                    if (data.code == 0){
+ 						//验证码正确
+ 				   	    that.tipes(data.message)
+                         window.location.replace("/zlj/index.html")
+                    } else {
+ 					    //错误信息
+ 				   	    that.tipes(data.message)
+ 				   }
+                 },
+                 error : function() {
+                 },
+            });
+         },
+        register:function(e){
+             var that = this;
+             alert("fdsa")
+             var datajson = JSON.stringify ({
+                 phone:that.loginphone,
+                 id:that.phoneid,
+                 code:that.loginphonecode,
+                 password:that.password })
+
+             $.ajax({url:"/zlj/register",
+                 dataType: "json",
+                 type: 'POST',
+                 contentType: 'application/json',
+                 data:datajson,
+                 success: function(data){
+                    if (data.code == 0){
+                         //验证码正确
+                         that.tipes(data.message)
+                         window.location.replace("/zlj/index.html")
+                    } else {
+                         //错误信息
+                         that.tipes(data.message)
+                    }
+                 },
+                 error : function() {
+                 },
+            });
+         },
 
 
     }

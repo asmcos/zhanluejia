@@ -34,6 +34,7 @@
     "babel-preset-es2015": "^6.0.0",
     "babel-preset-stage-2": "^6.0.0",
     "babel-register": "^6.0.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.15.2",
     "casper": "github:tryghost/casper",
     "connect-history-api-fallback": "^1.3.0",
