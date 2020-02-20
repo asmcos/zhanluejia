@@ -79,6 +79,7 @@ function list(req,res){
                 .limit(l)
                 .sort('-updateTime')
                 .populate({path: 'author', select: {'name':1,'avatar':1}})
+                .populate({path: 'question', select:{'title':1} })
                 .exec(async function (err, answers) {
                     if (err) return res.json(err);
                     var userlikes = []
