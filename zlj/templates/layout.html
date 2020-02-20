@@ -26,6 +26,13 @@
 
   {% endblock %}
     <style>
+        @media screen and (max-width: 751px)
+        {
+            .newnav{
+                z-index: 99999;position: relative;background: #fff; margin-left: -15px !important;
+            }
+        }
+
     </style>
 </head>
 <body class="homepage">
@@ -45,7 +52,7 @@
                     <a class="navbar-brand" href="index.html"><img src="/static/img/logo.jpg" alt="logo" style="width:60px;height:60px;"></a>
                 </div>
 
-                <div class="collapse navbar-collapse navbar-right" style="z-index: 99999;position: relative;background: #fff; margin-left: -15px;">
+                <div class="collapse navbar-collapse navbar-right newnav" style="">
                     <ul class="nav navbar-nav">
                         <li v-bind:class="active_index"><a href="index.html">战略家</a></li>
                         <li v-bind:class="active_q"><a href="/zlj/newquestion.html">提问</a></li>
