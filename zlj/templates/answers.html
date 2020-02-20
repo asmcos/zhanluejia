@@ -44,7 +44,7 @@
                                         <!--<img src="/static/uploads/158192403699543内容不存在_spec.png" alt="" class="img-responsive" style="width: 190px; height: 124px; margin-left: 10px;">-->
                                     <!--</div>-->
                                     <div class="media-body" style="margin-bottom: 10px; min-height: 150px;">
-                                        <div class="userinfo" style="margin-bottom: 10px; box-sizing: border-box;"><img src="/static/uploads/158192403699543内容不存在_spec.png" alt="" class="userimg">
+                                        <div class="userinfo" style="margin-bottom: 10px; box-sizing: border-box;"><img :src="a.author.avatar"  alt="" class="userimg">
                                             <i>{{a.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{a.updateTime}}</i>
                                         </div>
                                         <p class="neirong"  style="color: #7f7d8e;" v-html="a.content"></p>
