@@ -96,24 +96,24 @@
                     <div class="tab-content" style="padding: 0px;">
                         <div id="tab1" class="tab-pane fade  active in" >
                             <h2 style="padding: 0px 20px; box-sizing: border-box; margin-top: 20px;">
-                                <a href="/zlj/answer.html?questionid=">{{q.title}}</a>
+                                <a v-bind:href="'/zlj/answer.html?questionid='+q._id">{{q.title}}</a>
                             </h2>
-                            <p class="huida" style="padding: 0px 20px; box-sizing: border-box;">2回答</p>
-                            <div class="anwersuser">
+                            <p class="huida" style="padding: 0px 20px; box-sizing: border-box;">{{q.answerCount}}回答</p>
+                            <div v-for="item in q.answers" class="anwersuser">
                                 <div class="media" style="padding: 0px 20px; box-sizing: border-box;">
                                     <div class="pull-left" style="width: 124px; height: 124px;">
-                                        <img src="/static/uploads/a8f58959cd9678af65fe903f46f541cf.png" class="img-responsive" style="width: 190px; height: 124px; margin-left: 10px;">
+                                        <img v-bind:src="item.thumbnail||'/static/img/132465.jpg'"  class="img-responsive" style="width: 190px; height: 124px; margin-left: 10px;">
                                     </div>
                                     <div class="media-body" style="margin-bottom: 10px; min-height: 150px;">
-                                        <div class="userinfo" style="margin-bottom: 10px; box-sizing: border-box;"><img src="/zlj/img/icon/袋鼠.png" alt="" class="userimg">
-                                            <i>才高八斗帅小王</i>|  <i style="margin-left: 0px; font-weight: 400;">2019-12-13T02:22:33.396Z</i>
+                                        <div class="userinfo" style="margin-bottom: 10px; box-sizing: border-box;"><img :src="item.author.avatar" alt="" class="userimg">
+                                            <i>{{item.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{item.createTime|LocaleTime}}</i>
                                         </div>
-                                        <p class="neirong" style="color: rgb(127, 125, 142);">这是第二个非常严肃的回答上面图片就是我的观点！！！</p>
+                                        <p class="neirong"  style="color: #7f7d8e;">{{item.content|HtmltoText}}</p>
                                         <div class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;color: #4e4e4e; font-weight: lighter">
-                                            <i class="iconfont" style="color: rgb(202, 202, 202); !important;"></i>1赞
+                                            <i class="iconfont" style="color: rgb(202, 202, 202); !important;"></i>{{item.likeCount|Countfilter}}赞
                                         </div>
                                         <div id="pl" class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;color: #4e4e4e; font-weight: lighter">
-                                            <i class="iconfont" style="color: rgb(202, 202, 202); font-size: 10px; line-height: 15px; float: left; margin-top: 6px; margin-right: 5px;"></i>0评论
+                                            <i class="iconfont" style="color: rgb(202, 202, 202); font-size: 10px; line-height: 15px; float: left; margin-top: 6px; margin-right: 5px;"></i>{{item.commentCount|Countfilter}}评论
                                         </div>
                                     </div>
                                 </div>
@@ -323,6 +323,24 @@ console.log(myVue)
          active_m : "active",
       },
     })
+    Vue.filter('Countfilter',function(count){
+        if (count < 0){
+            return 0
+        } else {
+            return count
+        }
+    })
+
+    function HtmltoText(str){
+        return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+    }
+    Vue.filter('HtmltoText',HtmltoText)
+
+    function toLocaleString(str){
+        var d = new Date(str)
+        return d.toLocaleString()
+    }
+    Vue.filter('LocaleTime',toLocaleString)
 })
 </script>
 {%endblock%}
