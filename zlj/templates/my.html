@@ -56,6 +56,25 @@
     .jcrop-active{
         width: 100% !important;
     }
+    .questStyle{width: 100%; height: auto; overflow: hidden; display: block; padding: 20px 24px; background: #fff; margin-top: 12px;}
+    .questStyleTitle{
+        font-size: 20px;
+        line-height: 28px;
+        margin: 0;
+        color: inherit;
+        font-weight: bold;
+    }
+    .answernumber{margin-top: 8px;
+        font-size: 12px;
+        color: #999; width: 100%; display: block; font-style: normal}
+    .answerBtn{
+        margin-top: 12px;
+        font-size: 12px;
+        line-height: 20px;
+        height: 20px;
+        color: #4173af;
+    }
+
 </style>
 
 {% endblock %}
@@ -91,7 +110,9 @@
                 <span :class="{active:active==index}" class="tab-content1" style="" v-for="(item,index) in tabListmenu" @click="reds(index)">{{item.name}} <i>{{item.number}}</i></span>
                 <!--<span class="tab-content active">提问<i>1</i></span>-->
             </div>
-            <div class="col-md-8"><div class="tab-wrap" style="border: 1px solid rgb(235, 236, 237);">
+            <div class="col-md-8">
+                <!--回答样式-->
+                <div class="tab-wrap" style="border: 1px solid rgb(235, 236, 237);" v-if="active==1">
                 <div class="parrent media-body"  v-for="q in questions">
                     <div class="tab-content" style="padding: 0px;">
                         <div id="tab1" class="tab-pane fade  active in" >
@@ -99,6 +120,7 @@
                                 <a v-bind:href="'/zlj/answer.html?questionid='+q._id">{{q.title}}</a>
                             </h2>
                             <p class="huida" style="padding: 0px 20px; box-sizing: border-box;">{{q.answerCount}}回答</p>
+
                             <div v-for="item in q.answers" class="anwersuser">
                                 <div class="media" style="padding: 0px 20px; box-sizing: border-box;">
                                     <div class="pull-left" style="width: 124px; height: 124px;">
@@ -118,10 +140,20 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
+
+                <!--提问样式-->
+                <div class="anwersuser" v-if="active==0">
+                    <div class="questStyle">
+                        <span class="questStyleTitle">疫情过后，你最想做的一件事是什么呢？疫情过后，你最想做的一件事是什么呢？疫情过后，你最想做的一件事是什么呢？</span>
+                        <i class="answernumber">10回答</i>
+                        <a href="#" class="answerBtn">回答</a>
+                    </div>
+                </div>
             </div>
 
 
@@ -197,6 +229,7 @@ $(document).ready(function () {
   	methods: {
         reds:function(index){
             this.active = index;
+            console.log(index)
         },
         closeChange(){
             this.changeOrbtn=0
