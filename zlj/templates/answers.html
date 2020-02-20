@@ -29,46 +29,40 @@
     <div class="row">
         <div class="col-md-8"> <!--main-->
 
+            <div class="tab-wrap" style="border: 1px solid rgb(235, 236, 237);" v-for= "(a,index) in answers">
+                <div class="parrent media-body">
+                    <div class="tab-content" style="padding: 0px;">
+                        <div id="tab1" class="tab-pane fade  active in" >
+                            <h2 style="padding: 0px 20px; box-sizing: border-box; margin-top: 20px;">
+                                <a href="#">{{a.question.title}}</a>
+                            </h2>
+                            <p class="huida" style="padding: 0px 20px; box-sizing: border-box;">{{a.question.answerCount}}回答</p>
 
-                    <div class="tab-wrap" v-for= "(a,index) in answers">
-                        <div class="huidalist" style="padding: 20px">
-                            <div class="huidalistimg">
-                                <img :src="a.author.avatar" alt="">
-                            </div>
-                            <div class="huidalistinfo">
-                                <span>{{a.author.name.first}}</span>
-                                <span>{{a.createTime|LocaleTime}}</span>
-                            </div>
-                        </div>
-                        <div class="parrent media-body"  >
-                            <div class="tab-content" style="padding: 0;">
-                                <div class="tab-pane fade  active in" id="tab1">
-                                    <div class="media" style="padding: 0 20px; box-sizing: border-box;overflow: hidden">
-                                        <div class="media-body" >
-                                            <div v-html="a.content" ></div>
-                                            <!--<img class="img-responsive" v-bind:src="a.thumbnail||'/static/img/avatar5.png'" style="max-height:140px;">-->
-
+                            <div  class="anwersuser">
+                                <div class="media" style="padding: 0px 20px; box-sizing: border-box;">
+                                    <!--<div class="pull-left" style="width: 124px; height: 124px;">-->
+                                        <!--<img src="/static/uploads/158192403699543内容不存在_spec.png" alt="" class="img-responsive" style="width: 190px; height: 124px; margin-left: 10px;">-->
+                                    <!--</div>-->
+                                    <div class="media-body" style="margin-bottom: 10px; min-height: 150px;">
+                                        <div class="userinfo" style="margin-bottom: 10px; box-sizing: border-box;"><img src="/static/uploads/158192403699543内容不存在_spec.png" alt="" class="userimg">
+                                            <i>{{a.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{a.updateTime}}</i>
                                         </div>
-
-                                    </div>
-                                    <div :class="mylikes"   style="margin: 0;margin-top: 20px; background: #eee; height: 40px;line-height: 40px;">
-                                        <p @click="answerlike(a,index)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;" class="yiding">
-                                            <i class="iconfont" style="color: #FF6534!important;margin-right: 5px;" v-if="mylikes[index]==1">&#xe616;</i>
+                                        <p class="neirong"  style="color: #7f7d8e;" v-html="a.content"></p>
+                                        <div @click="answerlike(a,index)" class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;color: #4e4e4e; font-weight: lighter">
+                                            <i class="iconfont" style="color: #FF6534!important; margin-right: 5px;" v-if="mylikes[index]==1">&#xe616;</i>
                                             <i class="iconfont" style="color: #cacaca;margin-right: 5px;"  v-else>&#xe616;</i>{{a.likeCount|Countfilter}}个赞
-                                        </p>
-                                        <p  style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;" class="yiding">
-                                            <i class="iconfont" style="color: #cacaca;line-height: 10px; float: left; margin-top: 6px; margin-right: 5px;">&#xe63a;</i>
-                                            {{a.commentCount|Countfilter}}评论
-                                        </p>
-
-
+                                        </div>
+                                        <div id="pl" class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;color: #4e4e4e; font-weight: lighter">
+                                            <i class="iconfont" style="color: rgb(202, 202, 202); font-size: 10px; line-height: 15px; float: left; margin-top: 6px; margin-right: 5px;"></i>{{a.commentCount|Countfilter}}评论
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
 
-
-                            </div> <!--/.tab-content-->
                         </div>
-                    </div> <!--tab-wrap-->
+                    </div>
+                </div>
+            </div>
 
 
 
@@ -150,12 +144,12 @@
             },
           });// Vue
 
-          var E = window.wangEditor
-          var editor = new E('#content');
-
-          editor.customConfig.uploadImgServer = '/zlj/uploadimage?responseType=json';
-          editor.customConfig.uploadFileName = "image"
-          editor.create();
+          // var E = window.wangEditor
+          // var editor = new E('#content');
+          //
+          // editor.customConfig.uploadImgServer = '/zlj/uploadimage?responseType=json';
+          // editor.customConfig.uploadFileName = "image"
+          // editor.create();
 
       }) //ready
 
