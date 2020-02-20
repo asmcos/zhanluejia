@@ -113,29 +113,29 @@
             <div class="col-md-8">
                 <!--回答样式-->
                 <div class="tab-wrap" style="border: 1px solid rgb(235, 236, 237);" v-if="active==1">
-                <div class="parrent media-body"  v-for="q in questions">
+                <div class="parrent media-body"  v-for="a in answers">
                     <div class="tab-content" style="padding: 0px;">
                         <div id="tab1" class="tab-pane fade  active in" >
                             <h2 style="padding: 0px 20px; box-sizing: border-box; margin-top: 20px;">
-                                <a v-bind:href="'/zlj/answer.html?questionid='+q._id">{{q.title}}</a>
+                                <a v-bind:href="'/zlj/answer.html?questionid='+a.question._id">{{a.question.title}}</a>
                             </h2>
-                            <p class="huida" style="padding: 0px 20px; box-sizing: border-box;">{{q.answerCount}}回答</p>
+                            <p class="huida" style="padding: 0px 20px; box-sizing: border-box;">{{a.question.answerCount}}回答</p>
 
-                            <div v-for="item in q.answers" class="anwersuser">
+                            <div  class="anwersuser">
                                 <div class="media" style="padding: 0px 20px; box-sizing: border-box;">
                                     <div class="pull-left" style="width: 124px; height: 124px;">
-                                        <img v-bind:src="item.thumbnail||'/static/img/132465.jpg'"  class="img-responsive" style="width: 190px; height: 124px; margin-left: 10px;">
+                                        <img v-bind:src="a.thumbnail||'/static/img/132465.jpg'"  class="img-responsive" style="width: 190px; height: 124px; margin-left: 10px;">
                                     </div>
                                     <div class="media-body" style="margin-bottom: 10px; min-height: 150px;">
-                                        <div class="userinfo" style="margin-bottom: 10px; box-sizing: border-box;"><img :src="item.author.avatar" alt="" class="userimg">
-                                            <i>{{item.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{item.createTime|LocaleTime}}</i>
+                                        <div class="userinfo" style="margin-bottom: 10px; box-sizing: border-box;"><img :src="a.author.avatar" alt="" class="userimg">
+                                            <i>{{a.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{a.createTime|LocaleTime}}</i>
                                         </div>
-                                        <p class="neirong"  style="color: #7f7d8e;">{{item.content|HtmltoText}}</p>
+                                        <p class="neirong"  style="color: #7f7d8e;">{{a.content|HtmltoText}}</p>
                                         <div class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;color: #4e4e4e; font-weight: lighter">
-                                            <i class="iconfont" style="color: rgb(202, 202, 202); !important;"></i>{{item.likeCount|Countfilter}}赞
+                                            <i class="iconfont" style="color: rgb(202, 202, 202); !important;"></i>{{a.likeCount|Countfilter}}赞
                                         </div>
                                         <div id="pl" class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;color: #4e4e4e; font-weight: lighter">
-                                            <i class="iconfont" style="color: rgb(202, 202, 202); font-size: 10px; line-height: 15px; float: left; margin-top: 6px; margin-right: 5px;"></i>{{item.commentCount|Countfilter}}评论
+                                            <i class="iconfont" style="color: rgb(202, 202, 202); font-size: 10px; line-height: 15px; float: left; margin-top: 6px; margin-right: 5px;"></i>{{a.commentCount|Countfilter}}评论
                                         </div>
                                     </div>
                                 </div>
@@ -147,10 +147,10 @@
             </div>
 
                 <!--提问样式-->
-                <div class="anwersuser" v-if="active==0">
+                <div class="anwersuser" v-if="active==0" v-for="q in questions">
                     <div class="questStyle">
-                        <span class="questStyleTitle">疫情过后，你最想做的一件事是什么呢？疫情过后，你最想做的一件事是什么呢？疫情过后，你最想做的一件事是什么呢？</span>
-                        <i class="answernumber">10回答</i>
+                        <span class="questStyleTitle">{{q.title}}</span>
+                        <i class="answernumber">{{q.answerCount}}回答</i>
                         <a href="#" class="answerBtn">回答</a>
                     </div>
                 </div>
@@ -209,11 +209,11 @@ $(document).ready(function () {
       tabListmenu:[
             {
                 name:"提问",
-                number:1
+                number:""
             },
             {
                 name:"回答",
-                number:2
+                number:""
             }
         ],
        active:0,
@@ -261,6 +261,7 @@ $(document).ready(function () {
                 success: function(data){
 
                     that.questions = data.questions
+                    that.tabListmenu[0].number = data.questions.length
 
                 }
             })
@@ -271,6 +272,7 @@ $(document).ready(function () {
                 type: 'GET',
                 success: function(data){
                     that.answers = data.answers
+                    that.tabListmenu[1].number = data.answers.length
                 }
             })
         },
