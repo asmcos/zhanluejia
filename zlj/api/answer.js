@@ -94,6 +94,44 @@ function list(req,res){
 
 }
 
+function myanswers(req,res){
+    var answer  = keystone.list( "Answer" )
+
+    var l = 10
+    var s = 0
+    if (req.query.limit){
+      l = req.query.limit
+    }
+
+    l = parseInt(l)
+
+    if (req.query.skip){
+      s = req.query.skip
+    }
+    s = parseInt(s)
+
+    var userid = req.user._id
+
+    answer.model.find({author:userid})
+                .skip(s)
+                .limit(l)
+                .sort('-updateTime')
+                .populate({path: 'author', select: {'name':1,'avatar':1}})
+                .exec(async function (err, answers) {
+                    if (err) return res.json(err);
+                    var userlikes = []
+                    if (req.user&&answers.length>0){
+                        answerlist = answers.map(function(a){
+                            return a._id + ""
+                        })
+                        userlikes = await rediscmd.answerlike_hmget(req.user._id,answerlist)
+                    }
+
+                    return res.json({answers,userlikes})
+                })
+
+}
+
 async function like(req, res) {
 
     if (!req.query.answerid){
@@ -170,6 +208,7 @@ module.exports = {
 	create:create,
     list:list,
     like:like,
+    myanswers:myanswers,
     updateAnswerbyNewComment:updateAnswerbyNewComment,
 
 }

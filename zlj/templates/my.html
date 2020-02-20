@@ -92,11 +92,11 @@
                 <!--<span class="tab-content active">提问<i>1</i></span>-->
             </div>
             <div class="col-md-8"><div class="tab-wrap" style="border: 1px solid rgb(235, 236, 237);">
-                <div class="parrent media-body">
+                <div class="parrent media-body"  v-for="q in questions">
                     <div class="tab-content" style="padding: 0px;">
-                        <div id="tab1" class="tab-pane fade  active in">
+                        <div id="tab1" class="tab-pane fade  active in" >
                             <h2 style="padding: 0px 20px; box-sizing: border-box; margin-top: 20px;">
-                                <a href="/zlj/answer.html?questionid=5df2ede6827ecc19c80f5f19">这是一个非常严肃的问题</a>
+                                <a href="/zlj/answer.html?questionid=">{{q.title}}</a>
                             </h2>
                             <p class="huida" style="padding: 0px 20px; box-sizing: border-box;">2回答</p>
                             <div class="anwersuser">
@@ -173,8 +173,8 @@ $(document).ready(function () {
       y2: 0,
       clip: 0,
       loadfile: 0,
-        changeOrbtn:0,
-        tabListmenu:[
+      changeOrbtn:0,
+      tabListmenu:[
             {
                 name:"提问",
                 number:1
@@ -184,12 +184,15 @@ $(document).ready(function () {
                 number:2
             }
         ],
-        active:0
+       active:0,
+       questions:[],
+       answers:[],
 
 	},
 
 	created () {
     	this.getUserInfo()
+
   	},
   	methods: {
         reds:function(index){
@@ -213,9 +216,32 @@ $(document).ready(function () {
 					that.userinfo.avatar = data.avatar
 					that.userinfo.nickname = data.name.first
 
+                    that.getQuestions()
+                    that.getAnswers()
 				}
         	})
     	},
+        getQuestions(){
+            var that = this
+            $.ajax({url:"/zlj/myquestions",
+                type: 'GET',
+                success: function(data){
+
+                    that.questions = data.questions
+
+                }
+            })
+        },
+        getAnswers(){
+            var that = this
+            $.ajax({url:"/zlj/myanswers",
+                type: 'GET',
+                success: function(data){
+                    that.answers = data.answers
+                }
+            })
+        },
+
 		Onchange (f) {
       		/* eslint-disable */
       		var that = this
@@ -291,6 +317,12 @@ $(document).ready(function () {
 	},//methods
   })
 console.log(myVue)
+    var VueMenu = new Vue({
+      el: '#header',
+     data:{
+         active_m : "active",
+      },
+    })
 })
 </script>
 {%endblock%}

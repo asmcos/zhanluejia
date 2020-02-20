@@ -136,6 +136,7 @@ exports.register = module.exports.register = function(req,res){
 exports.my = module.exports.my = function(req,res){
 
 	if (req.user){
+		req.user.password = ""
 		return res.json(req.user)
 	}
 	return res.json({code:-1,message:"no login"})

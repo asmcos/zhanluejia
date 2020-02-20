@@ -142,6 +142,102 @@ async function list(req, res) {
 
 }
 
+async function myquestions(req, res) {
+
+
+    var question  = keystone.list( "Question" )
+    var tag  = keystone.list( "Tag" )
+
+    var l = 10
+    var s = 0
+    if (req.query.limit){
+      l = req.query.limit
+    }
+
+    l = parseInt(l)
+
+    if (req.query.skip){
+      s = req.query.skip
+    }
+    s = parseInt(s)
+
+    var tagname = req.query.tag
+
+    if (!req.user){
+        return res.json({code:-1,message:"账号异常"})
+    }
+    
+    var userid = req.user._id
+
+    if (tagname){
+        tagname = decodeURI(tagname)
+        var tagid = await tag.model.findOne({name:tagname})
+
+        // 查找的 标签 不存在
+        if (!tagid){
+            return res.json({questions:[],userlikes:[]})
+        }
+
+        question.model.find({author:userid})
+                      .skip(s)
+                      .limit(l)
+                      .populate('tags')
+                      .where('tags').in([tagid])
+                      .sort('-updateTime')
+                      .populate({ path: 'answers',
+                          options: {sort: {'likeCount':-1},
+                          limit: 1},
+                          populate: {path: 'author', select: {'name':1,'avatar':1}}
+                      })
+                      .exec(async function (err, questions) {
+                          if (err) return res.json(err);
+
+                          var userlikes = []
+                          if (req.user && questions.length > 0){
+                              answerlist = questions.map(function(a){                              if (a.answers.length > 0){
+                                      return a.answers[0]._id + ""
+                                  }
+                                  return "0"
+                              })
+                              userlikes = await rediscmd.answerlike_hmget(req.user._id,answerlist)
+                          }
+
+                          return res.json({questions,userlikes})
+                      })
+
+
+    } else {
+        question.model.find({author:userid})
+                      .skip(s)
+                      .limit(l)
+                      .sort('-updateTime')
+                      .populate({ path: 'answers',
+                          options: {sort: {'likeCount':-1},
+                          limit: 1},
+                          populate: {path: 'author', select: {'name':1,'avatar':1}}
+                      })
+                      .exec(async function (err, questions) {
+                          if (err) return res.json(err);
+
+                          var userlikes = []
+                          if (req.user&& questions.length > 0){
+                              answerlist = questions.map(function(a){                              if (a.answers.length > 0){
+                                      return a.answers[0]._id + ""
+                                  }
+                                  return "0"
+                              })
+                              userlikes = await rediscmd.answerlike_hmget(req.user._id,answerlist)
+                          }
+
+                          return res.json({questions,userlikes})
+                      })
+
+    }
+
+
+
+}
+
 function listanswer(req, res) {
 
 
@@ -194,5 +290,6 @@ module.exports = {
 	create:create,
     list:list,
     listanswer:listanswer,
+    myquestions:myquestions,
     updateQuesionbyNewAnswer:updateQuesionbyNewAnswer
 }
