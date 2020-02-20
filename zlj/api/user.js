@@ -74,14 +74,20 @@ exports.loginpw = module.exports.loginpw = function(req,res){
 
 	U.model.findOne({phoneNum:req.body.phone},function(err,newU){
 
+	   if(!newU){
+		   return res.json({code:-1,message:"密码或者账号不存在"})
+	   }
 		//比较密码
-	   if (bcrypt.compareSync(req.body.password,newU.password)){
+	   var ret = bcrypt.compareSync(req.body.password,newU.password)
+
+	   if (ret){
 		   newU.password = ""
 		   keystone.session.signinWithUser(newU, req, res, function () {
-				   return res.json(data)
+				   return res.json({code:0,message:"登录成功"})
 		   })
-   		}
-		return res.json({code:-1,message:"密码或者账号不存在"})
+	   } else {
+		   return res.json({code:-1,message:"密码或者账号不存在"})
+	   }
    })//findOne
 }
 
@@ -89,17 +95,17 @@ exports.register = module.exports.register = function(req,res){
 	var imglist = img.getImgList(__dirname + "/../www/img/icon/")
 	var userlist = img.getNick()
 
-	/*aliyunSMS.checkCode(req,res,function(data){
+	aliyunSMS.checkCode(req,res,function(data){
 		if (data.code != 0 ){
 
 			return res.json(data)
 		}
-*/
-		var data = {code:0,message:""}
+
+
 		//注册
 		var U = keystone.list( "User" )
 
-		var hashpw = bcrypt.hashSync(req.body.password)
+		var hashpw = bcrypt.hashSync(req.body.password,1)
 
 		var avatar = urlpath + randavatar(imglist)
 		var nick = randuser(userlist)
@@ -110,10 +116,11 @@ exports.register = module.exports.register = function(req,res){
 			$setOnInsert:{name:{first:nick},avatar:avatar}, //only for new user,don't update for old user
 		}
 
+
+
 		U.model.findOneAndUpdate({phoneNum:req.body.phone},profile,{upsert:true,returnNewDocument:true},function(err, updatedObject){
 
 			 U.model.findOne({phoneNum:req.body.phone},function(err,newU){
-
 				newU.password = ""
 				keystone.session.signinWithUser(newU, req, res, function () {
 						return res.json(data)
@@ -122,7 +129,7 @@ exports.register = module.exports.register = function(req,res){
 			})//findOne
 		})//U.model
 
-	//})//aliyunSMS
+	})//aliyunSMS
 
 }
 

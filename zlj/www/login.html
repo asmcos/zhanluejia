@@ -327,13 +327,6 @@ svg {
 								<!--<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">-->
 								<!--<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>-->
 							<!--</div>-->
-							<div class="y-box action">
-								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
-								<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
-							</div>
-
-							<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="checkCode(0)" value="登录">
-
 
 						</form>
 						<!--手机号登录-->
@@ -356,11 +349,6 @@ svg {
 								<!--<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">-->
 								<!--<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>-->
 							<!--</div>-->
-							<div class="y-box action">
-								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
-								<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
-							</div>
-							<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="checkCode(0)" value="登录">
 						</form>
 						<!--注册-->
 						<form  v-if="nav==2">
@@ -380,14 +368,16 @@ svg {
 								<input id="code" type="text" name="code" autocomplete="off" v-model="loginphonecode" spellcheck="false" placeholder="手机验证码">
 								<span class="code-btn" @click="sendcode" >{{content}}</span>
 							</div>
-							<div class="y-box action">
-								<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
-								<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
-							</div>
-							<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="register(1)" value="注册">
 
 						</form>
+						<div class="y-box action">
+							<input id="agreement" class="agreement" type="checkbox" name="agreement" checked="checked">
+							<label for="agreement">我已阅读并同意<a class="licence" href="#" target="_blank">《用户协议和隐私条款》</a>  </label>
+						</div>
+						<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="register(1)" value="注册" v-if="position==1">
+						<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="checkCode(0)" value="登录" v-if="position==0 && loginpw==0">
 
+						<input style="outline: none;color:transparent;text-shadow:0 0 0 #fff;" name="submitBtn"  class="action-btn" @click="loginPW(0)" value="密码登录" v-if="position==0 && loginpw==1">
 						<div  class="phone-mail mail-login">
 							<!--span @click="tabNav(0)" v-if="nav==1">账号密码登录</span-->
 							<span @click="tabNav(1)" v-if="loginpw==0">账号密码登录</span>
@@ -502,6 +492,10 @@ svg {
 			{
 				that.nav=1;
 			}
+
+
+
+
 		},
 		tabNav:function(e){
 			var that = this;
@@ -570,7 +564,7 @@ svg {
         },
         loginPW:function(e){
              var that = this;
-
+            
              var datajson = JSON.stringify ({phone:that.loginphone,id:that.phoneid,password:that.password})
              $.ajax({url:"/zlj/loginpw",
                  dataType: "json",
@@ -593,7 +587,7 @@ svg {
          },
         register:function(e){
              var that = this;
-             alert("fdsa")
+
              var datajson = JSON.stringify ({
                  phone:that.loginphone,
                  id:that.phoneid,
