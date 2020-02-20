@@ -80,9 +80,9 @@
                                     <div class="pl_content" v-if="1">
                                         <div class="item-list" v-if="user">
                                             <div class="item-list-avatar"><img :src="user.avatar" alt=""></div>
-                                            <div class="item-list-content" >
+                                            <div class="item-list-content">
                                                 <input data-node="comment-edit" name="name" placeholder="写下你的评论..." rows="8" :id="'writecomment'+a._id" ></input>
-                                                <div class="fabiao" @click="sendComment(a)">
+                                                <div class="fabiao" @click="sendComment(a)"  style="margin-bottom: 0 !important;">
                                                     <span>发表</span>
                                                 </div>
                                             </div>
