@@ -52,6 +52,41 @@ function create(req, res) {
 
 }
 
+function del(req, res) {
+
+
+    if (!req.user){
+        return res.json({code:-1,message:"Your need login"})
+    }
+
+
+
+      var question  = keystone.list( "Question" )
+
+      var questionid = req.query.questionid
+
+
+      var item = question.model()
+
+      var authorid = req.user._id
+
+      //0 删除，1正常
+
+      question.model.findOneAndUpdate({_id:questionid,author:authorid},{status:0},{},function(err, updatedObject){
+          console.log(err,updatedObject)
+          if (err){
+              return res.json({code:-1,message:"update question err"})
+          }
+          if (updatedObject != null){
+              return res.json({code:0,message:'delete success'})
+          }
+
+          return res.json({code:-2,message:"delete failed"})
+      })
+
+
+}
+
 async function list(req, res) {
 
 
@@ -82,7 +117,7 @@ async function list(req, res) {
             return res.json({questions:[],userlikes:[]})
         }
 
-        question.model.find()
+        question.model.find({status:1})
                       .skip(s)
                       .limit(l)
                       .populate('tags')
@@ -90,7 +125,7 @@ async function list(req, res) {
                       .sort('-updateTime')
                       .populate({ path: 'answers',
                           options: {sort: {'likeCount':-1},
-                          limit: 1},
+                          limit: 1,status:1},
                           populate: {path: 'author', select: {'name':1,'avatar':1}}
                       })
                       .exec(async function (err, questions) {
@@ -111,13 +146,13 @@ async function list(req, res) {
 
 
     } else {
-        question.model.find()
+        question.model.find({status:1})
                       .skip(s)
                       .limit(l)
                       .sort('-updateTime')
                       .populate({ path: 'answers',
                           options: {sort: {'likeCount':-1},
-                          limit: 1},
+                          limit: 1,status:1},
                           populate: {path: 'author', select: {'name':1,'avatar':1}}
                       })
                       .exec(async function (err, questions) {
@@ -166,7 +201,7 @@ async function myquestions(req, res) {
     if (!req.user){
         return res.json({code:-1,message:"账号异常"})
     }
-    
+
     var userid = req.user._id
 
     if (tagname){
@@ -178,7 +213,7 @@ async function myquestions(req, res) {
             return res.json({questions:[],userlikes:[]})
         }
 
-        question.model.find({author:userid})
+        question.model.find({author:userid,status:1})
                       .skip(s)
                       .limit(l)
                       .populate('tags')
@@ -186,7 +221,7 @@ async function myquestions(req, res) {
                       .sort('-updateTime')
                       .populate({ path: 'answers',
                           options: {sort: {'likeCount':-1},
-                          limit: 1},
+                          limit: 1,status:1},
                           populate: {path: 'author', select: {'name':1,'avatar':1}}
                       })
                       .exec(async function (err, questions) {
@@ -207,13 +242,13 @@ async function myquestions(req, res) {
 
 
     } else {
-        question.model.find({author:userid})
+        question.model.find({author:userid,status:1})
                       .skip(s)
                       .limit(l)
                       .sort('-updateTime')
                       .populate({ path: 'answers',
                           options: {sort: {'likeCount':-1},
-                          limit: 1},
+                          limit: 1,status:1},
                           populate: {path: 'author', select: {'name':1,'avatar':1}}
                       })
                       .exec(async function (err, questions) {
@@ -249,10 +284,10 @@ function listanswer(req, res) {
         return res.json({code:-1,message:"no questionid"})
     }
 
-      question.model.findOne({_id:questionid})
+      question.model.findOne({_id:questionid,status:1})
                     .populate({ path: 'answers',
                         options: {sort: {'updateTime':-1},
-                        limit: 20},
+                        limit: 20,status:1},
                         populate: {path: 'author',select: {'name':1,'avatar':1}}
                     })
                     .exec(async function (err, question) {
@@ -289,6 +324,7 @@ function updateQuesionbyNewAnswer(req,res,answer,callback){
 module.exports = {
 	create:create,
     list:list,
+    del:del,
     listanswer:listanswer,
     myquestions:myquestions,
     updateQuesionbyNewAnswer:updateQuesionbyNewAnswer

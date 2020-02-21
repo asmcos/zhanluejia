@@ -57,6 +57,39 @@ function create(req, res) {
 
 
 }
+function del(req,res){
+
+    if (!req.user){
+        return res.json({code:-1,message:"Your need login"})
+    }
+
+
+
+      var answer  = keystone.list( "Answer" )
+
+      var answerid = req.query.answerid
+
+
+      var item = answer.model()
+
+      var authorid = req.user._id
+
+      //0 删除，1正常
+
+      answer.model.findOneAndUpdate({_id:answerid,author:authorid},{status:0},{},function(err, updatedObject){
+          console.log(err,updatedObject)
+          if (err){
+              return res.json({code:-1,message:"update question err"})
+          }
+          if (updatedObject != null){
+              return res.json({code:0,message:'delete success'})
+          }
+
+          return res.json({code:-2,message:"delete failed"})
+      })
+
+
+}
 
 function list(req,res){
     var answer  = keystone.list( "Answer" )
@@ -74,7 +107,7 @@ function list(req,res){
     }
     s = parseInt(s)
 
-    answer.model.find()
+    answer.model.find({status:1})
                 .skip(s)
                 .limit(l)
                 .sort('-updateTime')
@@ -113,7 +146,7 @@ function myanswers(req,res){
 
     var userid = req.user._id
 
-    answer.model.find({author:userid})
+    answer.model.find({author:userid,status:1})
                 .skip(s)
                 .limit(l)
                 .sort('-updateTime')
@@ -210,6 +243,7 @@ module.exports = {
 	create:create,
     list:list,
     like:like,
+    del:del,
     myanswers:myanswers,
     updateAnswerbyNewComment:updateAnswerbyNewComment,
 

@@ -94,11 +94,13 @@ exports = module.exports = function (app) {
     //questsion
     app.use('/zlj/newquestion', routes.zlj.question.create);
     app.get('/zlj/listquestion', routes.zlj.question.list);
+    app.get('/zlj/delquestion', routes.zlj.question.del);
     app.get('/zlj/listanswer', routes.zlj.question.listanswer);
     app.get('/zlj/myquestions', routes.zlj.question.myquestions);
 
     //answer
     app.use('/zlj/answer', routes.zlj.answer.create);
+    app.use('/zlj/delanswer', routes.zlj.answer.del);
     app.use('/zlj/myanswers', routes.zlj.answer.myanswers);
     app.use('/zlj/answers', routes.zlj.answer.list);
     app.use('/zlj/answerlike', routes.zlj.answer.like); //点赞
