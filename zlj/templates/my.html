@@ -74,6 +74,26 @@
         height: 20px;
         color: #4173af;
     }
+    @font-face {
+        font-family: 'Glyphicons Halflings';
+
+        src: url('../fonts/glyphicons-halflings-regular.eot');
+        src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+    }
+    .glyphicon-remove:before {
+        content: "\e014";
+        margin-top: 2px;
+        display: block;
+        float: left;
+        color: rgb(78, 78, 78);
+    }
+    .glyphicon-pencil:before {
+        content: "\270f";
+        margin-top: 2px;
+        display: block;
+        float: left;
+        color: rgb(78, 78, 78);
+    }
 
 </style>
 
@@ -137,6 +157,8 @@
                                         <div id="pl" class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;color: #4e4e4e; font-weight: lighter">
                                             <i class="iconfont" style="color: rgb(202, 202, 202); font-size: 10px; line-height: 15px; float: left; margin-top: 6px; margin-right: 5px;"></i>{{a.commentCount|Countfilter}}评论
                                         </div>
+                                        <a href="#" class="answerBtn glyphicon glyphicon-remove" style="float: left; margin-top: 0;margin-right: 10px; font-size: 14px;color: rgb(78, 78, 78);">删除</a>
+                                        <a href="#" class="answerBtn glyphicon glyphicon-pencil" style="float: left; margin-right: 10px; margin-top: 0;font-size: 14px;color: rgb(78, 78, 78);">编辑</a>
                                     </div>
                                 </div>
                             </div>
@@ -152,6 +174,8 @@
                         <span class="questStyleTitle">{{q.title}}</span>
                         <i class="answernumber">{{q.answerCount}}回答</i>
                         <a href="#" class="answerBtn">回答</a>
+                        <a href="#" class="answerBtn" style="float: right">删除</a>
+                        <a href="#" class="answerBtn" style="float: right; margin-right: 10px;">编辑</a>
                     </div>
                 </div>
             </div>
