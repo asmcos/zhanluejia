@@ -13,6 +13,8 @@ keystone.init({
 
 var wxapi = require('./wxmp/wxapi');
 global.wxapi = wxapi.wxapi
+global.mpapi = wxapi.mpapi
+
 
 var redis = require('./redis/index');
 global.redis = redis.redis
