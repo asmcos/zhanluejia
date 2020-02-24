@@ -69,6 +69,7 @@ exports = module.exports = function (app) {
 	app.use('/wxmp/', keystone.express.static(path.join(__dirname, '../wxmp/')));
 	app.use('/wxmp/callback', routes.wxmp.api.callback);
 	app.use('/wxmp/my', routes.wxmp.api.my);
+    app.use('/wxmp/getConfig',routes.wxmp.api.getConfig);
 
 	// 战略家 pc,h5
 	app.use('/zlj/', keystone.express.static(path.join(__dirname, '../zlj/www')));

@@ -15,18 +15,37 @@ var keystone = require('keystone')
 
 
 exports.my = module.exports.my = function(req,res){
-
-	return res.json(req.user)
+	if (req.user){
+		req.user.password = ""
+		return res.json(req.user)
+	}
+	return res.json({code:-1,message:"no login"})
 
 }
+
+exports.getConfig = module.exports.getConfig = function(req,res){
+
+    var param = {
+
+      url: req.query.url ||""
+     };
+
+
+	mpapi.getJsConfig(param,function(ret,data){
+		if (ret){
+			return res.json({code:-1,message:"wechat get config failed"})
+		}
+		return res.json(data)
+	})
+}
 exports.callback = module.exports.callback = function(req,res){
-	
+
 	var code = req.query.code;
 
 	wxapi.getAccessToken(code, function (err, result) {
 		openid = result["data"]["openid"]
 		wxapi.getUser(openid,function(err,result1){
-			
+
 	        //openid, nickname, headimgurl,unionid
 
     	    var U = keystone.list( "User" )
@@ -52,7 +71,7 @@ exports.callback = module.exports.callback = function(req,res){
         	}) //U.model.findOneAndUpdate
 
 
-			
+
 		}) //wxapi.getUser
 
 	})	//wxapi.getAccessToken
