@@ -82,7 +82,10 @@ exports = module.exports = function (app) {
     app.use('/zlj/updateuser', routes.zlj.user.updateuser);
     app.use('/zlj/uploadavatar', routes.zlj.user.uploadavatar);
 
-    app.get('/', routes.zlj.html.index);
+    // redirect ,wechat jssdk domain is www.zhanluejia.net.cn/zlj
+    app.get('/', function(req,res){
+        return res.redirect("/zlj/index.html")
+    });
 	app.use('/zlj/index.html', routes.zlj.html.index);
     app.use('/zlj/gather.html', routes.zlj.html.gather);
 	app.use('/zlj/my.html', routes.zlj.html.my);
