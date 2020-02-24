@@ -399,7 +399,7 @@
 
 
 </style>
-<section id="blog" class="container" style="padding: 20px 0;">
+<section id="mainlist" class="container" style="padding: 20px 0;">
 <div class="blog">
     <div class="row">
         <div class="col-md-8"> <!--main-->
@@ -467,11 +467,11 @@
         </div>
     </div>
     <!--详情页弹层-->
-    <div class="moreRelitivityBg" v-if="tanceng==1" style="z-index: 999999"></div>
-    <div class="moreRelitivity" v-if="tanceng==1">
+    <div class="moreRelitivityBg" id="fastwinbg" style="z-index: 999999;display:none;"></div>
+    <div class="moreRelitivity" id="fastwin" style="display:none;">
 
 
-        <div class="mainContent">
+        <div class="mainContent" v-if="fastwinshow==1">
             <div class="closeTanceng" @click="openOrclose(1)">
                 关闭
             </div>
@@ -595,14 +595,14 @@
 $(document).ready(function () {
 
   var myVue = new Vue({
-    el: '#blog',
+    el: '#mainlist',
 	data:{
         questions:[],
         mylikes:[],
         loading:1,
         user:{'id':'<%= user.id%>','avatar':'<%=user.avatar%>','name':'<%=user.name%>',}, //swig templates by express
-        tanceng:0,//控制弹层显示隐藏
         fastwindata:{q:""},
+        fastwinshow:0,
     },
     created () {
     	this.getQuestions()
@@ -612,11 +612,16 @@ $(document).ready(function () {
         openOrclose(e){
             if(e==0)
             {
-                this.tanceng=1
+
+                $("#fastwinbg").show()
+                $("#fastwin").show()
+                this.fastwinshow = 1
             }
             else if(e == 1)
             {
-                this.tanceng=0
+                $("#fastwin").hide()
+                $("#fastwinbg").hide()
+                this.fastwinshow = 0
             }
         },
         getQuestions(){
@@ -626,7 +631,7 @@ $(document).ready(function () {
                 success: function(data){
                     that.questions = data.questions
                     that.mylikes = data.userlikes
-                    console.log(that.questions);
+
                     that.loading=0
                 }
             })//ajax
@@ -706,7 +711,8 @@ $(document).ready(function () {
   });
 
   Vue.filter('Countfilter',function(count){
-      if (count < 0){
+      console.log(count)
+      if (!count||count < 0){
           return 0
       } else {
           return count
@@ -754,7 +760,7 @@ $(document).ready(function () {
                     // 分享给好友，或者群
                     wx.updateAppMessageShareData({
                         title: '【战略家】运筹帷幄,决胜千里', // 分享标题
-                        desc: '与领袖同行,有趣的人总会相遇。', // 分享描述
+                        desc: '有趣的心灵总会相遇。', // 分享描述
                         link: shareurl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                         imgUrl: 'http://www.zhanluejia.net.cn/static/img/logo.jpg', // 分享图标
                         success: function () {
