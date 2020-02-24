@@ -731,6 +731,55 @@ $(document).ready(function () {
     },
   })
 
+//wxshare
+
+    function share( ){
+        var url = encodeURIComponent(window.location.href);
+
+        $.ajax({url:"/wxmp/getconfig?url=" +url,
+            type: 'GET',
+            success: function(data){
+                var params = data
+
+                params.jsApiList = [
+                    'onMenuShareAppMessage',
+                    'onMenuShareTimeline',
+                    'hideOptionMenu'
+                ];
+                params.debug = false
+                params.url = url
+
+                wx.config(params)
+                wx.ready(function(){
+                    // 分享给好友，或者群
+                    wx.updateAppMessageShareData({
+                        title: '【战略家】', // 分享标题
+                        desc: '真有趣', // 分享描述
+                        link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: 'http://www.zhanluejia.net.cn/static/img/logo.jpg', // 分享图标
+                        success: function () {
+                        // 设置成功
+                        }
+                    })
+                    //分享给朋友圈
+                    wx.updateTimelineShareData({
+                        title: '【战略家】运筹帷幄,决胜千里', // 分享标题
+                        link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: 'http://www.zhanluejia.net.cn/static/img/logo.jpg', // 分享图标
+                        success: function () {
+                          // 设置成功
+                        }
+                    })//updateTimelineShareData
+
+                })
+
+            }//success
+        })//ajax
+
+    } //share
+    share()
+
+
 })
 </script>
 {% endblock %}
