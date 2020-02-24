@@ -33,12 +33,14 @@
             border: none;
             padding: 0 15px;
         }
+        .item-list-content input{
+            border: 1px solid #ddd;
+        }
+
     }
 </style>
 <div id="app">
 <section id="blog" class="container">
-
-
 <div class="blog">
     <div class="row">
         <div class="col-md-8"> <!--main-->
@@ -52,8 +54,8 @@
                     <i class="wenzi">分享你的真实观点和经验，通过汇编、洗稿的等方式拼凑的回答将会被折叠</i>
                     <button  class="btn btn-primary" style="float: right"> 确认回答</button>
                     <!--未登录状态下，下方div显示-->
-                    <div class="muBlock" v-if="user.id =='' || user.id == null || user.id == undefined">
-                    </div>
+                    <!--<div class="muBlock" v-if="user.id =='' || user.id == null || user.id == undefined">-->
+                    <!--</div>-->
                 </form>
             </div>
             <h3 class="answer-count-h" v-if="question.answers"><span>{{question.answers.length}}个回答</span></h3>
