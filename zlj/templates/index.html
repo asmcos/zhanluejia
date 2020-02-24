@@ -734,7 +734,8 @@ $(document).ready(function () {
 //wxshare
 
     function share( ){
-        var url = encodeURIComponent(window.location.href);
+        var url = encodeURIComponent(window.location.href.split("#"));
+        var shareurl = window.location.href.split("#")
 
         $.ajax({url:"/wxmp/getconfig?url=" +url,
             type: 'GET',
@@ -746,8 +747,7 @@ $(document).ready(function () {
                     'updateTimelineShareData',
                     'hideOptionMenu'
                 ];
-                params.debug = true
-
+                params.debug = false
 
                 wx.config(params)
                 wx.ready(function(){
@@ -755,7 +755,7 @@ $(document).ready(function () {
                     wx.updateAppMessageShareData({
                         title: '【战略家】', // 分享标题
                         desc: '真有趣', // 分享描述
-                        link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        link: shareurl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                         imgUrl: 'http://www.zhanluejia.net.cn/static/img/logo.jpg', // 分享图标
                         success: function () {
                         // 设置成功
@@ -764,7 +764,7 @@ $(document).ready(function () {
                     //分享给朋友圈
                     wx.updateTimelineShareData({
                         title: '【战略家】运筹帷幄,决胜千里', // 分享标题
-                        link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        link: ：shareurl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                         imgUrl: 'http://www.zhanluejia.net.cn/static/img/logo.jpg', // 分享图标
                         success: function () {
                           // 设置成功
