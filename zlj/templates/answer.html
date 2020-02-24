@@ -22,6 +22,18 @@
         margin: 0 0 10px;
         text-align: left;
     }
+    .muBlock{width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: red; z-index: 99999}
+    @media screen and (max-width: 751px)
+    {
+        .item-list-content {
+            width: 100% !important;
+            height: auto;
+            float: left;
+             margin-left: 0px;
+            border: none;
+            padding: 0 15px;
+        }
+    }
 </style>
 <div id="app">
 <section id="blog" class="container">
@@ -33,13 +45,15 @@
             <div class="center">
                 <h2>{{question.title}}</h2>
                 <p> <div v-html="question.content"></div></p>
-                <form  v-on:submit.prevent="sendAnswer" style="margin-top: 20px;">
-
+                <form  v-on:submit.prevent="sendAnswer" style="margin-top: 20px; position: relative">
                     <div id="content">
 
                     </div>
                     <i class="wenzi">分享你的真实观点和经验，通过汇编、洗稿的等方式拼凑的回答将会被折叠</i>
-                    <button  class="btn btn-primary" style="float: right"> 确认回答 </button>
+                    <button  class="btn btn-primary" style="float: right"> 确认回答</button>
+                    <!--未登录状态下，下方div显示-->
+                    <div class="muBlock" v-if="user.id =='' || user.id == null || user.id == undefined">
+                    </div>
                 </form>
             </div>
             <h3 class="answer-count-h" v-if="question.answers"><span>{{question.answers.length}}个回答</span></h3>
@@ -80,12 +94,21 @@
                                     <div class="pl_content" v-if="1">
                                         <div class="item-list" v-if="user">
                                             <div class="item-list-avatar"><img :src="user.avatar" alt=""></div>
-                                            <div class="item-list-content">
-                                                <input data-node="comment-edit" name="name" placeholder="写下你的评论..." rows="8" :id="'writecomment'+a._id" ></input>
+                                            <!--未登录显示部分-->
+                                            <div class="item-list-content" v-if="user.id =='' || user.id == null || user.id == undefined">
+                                                <input data-node="comment-edit" name="name" placeholder="请先登录..." rows="8" :id="'writecomment'+a._id" disabled="disabled"></input>
                                                 <div class="fabiao" @click="sendComment(a)"  style="margin-bottom: 0 !important;">
-                                                    <span>发表</span>
+                                                    <span style="width: 100%;">发表</span>
                                                 </div>
                                             </div>
+                                            <!--已登录显示部分-->
+                                            <div class="item-list-content" v-else>
+                                                <input data-node="comment-edit" name="name" placeholder="写下你的评论..." rows="8" :id="'writecomment'+a._id" ></input>
+                                                <div class="fabiao" @click="sendComment(a)"  style="margin-bottom: 0 !important;">
+                                                    <span style="width: 100%;">发表</span>
+                                                </div>
+                                            </div>
+
                                         </div>
                                         <!--comment list -->
                                         <div class="item-list" v-if="a.commentLoad" v-for="c in a.comments">
