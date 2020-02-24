@@ -26,8 +26,7 @@ exports.my = module.exports.my = function(req,res){
 exports.getConfig = module.exports.getConfig = function(req,res){
 
     var param = {
-
-      url: req.query.url ||""
+      url: decodeURIComponent(req.query.url) ||""
      };
 
 
