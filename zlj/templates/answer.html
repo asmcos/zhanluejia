@@ -335,18 +335,32 @@
                 return count
             }
         })
+
+        function htmlToText(str){
+            var text =  str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+            return text
+        }
+
         function getdesc(q){
             if(q.content){
-                return q.content.slice(0,80)
-            }else if ( q.answers.length>0 && q.answers[0].content){
-                return  q.answers[0].content.slice(0,80)
+                var text = q.content.slice(0,80)
+                if (htmlToText(text).length > 4){
+                    return htmlToText(text)
+                }
+            }
+
+            if ( q.answers.length>0 && q.answers[0].content){
+                var text =  q.answers[0].content.slice(0,80)
+                if (htmlToText(text).length > 4){
+                    return htmlToText(text)
+                }
             } else {
                return '有趣的心灵总会相遇。'
             }
         }
         function getimg(q){
-            if (q.answers.length>0 && q.answers[0].thumbnail){
-                return  q.answers[0].thumbnail
+            if (q.answers.length > 0 && q.answers[0].thumbnail){
+                return  "http://www.zhanluejia.net.cn/zlj/"+q.answers[0].thumbnail
             } else {
                 return "http://www.zhanluejia.net.cn/static/img/logo.jpg"
             }
