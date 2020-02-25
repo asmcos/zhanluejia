@@ -693,25 +693,32 @@ $(document).ready(function () {
         }, //answercomment
         qafastwindow(q,a,index){ //question and answer
             var that = this;
-            console.log(q)
-            that.fastwindata.q = q
-            that.fastwindata.a = a
-            that.fastwindata.index = index
-            that.openOrclose(0)
-            that.commentStart(a)
+            if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端
+                window.location.href="/zlj/answer.html?questionid=" +q._id
+            }
+            else
+            {
+                console.log(q)
+                that.fastwindata.q = q
+                that.fastwindata.a = a
+                that.fastwindata.index = index
+                that.openOrclose(0)
+                that.commentStart(a,q)
+            }
+
         },
-        commentStart(a){
+        commentStart(a,b){
             var that = this;
+                $.ajax({url:"/zlj/listcomment?answerid=" +a._id,
+                    type: 'GET',
+                    success: function(data){
+                        that.fastwindata.a = a
+                        that.fastwindata.a.comments = data.lists
+                    }
+                })//ajax
 
-            $.ajax({url:"/zlj/listcomment?answerid=" +a._id,
-                type: 'GET',
-                success: function(data){
-                    that.fastwindata.a = a
-                    that.fastwindata.a.comments = data.lists
 
 
-                }
-            })//ajax
 
         },
         sendComment(a){
