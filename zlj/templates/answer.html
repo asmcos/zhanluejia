@@ -360,7 +360,7 @@
         }
         function getimg(q){
             if (q.answers.length > 0 && q.answers[0].thumbnail){
-                return  "http://www.zhanluejia.net.cn/zlj/"+q.answers[0].thumbnail
+                return  "http://www.zhanluejia.net.cn"+q.answers[0].thumbnail
             } else {
                 return "http://www.zhanluejia.net.cn/static/img/logo.jpg"
             }
@@ -373,7 +373,7 @@
             var desc =  getdesc(q)
             var img =  getimg(q)
 
-
+            console.log(img)
             $.ajax({url:"/wxmp/getconfig?url=" +url,
                 type: 'GET',
                 success: function(data){
