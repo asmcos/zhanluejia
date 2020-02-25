@@ -338,19 +338,19 @@
 
         function htmlToText(str){
             var text =  str.replace(/<[^>]+>/g,"");//去掉所有的html标记
-            return text
+            return text.slice(0,80)
         }
 
         function getdesc(q){
             if(q.content){
-                var text = q.content.slice(0,80)
+                var text = q.content
                 if (htmlToText(text).length > 4){
                     return htmlToText(text)
                 }
             }
 
             if ( q.answers.length>0 && q.answers[0].content){
-                var text =  q.answers[0].content.slice(0,80)
+                var text =  q.answers[0].content
                 if (htmlToText(text).length > 4){
                     return htmlToText(text)
                 }
