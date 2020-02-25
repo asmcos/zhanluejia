@@ -269,6 +269,7 @@
                             that.question = data.question
                             that.mylikes = data.userlikes
                             that.loading=0
+                            share(data.question)
                         }
                     })//ajax
                 },
@@ -334,6 +335,74 @@
                 return count
             }
         })
+        function getdesc(q){
+            if(q.content){
+                return q.content.slice(0,80)
+            }else if ( q.answers.length>0 && q.answers[0].content){
+                return  q.answers[0].content.slice(0,80)
+            } else {
+               return '有趣的心灵总会相遇。'
+            }
+        }
+        function getimg(q){
+            if (q.answers.length>0 && q.answers[0].thumbnail){
+                return  q.answers[0].thumbnail
+            } else {
+                return "http://www.zhanluejia.net.cn/static/img/logo.jpg"
+            }
+        }
+        function share( q ){
+            var url = encodeURIComponent(window.location.href.split("#"));
+            var shareurl = window.location.href.split("#")[0]
+
+            var title = "【战略家】" + q.title
+            var desc =  getdesc(q)
+            var img =  getimg(q)
+
+
+            $.ajax({url:"/wxmp/getconfig?url=" +url,
+                type: 'GET',
+                success: function(data){
+                    var params = data
+
+                    params.jsApiList = [
+                        'updateAppMessageShareData',
+                        'updateTimelineShareData',
+                        'hideOptionMenu'
+                    ];
+                    params.debug = false
+
+                    wx.config(params)
+                    wx.ready(function(){
+                        // 分享给好友，或者群
+                        wx.updateAppMessageShareData({
+                            title: title, // 分享标题
+                            desc: desc, // 分享描述
+                            link: shareurl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl:img  , // 分享图标
+                            success: function () {
+                            // 设置成功
+                            }
+                        })
+                        //分享给朋友圈
+                        wx.updateTimelineShareData({
+                            title: title, // 分享标题
+                            link: shareurl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: img, // 分享图标
+                            success: function () {
+                              // 设置成功
+                            }
+                        })//updateTimelineShareData
+
+                    })
+
+                }//success
+            })//ajax
+
+        } //share
+
+
+
 
         </script>
 {% endblock %}
