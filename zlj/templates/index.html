@@ -391,11 +391,17 @@
         line-height: 50px;
     }
     .mainContent{width: 1100px; height: auto; overflow: hidden; display: block; margin: 0 auto; position: relative}
+    .newshow{display: none !important;}
+    .newshow1{display: block !important;}
     @media screen and (max-width: 751px)
     {
         .rightimg{display: none}
         .row {
            margin: 0;
+        }
+        .tab-wrap .media .media-body {
+            clear: both;
+            width: 100%;
         }
 
     }
@@ -403,11 +409,13 @@
     {
         .tab-wrap .media .pull-left {
             clear: both;
-            width: 30% !important;
-            height: 8rem !important;
+            width: 100% !important;
+            height: auto !important;
             margin-right: 0 !important;
             overflow: hidden;
         }
+        .newshow{display: block !important;}
+        .newshow1{display: none !important;}
 
     }
 
@@ -428,12 +436,15 @@
                         <div v-for="item in q.answers" class="anwersuser">
 
                             <div class="media" style="padding: 0 20px; box-sizing: border-box">
-                                <div class="pull-left" style="width:124px;height:124px; no-repeat center center">
+                                <div class="pull-left newshow1" style="width:124px;height:124px; no-repeat center center">
                                     <img class="img-responsive" v-bind:src="item.thumbnail||'/static/img/132465.jpg'" style="width: 190px; height: 124px;margin-left: 10px;">
                                 </div>
                                 <div class="media-body" style="margin-bottom: 10px; min-height: 150px;">
                                     <div class="userinfo" @click="qafastwindow(q,item,index)" style="margin-bottom: 10px;box-sizing: border-box"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{item.createTime|LocaleTime}}</i>  </div>
                                     <p class="neirong" @click="qafastwindow(q,item,index)" style="color: #7f7d8e;">{{item.content|HtmltoText}}</p>
+                                    <div class="pull-left newshow" style="width:100% !important;height:auto !important;">
+                                        <img class="img-responsive" v-bind:src="item.thumbnail||'/static/img/132465.jpg'" style="width: 190px; height: 124px;margin-left: 10px;">
+                                    </div>
                                     <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left" class="yiding">
 
                                         <i class="iconfont" style="color: #FF6534!important;" v-if="mylikes[index]==1">&#xe616;</i>
