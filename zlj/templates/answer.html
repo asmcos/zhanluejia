@@ -22,7 +22,7 @@
         margin: 0 0 10px;
         text-align: left;
     }
-    .muBlock{width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: red; z-index: 99999}
+    .muBlock{width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: red; z-index: 99999;opacity: 0;}
     @media screen and (max-width: 751px)
     {
         .item-list-content {
@@ -62,10 +62,11 @@
 
                     </div>
                     <i class="wenzi">分享你的真实观点和经验，通过汇编、洗稿的等方式拼凑的回答将会被折叠</i>
-                    <button  class="btn btn-primary" style="float: right"> 确认回答</button>
+                    <button  class="btn btn-primary" style="float: right;background:#ddd; color:#666" v-if="user.id =='' || user.id == null || user.id == undefined" @click="goLogin()"> 请先登录</button>
+                    <button  v-else class="btn btn-primary" style="float: right"> 确认回答</button>
                     <!--未登录状态下，下方div显示-->
-                    <!--<div class="muBlock" v-if="user.id =='' || user.id == null || user.id == undefined">-->
-                    <!--</div>-->
+                    <div class="muBlock" v-if="user.id =='' || user.id == null || user.id == undefined" @click="goLogin()">
+                    </div>
                 </form>
             </div>
             <h3 class="answer-count-h" v-if="question.answers"><span>{{question.answers.length}}个回答</span></h3>
@@ -228,6 +229,9 @@
                         }
                     })//ajax
 
+                },
+                goLogin(){
+                    window.location.href="/zlj/login.html"
                 },
                 clickComment(a){
                     var that = this;

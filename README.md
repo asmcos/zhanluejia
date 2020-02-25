@@ -1,6 +1,6 @@
 zhanluejia.org website base on JSAdmin.
 
-http://www.zhanluejia.org
+http://www.zhanluejia.net.cn
 
 1.
 npm run build //build static file
