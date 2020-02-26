@@ -278,7 +278,12 @@
                     })//ajax
                 },
                 answerlike (a,index) {
+
+
                     var that = this;
+                    if (that.user.id ==""){
+                        that.goLogin()
+                    }
                     console.log(a._id);
                     if (that.mylikes[index] == 1){
                         that.mylikes[index] = 0
