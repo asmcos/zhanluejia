@@ -792,13 +792,16 @@ $(document).ready(function () {
                     'hideOptionMenu'
                 ];
                 params.debug = false
-
+                var share_desc = '<%= sysconf.share_desc%>'
+                if (share_desc.length < 5){
+                    share_desc = '有趣的心灵总会相遇。'
+                }
                 wx.config(params)
                 wx.ready(function(){
                     // 分享给好友，或者群
                     wx.updateAppMessageShareData({
                         title: '【战略家】运筹帷幄,决胜千里', // 分享标题
-                        desc: '有趣的心灵总会相遇。', // 分享描述
+                        desc: share_desc, // 分享描述
                         link: shareurl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                         imgUrl: 'http://www.zhanluejia.net.cn/static/img/logo.jpg', // 分享图标
                         success: function () {

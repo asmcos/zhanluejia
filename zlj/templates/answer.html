@@ -359,7 +359,11 @@
                     return htmlToText(text)
                 }
             } else {
-               return '有趣的心灵总会相遇。'
+                var share_desc = '<%= sysconf.share_desc%>'
+                if (share_desc.length < 5){
+                    share_desc = '有趣的心灵总会相遇。'
+                }
+                return share_desc;
             }
         }
         function getimg(q){
