@@ -109,7 +109,7 @@
                                             <div class="item-list-avatar"><img :src="user.avatar" alt=""></div>
                                             <!--未登录显示部分-->
                                             <div class="item-list-content" v-if="user.id =='' || user.id == null || user.id == undefined">
-                                                <input data-node="comment-edit" name="name" placeholder="请先登录..." rows="8" :id="'writecomment'+a._id" disabled="disabled"></input>
+                                                <input data-node="comment-edit" name="name" placeholder="请先登录..." rows="8" :id="'writecomment'+answer._id" disabled="disabled"></input>
                                                 <div class="fabiao" @click="sendComment(answer)"  style="margin-bottom: 0 !important;">
                                                     <span style="width: 100%;">发表</span>
                                                 </div>
