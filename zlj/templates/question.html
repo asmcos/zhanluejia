@@ -236,8 +236,8 @@
                 clickComment(a){
                     var that = this;
                     console.log(a)
-                    console.log(a.commentLoad)
-                    if (a.commentLoad == 1){
+
+                    if (a.commentLoad && a.commentLoad == 1){
                         that.$set(a, `commentLoad`, 0)
                         return
                     } else {
@@ -305,7 +305,7 @@
                   var that = this
                   $.ajax({
                       type:"POST",
-                      url:"/zlj/answer",
+                      url:"/zlj/newanswer",
                       data:{
                         question:that.questionid,
                         content: content1

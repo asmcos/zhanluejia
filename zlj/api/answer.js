@@ -167,6 +167,28 @@ function myanswers(req,res){
 
 }
 
+// a answer and it's question
+function answer(req,res){
+    var answer  = keystone.list( "Answer" )
+
+    var answerid = req.query.answerid
+
+    answer.model.findOne({_id:answerid,status:1})
+                .populate({path: 'author', select: {'name':1,'avatar':1}})
+                .populate({path: 'question', select:{'title':1,'answerCount':1,'content':1,'answers':1}})
+                .exec(async function (err, answer) {
+                    if (err) return res.json(err);
+                    var userlike = ""
+                    if (req.user){
+                        userlike = rediscmd.answerlike_hget(req.user._id,answerid)
+                    }
+
+                    return res.json({answer,userlike})
+                })
+
+}
+
+
 async function like(req, res) {
 
     if (!req.query.answerid){
@@ -241,6 +263,7 @@ function updateAnswerbyNewComment(req,res,comment,callback){
 
 module.exports = {
 	create:create,
+    answer:answer,
     list:list,
     like:like,
     del:del,

@@ -34,7 +34,7 @@
                     <div class="tab-content" style="padding: 0px;">
                         <div id="tab1" class="tab-pane fade  active in" >
                             <h2 style="padding: 0px 20px; box-sizing: border-box; margin-top: 20px;">
-                                <a href="#">{{a.question.title}}</a>
+                                <a :href="'answer.html?answerid='+a._id">{{a.question.title}}</a>
                             </h2>
                             <p class="huida" style="padding: 0px 20px; box-sizing: border-box;">{{a.question.answerCount}}回答</p>
 

@@ -117,6 +117,16 @@ function answer (req,res){
     })
 }
 
+function question (req,res){
+
+	getData(req,res,function(data){
+        var content =  swig.renderFile(temppath + 'question.html',
+            data
+        );
+
+        res.send(content)
+    })
+}
 
 function answers (req,res){
 
@@ -135,6 +145,7 @@ exports = module.exports={
     index:index,
     my:my,
     newquestion:newquestion,
+	question:question,
     answer:answer, //q and a
 	answers:answers, //all answers
 	gather:gather,

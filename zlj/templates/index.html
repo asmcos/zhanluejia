@@ -431,7 +431,7 @@
             <div class="parrent media-body" >
                 <div class="tab-content" style="padding: 0">
                     <div class="tab-pane fade  active in" id="tab1">
-                        <h2 style="padding: 0 20px; box-sizing: border-box; margin-top: 20px;"><a v-bind:href="'/zlj/answer.html?questionid='+q._id">{{q.title}}</a></h2>
+                        <h2 style="padding: 0 20px; box-sizing: border-box; margin-top: 20px;"><a v-bind:href="'/zlj/question.html?questionid='+q._id">{{q.title}}</a></h2>
                         <p class="huida" style="padding: 0 20px; box-sizing: border-box">{{q.answerCount}}回答</p>
                         <div v-for="item in q.answers" class="anwersuser">
 
@@ -688,13 +688,13 @@ $(document).ready(function () {
                 window.location.href = "/zlj/login.html"
             }
             else {
-                window.location.href= "/zlj/answer.html?questionid=" + q._id
+                window.location.href= "/zlj/question.html?questionid=" + q._id
             }
         }, //answercomment
         qafastwindow(q,a,index){ //question and answer
             var that = this;
             if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端
-                window.location.href="/zlj/answer.html?questionid=" +q._id
+                window.location.href="/zlj/question.html?questionid=" +q._id
             }
             else
             {
