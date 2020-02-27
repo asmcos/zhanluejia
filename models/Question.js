@@ -37,7 +37,9 @@ Question.add({
   hidenStatus: { type: Types.Number ,default:0}, //0.正常开放,1.隐藏
   isTop: { type:Types.Number,default:0}, //0,未置顶, 1,置顶且排序靠后，2,置顶且排序优先于1
   answers: {type: Types.Relationship, ref: 'Answer' ,many: true},
+  pageviews: {type:Number,default:0}, //浏览量
   status: {type: Number,default:1} //1 正常，0 删除
+
 });
 
 Question.schema.pre('save', function (next) {

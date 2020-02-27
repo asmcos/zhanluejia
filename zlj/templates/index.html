@@ -432,7 +432,8 @@
                 <div class="tab-content" style="padding: 0">
                     <div class="tab-pane fade  active in" id="tab1">
                         <h2 style="padding: 0 20px; box-sizing: border-box; margin-top: 20px;"><a v-bind:href="'/zlj/question.html?questionid='+q._id">{{q.title}}</a></h2>
-                        <p class="huida" style="padding: 0 20px; box-sizing: border-box">{{q.answerCount}}回答</p>
+                        <p class="huida" style="padding: 0 20px; box-sizing: border-box">{{q.answerCount}}回答  {{q.pageviews|Countfilter}}次浏览</p>
+
                         <div v-for="item in q.answers" class="anwersuser">
 
                             <div class="media" style="padding: 0 20px; box-sizing: border-box">

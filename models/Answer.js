@@ -37,6 +37,7 @@ Answer.add({
   comments: {type:Types.Relationship,ref:'Comment',many:true},
   likeCount: { type:Types.Number,default:0 } ,//点赞数
   liked:{ type:Types.Relationship,ref: 'Answerlike' },
+  pageviews: {type:Number,default:0}, //浏览量
   status: {type: Number,default:1} //1 正常，0 删除
 });
 

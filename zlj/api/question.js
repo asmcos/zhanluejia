@@ -273,7 +273,7 @@ async function myquestions(req, res) {
 
 }
 
-function listanswer(req, res) {
+async function listanswer(req, res) {
 
 
     var question  = keystone.list( "Question" )
@@ -284,22 +284,25 @@ function listanswer(req, res) {
         return res.json({code:-1,message:"no questionid"})
     }
 
-      question.model.findOne({_id:questionid,status:1})
+    await question.model.updateOne({_id:questionid,status:1}, {$inc: {pageviews:1}});
+
+    question.model.findOne({_id:questionid,status:1})
                     .populate({ path: 'answers',
                         options: {sort: {'updateTime':-1},
                         limit: 20,status:1},
                         populate: {path: 'author',select: {'name':1,'avatar':1}}
                     })
-                    .exec(async function (err, question) {
+                    .exec(async function (err, questionDoc) {
                         if (err) return res.json(err);
+
                         var userlikes = []
-                        if (req.user&&question.answers.length>0){
-                            answerlist = question.answers.map(a => a._id+"")
+                        if (req.user&&questionDoc.answers.length>0){
+                            answerlist = questionDoc.answers.map(a => a._id+"")
                             userlikes = await rediscmd.answerlike_hmget(req.user._id,answerlist)
 
                         }
 
-                        return res.json({question,userlikes})
+                        return res.json({question:questionDoc,userlikes})
                     })
 
 }

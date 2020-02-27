@@ -168,10 +168,16 @@ function myanswers(req,res){
 }
 
 // a answer and it's question
-function answer(req,res){
+async function answer(req,res){
     var answer  = keystone.list( "Answer" )
 
+    if (!req.query.answerid){
+        return res.json({code:-1,message:"no answerid "})
+    }
+
     var answerid = req.query.answerid
+
+    await answer.model.updateOne({_id:answerid,status:1}, {$inc: {pageviews:1}});
 
     answer.model.findOne({_id:answerid,status:1})
                 .populate({path: 'author', select: {'name':1,'avatar':1}})
