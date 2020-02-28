@@ -30,10 +30,33 @@ function getsysconf(data,cb){
 	})
 }
 
-function getData(req,res,setData) {
-    var data = {
+function seoquestion(data ,cb){
 
-	}
+}
+function seoquestions(data ,cb){
+
+	var questions = keystone.list( "Question" )
+
+	questions.model.find({status:1})
+	.limit(10)
+	.select("title")
+	.exec(function(err,result){
+
+		data.questions = result
+
+		cb(null,"seoquestions")
+	})
+}
+
+function seoanswer(data,cb){
+
+}
+function seoanswers(data,cb){
+
+}
+function getData(req,res,data,tasklist,setData) {
+
+
 	if (req.user){
 		var user = {
 			id:req.user._id+"",
@@ -43,12 +66,7 @@ function getData(req,res,setData) {
 
 		data.user = user
 	}
-    async.parallel([
-
-        function(callback){
-            getsysconf(data,callback);
-        },
-    ],
+    async.parallel(tasklist,
     function(err,results){
         setData(data)
     })
@@ -56,8 +74,20 @@ function getData(req,res,setData) {
 
 function index (req,res){
 
-    getData(req,res,function(data){
+	var tasklist = [
 
+        function(callback){
+            getsysconf(data,callback);
+        },
+		function(callback){
+			seoquestions(data,callback);
+		}
+    ]
+
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
+		console.log(data)
         var content =  swig.renderFile(temppath + 'index.html',
             data
         );
@@ -68,8 +98,16 @@ function index (req,res){
 }
 
 function gather (req,res){
+	var tasklist = [
 
-    getData(req,res,function(data){
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
         var content =  swig.renderFile(temppath + 'gather.html',
             data
         );
@@ -82,8 +120,16 @@ function gather (req,res){
 
 function my (req,res){
 
+	var tasklist = [
 
-	getData(req,res,function(data){
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
         var content =  swig.renderFile(temppath + 'my.html',
             data
         );
@@ -95,8 +141,16 @@ function my (req,res){
 
 function newquestion (req,res){
 
+	var tasklist = [
 
-	getData(req,res,function(data){
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
         var content =  swig.renderFile(temppath + 'newquestion.html',
             data
         );
@@ -107,8 +161,16 @@ function newquestion (req,res){
 
 function answer (req,res){
 
+	var tasklist = [
 
-	getData(req,res,function(data){
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
         var content =  swig.renderFile(temppath + 'answer.html',
             data
         );
@@ -118,8 +180,16 @@ function answer (req,res){
 }
 
 function question (req,res){
+	var tasklist = [
 
-	getData(req,res,function(data){
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
         var content =  swig.renderFile(temppath + 'question.html',
             data
         );
@@ -130,8 +200,17 @@ function question (req,res){
 
 function answers (req,res){
 
+	var tasklist = [
 
-	getData(req,res,function(data){
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
         var content =  swig.renderFile(temppath + 'answers.html',
             data
         );

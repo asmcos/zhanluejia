@@ -830,4 +830,9 @@ $(document).ready(function () {
 
 })
 </script>
+<noscript>
+    {% for q in questions %}
+    <a href=<%= "/zlj/question.html?questionid="+q._id %>><%= q.title %> </a>
+    {% endfor %}
+</noscript>
 {% endblock %}
