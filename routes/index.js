@@ -69,7 +69,7 @@ exports = module.exports = function (app) {
 	app.use('/wxmp/', keystone.express.static(path.join(__dirname, '../wxmp/')));
 	app.use('/wxmp/callback', routes.wxmp.api.callback);
 	app.use('/wxmp/my', routes.wxmp.api.my);
-    app.use('/wxmp/getConfig',routes.wxmp.api.getConfig);
+  app.use('/wxmp/getConfig',routes.wxmp.api.getConfig);
 
 	// 战略家 pc,h5
 	app.use('/zlj/', keystone.express.static(path.join(__dirname, '../zlj/www')));
@@ -104,7 +104,7 @@ exports = module.exports = function (app) {
     app.get('/zlj/myquestions', routes.zlj.question.myquestions);
 
     //answer
-    app.use('/zlj/newanswer', routes.zlj.answer.create); 
+    app.use('/zlj/newanswer', routes.zlj.answer.create);
     app.use('/zlj/answer', routes.zlj.answer.answer); //list a answer
     app.use('/zlj/delanswer', routes.zlj.answer.del);
     app.use('/zlj/myanswers', routes.zlj.answer.myanswers);
