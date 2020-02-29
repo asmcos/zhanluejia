@@ -414,6 +414,12 @@ svg {
 <script>
    $(document).ready(function(){
 
+     var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+     if (ua.match(/MicroMessenger/i) == "micromessenger") {
+        //在微信中打开
+        window.location.replace("/wxmp/login.html")
+      }
+
 		 $("input").focus(function(){
 			$(this).css("border-bottom","1px solid #ff6534");
 		});
@@ -564,7 +570,7 @@ svg {
         },
         loginPW:function(e){
              var that = this;
-            
+
              var datajson = JSON.stringify ({phone:that.loginphone,id:that.phoneid,password:that.password})
              $.ajax({url:"/zlj/loginpw",
                  dataType: "json",
