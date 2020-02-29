@@ -473,7 +473,7 @@
             </div>
         </div> <!--tab-wrap-->
 
-            <div class="morebtn">加载更多</div>
+            <div class="morebtn" @click="getQuestions()">加载更多</div>
 
 
 
@@ -631,6 +631,7 @@ $(document).ready(function () {
         user:{'id':'<%= user.id%>','avatar':'<%=user.avatar%>','name':'<%=user.name%>',}, //swig templates by express
         fastwindata:{q:""},
         fastwinshow:0,
+        s:0,
     },
     created () {
     	this.getQuestions()
@@ -654,13 +655,22 @@ $(document).ready(function () {
         },
         getQuestions(){
             var that = this
-            $.ajax({url:"/zlj/listquestion",
+            that.s = that.questions.length
+            $.ajax({url:"/zlj/listquestion?skip=" + that.s,
                 type: 'GET',
                 success: function(data){
-                    that.questions = data.questions
-                    that.mylikes = data.userlikes
+
+
+
+                    var q = that.questions
+                    var l = that.mylikes
+
+                    that.questions = q.concat(data.questions)
+                    that.mylikes = l.concat(data.userlikes)
 
                     that.loading=0
+
+
                 }
             })//ajax
         },
