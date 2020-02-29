@@ -107,6 +107,11 @@ async function list(req, res) {
     s = parseInt(s)
 
     var tagname = req.query.tag
+    var starttime = new Date()
+
+    if (req.query.starttime){
+      starttime = new Date(req.query.starttime)
+    }
 
     if (tagname){
         tagname = decodeURI(tagname)
@@ -117,7 +122,7 @@ async function list(req, res) {
             return res.json({questions:[],userlikes:[]})
         }
 
-        question.model.find({status:1})
+        question.model.find({status:1,updateTime:{$lt:starttime}})
                       .skip(s)
                       .limit(l)
                       .populate('tags')
@@ -146,7 +151,7 @@ async function list(req, res) {
 
 
     } else {
-        question.model.find({status:1})
+        question.model.find({status:1,updateTime:{$lt:starttime}})
                       .skip(s)
                       .limit(l)
                       .sort('-updateTime')

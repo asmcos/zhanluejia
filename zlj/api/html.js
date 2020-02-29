@@ -87,7 +87,7 @@ function index (req,res){
 	var data = {}
 
     getData(req,res,data,tasklist,function(data){
-		console.log(data)
+		
         var content =  swig.renderFile(temppath + 'index.html',
             data
         );

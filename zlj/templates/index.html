@@ -631,7 +631,6 @@ $(document).ready(function () {
         user:{'id':'<%= user.id%>','avatar':'<%=user.avatar%>','name':'<%=user.name%>',}, //swig templates by express
         fastwindata:{q:""},
         fastwinshow:0,
-        s:0,
     },
     created () {
     	this.getQuestions()
@@ -655,12 +654,13 @@ $(document).ready(function () {
         },
         getQuestions(){
             var that = this
-            that.s = that.questions.length
-            $.ajax({url:"/zlj/listquestion?skip=" + that.s,
+            var offset = ""
+            if (that.questions.length > 0){
+              offset = "?starttime=" + that.questions[that.questions.length-1].updateTime
+            }
+            $.ajax({url:"/zlj/listquestion" + offset,
                 type: 'GET',
                 success: function(data){
-
-
 
                     var q = that.questions
                     var l = that.mylikes
