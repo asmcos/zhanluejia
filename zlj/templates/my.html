@@ -158,7 +158,7 @@
                                             <i class="iconfont" style="color: rgb(202, 202, 202); font-size: 10px; line-height: 15px; float: left; margin-top: 6px; margin-right: 5px;"></i>{{a.commentCount|Countfilter}}评论
                                         </div>
                                         <a @click="delanswer(a._id)" class="answerBtn glyphicon glyphicon-remove" style="float: left; margin-top: 0;margin-right: 10px; font-size: 14px;color: rgb(78, 78, 78);">删除</a>
-                                        <a href="#" class="answerBtn glyphicon glyphicon-pencil" style="float: left; margin-right: 10px; margin-top: 0;font-size: 14px;color: rgb(78, 78, 78);">编辑</a>
+                                        <a :href="'/zlj/updateanswer.html?answerid='+a._id" class="answerBtn glyphicon glyphicon-pencil" style="float: left; margin-right: 10px; margin-top: 0;font-size: 14px;color: rgb(78, 78, 78);">编辑</a>
                                     </div>
                                 </div>
                             </div>

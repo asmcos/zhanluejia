@@ -87,7 +87,7 @@ function index (req,res){
 	var data = {}
 
     getData(req,res,data,tasklist,function(data){
-		
+
         var content =  swig.renderFile(temppath + 'index.html',
             data
         );
@@ -179,6 +179,26 @@ function answer (req,res){
     })
 }
 
+function updateanswer (req,res){
+
+	var tasklist = [
+
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
+        var content =  swig.renderFile(temppath + 'updateanswer.html',
+            data
+        );
+
+        res.send(content)
+    })
+}
+
 function question (req,res){
 	var tasklist = [
 
@@ -226,6 +246,7 @@ exports = module.exports={
     newquestion:newquestion,
 	question:question,
     answer:answer, //q and a
+	updateanswer:updateanswer, //编辑回答
 	answers:answers, //all answers
 	gather:gather,
 }

@@ -57,13 +57,13 @@
             <div class="center">
                 <h2>{{answer.question.title}}</h2>
                 <p> <div v-html="answer.question.content"></div></p>
-                <form  v-on:submit.prevent="sendAnswer" style="margin-top: 20px; position: relative">
+                <form  v-on:submit.prevent="sendUpdateAnswer" style="margin-top: 20px; position: relative">
                     <div id="Editcontent">
 
                     </div>
                     <i class="wenzi">分享你的真实观点和经验，通过汇编、洗稿的等方式拼凑的回答将会被折叠</i>
                     <button  class="btn btn-primary" style="float: right;background:#ddd; color:#666" v-if="user.id =='' || user.id == null || user.id == undefined" @click="goLogin()"> 请先登录</button>
-                    <button  v-else class="btn btn-primary" style="float: right"> 我来回答</button>
+                    <button  v-else class="btn btn-primary" style="float: right"> 更新回答</button>
                     <!--未登录状态下，下方div显示-->
                     <div class="muBlock" v-if="user.id =='' || user.id == null || user.id == undefined" @click="goLogin()">
                     </div>
@@ -204,6 +204,8 @@
         $(document).ready(function () {
 
 
+
+
           var myVue = new Vue({
             el: '#app',
         	data:{
@@ -230,6 +232,7 @@
                         type: 'GET',
                         success: function(data){
                             a.comments = data.lists
+
 
                         }
                     })//ajax
@@ -278,6 +281,7 @@
                             that.userlike = data.userlike
                             that.loading=0
                             share(data.answer)
+
                             that.$nextTick(function(){
                                 var E = window.wangEditor
                                 window.editor = new E('#Editcontent');
@@ -285,8 +289,9 @@
                                 editor.customConfig.uploadImgServer = '/zlj/uploadimage?responseType=json';
                                 editor.customConfig.uploadFileName = "image"
                                 editor.create();
-
+                                $('#'+editor.textElemId).html(that.answer.content)
                             });
+
 
                         }
                     })//ajax
@@ -312,20 +317,21 @@
                         }
                     })//ajax
                 },
-                sendAnswer () {
+                sendUpdateAnswer () {
 
                   var content1 =  $('#'+editor.textElemId).html()
 
                   var that = this
                   $.ajax({
                       type:"POST",
-                      url:"/zlj/newanswer",
+                      url:"/zlj/updateanswer",
                       data:{
-                        question:that.answer.question._id,
+                        answerid:that.answer._id,
                         content: content1
                         },
                     success:function(data){
                         if (data.code == 0){
+                            alert("修改成功")
                             window.location.reload()
                         }
                     }
@@ -334,6 +340,9 @@
                 },
             },
           });// Vue
+
+
+
 
 
 

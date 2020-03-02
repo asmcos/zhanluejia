@@ -92,6 +92,7 @@ exports = module.exports = function (app) {
     app.use('/zlj/newquestion.html', routes.zlj.html.newquestion);
     app.use('/zlj/question.html', routes.zlj.html.question); //list question and answers
     app.use('/zlj/answer.html', routes.zlj.html.answer);   // question title + a answer.html
+    app.use('/zlj/updateanswer.html', routes.zlj.html.updateanswer);   // updateanswer.html
     app.use('/zlj/answers.html', routes.zlj.html.answers); //list all answers
 
     app.use('/zlj/uploadimage',routes.zlj.upload.uploadimage);
@@ -106,6 +107,7 @@ exports = module.exports = function (app) {
     //answer
     app.use('/zlj/newanswer', routes.zlj.answer.create);
     app.use('/zlj/answer', routes.zlj.answer.answer); //list a answer
+    app.use('/zlj/updateanswer', routes.zlj.answer.updateanswer); //list a answer
     app.use('/zlj/delanswer', routes.zlj.answer.del);
     app.use('/zlj/myanswers', routes.zlj.answer.myanswers);
     app.use('/zlj/answers', routes.zlj.answer.list);

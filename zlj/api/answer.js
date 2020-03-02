@@ -195,6 +195,32 @@ async function answer(req,res){
 }
 
 
+async function updateanswer(req,res){
+    var answer  = keystone.list( "Answer" )
+
+    if (!req.body.answerid){
+        return res.json({code:-1,message:"no answerid"})
+    }
+
+    var answerid = req.body.answerid
+
+    if (!req.user){
+        return res.json({code:-2,message:"Your need login"})
+    }
+
+    answer.model.findOneAndUpdate({_id:answerid,author:req.user.id},{content:req.body.content},{},function(err, updatedObject){
+            if (err){
+                return res.json({code:-1,message:"update answer err"})
+            }
+            return res.json({code:0,message:"修改成功"})
+
+    })
+
+
+
+
+}
+
 async function like(req, res) {
 
     if (!req.query.answerid){
@@ -270,6 +296,7 @@ function updateAnswerbyNewComment(req,res,comment,callback){
 module.exports = {
 	create:create,
     answer:answer,
+    updateanswer:updateanswer,
     list:list,
     like:like,
     del:del,
