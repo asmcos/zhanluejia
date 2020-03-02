@@ -413,7 +413,12 @@ console.log(myVue)
     })
 
     function HtmltoText(str){
-        return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+        var text =  str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+        if (text.length>200){
+            return text.slice(0,200) + '...'
+        } else{
+            return text
+        }
     }
     Vue.filter('HtmltoText',HtmltoText)
 
