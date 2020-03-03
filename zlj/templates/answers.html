@@ -53,7 +53,7 @@
                                     <!--</div>-->
                                     <div class="media-body" style="margin-bottom: 10px; min-height: 150px;">
                                         <div class="userinfo" style="margin-bottom: 10px; box-sizing: border-box;"><img :src="a.author.avatar"  alt="" class="userimg">
-                                            <i>{{a.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{a.updateTime}}</i>
+                                            <i>{{a.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{a.updateTime|LocaleTime}}</i>
                                         </div>
                                         <p class="neirong"  style="color: #7f7d8e;" v-html="a.content"></p>
                                         <div @click="answerlike(a,index)" class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;color: #4e4e4e; font-weight: lighter">
@@ -161,12 +161,6 @@
             },
           });// Vue
 
-          // var E = window.wangEditor
-          // var editor = new E('#content');
-          //
-          // editor.customConfig.uploadImgServer = '/zlj/uploadimage?responseType=json';
-          // editor.customConfig.uploadFileName = "image"
-          // editor.create();
 
       }) //ready
 
