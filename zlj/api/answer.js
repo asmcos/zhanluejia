@@ -208,7 +208,10 @@ async function updateanswer(req,res){
         return res.json({code:-2,message:"Your need login"})
     }
 
-    answer.model.findOneAndUpdate({_id:answerid,author:req.user.id},{content:req.body.content},{},function(err, updatedObject){
+    var  thumbnail = imgUrlFun(req.body.content)
+
+
+    answer.model.findOneAndUpdate({_id:answerid,author:req.user.id},{content:req.body.content,thumbnail:thumbnail},{},function(err, updatedObject){
             if (err){
                 return res.json({code:-1,message:"update answer err"})
             }
