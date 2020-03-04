@@ -622,6 +622,17 @@
 <script>
 $(document).ready(function () {
 
+    function getUrlParam(name){
+
+            var reg=new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r= window.location.search.substr(1).match(reg);
+
+            if(r != null) {
+                return unescape(r[2]);
+            }
+            return null;
+    }
+
   var myVue = new Vue({
     el: '#mainlist',
 	data:{
@@ -654,13 +665,10 @@ $(document).ready(function () {
         },
         getQuestions(){
             var that = this
-            var offset = ""
-            if (that.questions.length > 0){
-              offset = "?starttime=" + that.questions[that.questions.length-1].updateTime
-            }
+
             var tag = decodeURI(getUrlParam("tag"))
 
-            var that = this
+
             $.ajax({url:"/zlj/listquestion?tag="+tag,
 
                 type: 'GET',
@@ -784,13 +792,21 @@ $(document).ready(function () {
   }
   Vue.filter('LocaleTime',toLocaleString)
 
+  function isactive(keyword){
+      if(escape(getUrlParam("tag"))==encodeURI(keyword)){
+          return "active"
+      }
+      return ""
+  }
+
+
   var VueMenu = new Vue({
     el: '#header',
    data:{
-       active_index : "active",
+       active_aboutme : isactive("关于我们"),
     },
   })
-
+console.log(VueMenu)
 //wxshare
 
     function share( ){
