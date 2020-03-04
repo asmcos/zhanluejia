@@ -114,7 +114,7 @@ async function list(req, res) {
     }
 
     if (tagname){
-        tagname = decodeURI(tagname)
+        tagname = decodeURI(escape(decodeURI(tagname)))
         var tagid = await tag.model.findOne({name:tagname})
 
         // 查找的 标签 不存在
