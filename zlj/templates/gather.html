@@ -2,38 +2,468 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<style>
+    .yiding{ padding: 0 10px;cursor: pointer;}
+    .yiding:hover{
+        background: #fff;
+        opacity: 0.5;
+        font-weight: 400;
+    }
 
-<section id="blog" class="container">
+    .yiding img{margin: 0}
+    @font-face {
+        font-family: 'iconfont';  /* project id 1595395 */
+        src: url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.eot');
+        src: url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.eot?#iefix') format('embedded-opentype'),
+        url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.woff2') format('woff2'),
+        url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.woff') format('woff'),
+        url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.ttf') format('truetype'),
+        url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.svg#iconfont') format('svg');
+    }
+    .iconfont{ font-family:"iconfont"
+    !important; font-size:14px;font-style:normal; -webkit-font-smoothing: antialiased; -webkit-text-stroke-width: 0.2px; -moz-osx-font-smoothing: grayscale;}
+    .moreRelitivity{width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 999999; overflow: auto}
+    .moreRelitivityBg{width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: #000; opacity: 0.7}
+    .main {
+        border-top: 4px solid #ff6534;
+        width: 1000px;
+        background: #fff;
+        margin: 0 auto;
+        position: relative;
+        padding-bottom: 30px;
+        overflow: hidden;
+        margin-top: 20px;
+        min-height: calc(100vh - 205px);
+    }
+    .header {
+        margin: 0 auto;
+        padding: 32px 152px 36px;
+        background: #F8F8F8;
+    }
+   .header h2 {
+        font-size: 26px;
+        font-weight: 700;
+        color: #333;
+    }
+     .header .abstract {
+        text-align: justify;
+        font-size: 16px;
+        color: gray;
+        line-height: 26px;
+        margin-top: 6px;
+    }
+     .question-bottom {
+        font-size: 0;
+        margin-top: 16px;
+        line-height: 20px;
+        height: 20px;
+    }
+    .question-bottom .answer-count {
+        float: right;
+        right: 0;
+        font-size: 14px;
+    }
+     .question-bottom a {
+        color: #406599;
+    }
+     .answer {
+        margin-top: 30px;
+         padding: 32px 152px 36px;
+    }
+    .answer-user {
+        position: relative;
+        margin-bottom: 8px;
+        min-height: 40px;
+    }
+     .answer-user .self-info {
+        float: right;
+        color: #999;
+        font-size: 14px;
+    }
+    .answer-user-avatar {
+        width: 40px;
+        height: 40px;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 8px;
+        float: left;
+        -webkit-border-radius: 40px;
+        border-radius: 40px;
+        overflow: hidden;
+        position: relative;
+    }
+     .answer-user-avatar img {
+        width: 100%;
+        height: 100%;
+    }
+     .answer-user-avatar:after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        background: rgba(0,0,0,.05);
+        position: absolute;
+    }
+     .answer-user .answer-user-name {
+        display: table-cell;
+        height: 20px;
+        vertical-align: middle;
+    }
+    .answer-user .name {
+        font-size: 14px;
+        font-weight: 700;
+        display: inline-block;
+        color: #333;
+        line-height: 20px;
+        height: 20px;
+    }
+     .answer-user .intro {
+        position: relative;
+        color: #777;
+        font-size: 14px;
+        margin-left: 9px;
+    }
+    .answer-user .intro:after {
+        content: "";
+        position: absolute;
+        width: 1px;
+        height: 12px;
+        top: 4px;
+        left: -6px;
+        background: #777;
+    }
+     .answer-user .create-time {
+        margin-top: 3px;
+        display: inline-block;
+        font-size: 12px;
+        color: #999;
+    }
+  .content {
+        font-size: 16px;
+        line-height: 26px;
+        margin-top: 14px;
+        text-align: justify;
+    }
+     .content p {
+        margin-bottom: 20px;
+    }
+    .rich-text p, .rich-text div {
+        line-height: 28px;
+        margin: 0;
+        margin-bottom: 20px;
+    }
+     .other-answer {
+        font-size: 14px;
+         display: block;
+         width: 100%;
+         float: left;
+         overflow: hidden;
+         margin-top: 10px;
+    }
+    .other-answer a {
+        color: #406599;
+    }
+     .goto-question {
+        position: relative;
+        margin: 30px 152px 0;
+        background: #FFF;
+        border: 1px solid rgba(232,232,232,.5);
+        -webkit-box-shadow: 0 0 4px 0 rgba(0,0,0,.05);
+        box-shadow: 0 0 4px 0 rgba(0,0,0,.05);
+        overflow: hidden;
+        font-weight: 700;
+    }
+     .goto-question .line {
+        width: 3px;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: rgba(42,144,215,.9);
+    }
+     .goto-question .goto-question-title {
+        width: 487px;
+        margin: 30px 0 30px 24px;
+        display: block;
+        font-size: 18px;
+        color: #333;
+        line-height: 28px;
+    }
+    .goto-question .goto-question-btn {
+        position: absolute;
+        top: 50%;
+        -moz-transform: translate(0,-50%);
+        -ms-transform: translate(0,-50%);
+        transform: translate(0,-50%);
+        -webkit-transform: translate(0,-50%);
+        right: 28px;
+        width: 108px;
+        height: 32px;
+        text-align: center;
+        color: #2A90D7;
+        line-height: 14px;
+        background: rgba(42,144,215,.05);
+        border: 1px solid #2A90D7;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+     .goto-question .goto-question-btn .box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        -moz-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
+        -webkit-transform: translate(-50%,-50%);
+    }
+     .comment {
+        margin: 30px 152px 0;
+    }
+    .comment-widget {
+        padding-top: 24px;
+        padding-bottom: 0;
+        background: #f8f8f8;
+    }
+    .comment-widget.detail {
+        padding-top: 20px;
+    }
+    .comment-widget .comment-info {
+        margin-left: 24px;
+        font-size: 0;
+        height: 22px;
+        line-height: 22px;
+    }
+    .comment-widget .comment-info.with-comment {
+        margin-bottom: 24px;
+    }
+    .comment-widget .comment-info .comment-count {
+        margin-right: 36px;
+    }
+    .comment-widget .my-comment {
+        margin-bottom: 15px;
+        position: relative;
+    }
+    .comment-widget .comment-avatar {
+        float: left;
+        text-align: center;
+        margin-left: 24px;
+        width: 42px;
+        height: 42px;
+        -webkit-border-radius: 42px;
+        border-radius: 42px;
+        position: relative;
+        overflow: hidden;
+        display: block;
+    }
+    .comment-widget .comment-avatar img {
+        width: 100%;
+        height: 100%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+    }
+    .comment-widget .comment-area {
+        background: #f4f5f6;
+        position: relative;
+        margin-left: 78px;
+        margin-right: 28px;
+        height: 44px;
+        overflow: hidden;
+        border: 1px solid #ddd;
+    }
+    .comment-widget .comment-area textarea {
+        background: #fff;
+        font-size: 14px;
+        line-height: 24px;
+        position: relative;
+        padding: 10px 14px;
+        outline: 0;
+        width: 100%;
+        height: 170px;
+        resize: none;
+        border: 0;
+        border-bottom: 1px solid #efefef;
+    }
+    .comment-widget .my-comment .disabled {
+        background-color: #e8e8e8;
+    }
+    .comment-widget .my-comment .submit-button {
+        position: absolute;
+        width: 112px;
+        height: 42px;
+        background-color: #7091ce;
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        line-height: 42px;
+        right: 0;
+        bottom: 0;
+    }
+    .comment-widget .comment-list {
+        padding-bottom: 15px;
+        padding: 0;
+        list-style: none;
+    }
+    .comment-widget .comment-item {
+        padding: 15px 24px 15px 0;
+    }
+    .comment-widget .comment-avatar {
+        float: left;
+        text-align: center;
+        margin-left: 24px;
+        width: 42px;
+        height: 42px;
+        -webkit-border-radius: 42px;
+        border-radius: 42px;
+        position: relative;
+        overflow: hidden;
+        display: block;
+    }
+    .comment-widget .comment-avatar a {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+    .comment-widget .comment-avatar img {
+        width: 100%;
+        height: 100%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+    }
+    .comment-widget .comment-content {
+        position: relative;
+        margin-left: 78px;
+    }
+    .comment-widget .uname {
+        color: #406599;
+        font-size: 14px;
+        display: block;
+    }
+    .comment-widget .digg-box {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        height: 100%;
+    }
+    .comment-widget .digg-box .digg {
+        position: relative;
+        color: #999;
+        padding-left: 18px;
+        line-height: 16px;
+        font-size: 14px;
+        display: block;
+        margin-top: -20px;
+        top: 50%;
+    }
+    .comment-widget .comment-content .content-text {
+        font-size: 16px;
+        margin-top: 4px;
+        margin-right: 80px;
+        text-align: justify;
+        line-height: 22px;
+    }
+    .comment-widget .tools {
+        margin-top: 5px;
+        height: 16px;
+        line-height: 16px;
+    }
+    .comment-widget .tools a, .comment-widget .tools span {
+        font-size: 14px;
+        margin-right: 36px;
+        color: gray;
+        position: relative;
+    }
+    .closeTanceng {
+        width: 50px;
+        height: 50px;
+        background: #000;
+        position: absolute;
+        right:0;
+        top: 20px;
+        color: #fff;
+        text-align: center;
+        line-height: 50px;
+    }
+    .mainContent{width: 1100px; height: auto; overflow: hidden; display: block; margin: 0 auto; position: relative}
+    .newshow{display: none !important;}
+    .newshow1{display: block !important;}
+    .morebtn{width: 100%; height: 40px; background: #0d6aad; color: #fff; text-align: center; line-height: 40px; margin: 0 auto; border-radius: 10px;}
+    @media screen and (max-width: 751px)
+    {
+        .rightimg{display: none}
+        .row {
+           margin: 0;
+        }
+        .tab-wrap .media .media-body {
+            clear: both;
+            width: 100%;
+        }
+
+    }
+    @media (max-width: 640px)
+    {
+        .tab-wrap .media .pull-left {
+            clear: both;
+            width: 100% !important;
+            height: auto !important;
+            margin-right: 0 !important;
+            overflow: hidden;
+        }
+        .newshow{display: block !important;}
+        .newshow1{display: none !important;}
+
+    }
+
+
+
+</style>
+<section id="mainlist" class="container" style="padding: 20px 0;">
 <div class="blog">
     <div class="row">
         <div class="col-md-8"> <!--main-->
 
-            <div class="tab-wrap" v-for= "(q,index) in questions">
+            <div class="tab-wrap" v-for= "(q,index) in questions" style="border: 1px solid #ebeced;">
             <div class="parrent media-body" >
                 <div class="tab-content" style="padding: 0">
                     <div class="tab-pane fade  active in" id="tab1">
                         <h2 style="padding: 0 20px; box-sizing: border-box; margin-top: 20px;"><a v-bind:href="'/zlj/question.html?questionid='+q._id">{{q.title}}</a></h2>
-                        <p class="huida" style="padding: 0 20px; box-sizing: border-box">{{q.answerCount}}回答</p>
+                        <p class="huida" style="padding: 0 20px; box-sizing: border-box">{{q.answerCount}}回答  {{q.pageviews|Countfilter}}次浏览</p>
+
                         <div v-for="item in q.answers" class="anwersuser">
-                           <div class="userinfo" style="padding: 0 20px; box-sizing: border-box"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0">{{item.createTime}}</i>  </div>
+
                             <div class="media" style="padding: 0 20px; box-sizing: border-box">
-                                <div class="pull-left" style="width:124px;height:124px; no-repeat center center">
+                                <div class="pull-left newshow1" style="width:124px;height:124px; no-repeat center center">
                                     <img class="img-responsive" v-bind:src="item.thumbnail||'/static/img/132465.jpg'" style="width: 190px; height: 124px;margin-left: 10px;">
                                 </div>
-                                <div class="media-body">
+                                <div class="media-body" style="margin-bottom: 10px; min-height: 150px;">
+                                    <div class="userinfo" @click="qafastwindow(q,item,index)" style="margin-bottom: 10px;box-sizing: border-box"><img :src="item.author.avatar" alt="" class="userimg"><i>{{item.author.name.first}}</i>|  <i style="margin-left: 0; font-weight: 400">{{item.createTime|LocaleTime}}</i>  </div>
+                                    <p class="neirong" @click="qafastwindow(q,item,index)" style="color: #7f7d8e;">{{item.content|HtmltoText}}</p>
+                                    <div class="pull-left newshow" style="width:100% !important;height:auto !important;">
+                                        <img class="img-responsive" v-bind:src="item.thumbnail||'/static/img/132465.jpg'" style="width: 190px; height: 124px;margin-left: 10px;">
+                                    </div>
+                                    <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left" class="yiding">
 
-                                    <p class="neirong">{{item.content|HtmltoText}}</p>
-
+                                        <i class="iconfont" style="color: #FF6534!important;" v-if="mylikes[index]==1">&#xe616;</i>
+                                        <i class="iconfont" style="color: #cacaca;"  v-else>&#xe616;</i>
+                                        {{item.likeCount|Countfilter}}赞
+                                    </div>
+                                    <div @click="answercomment(item,index,q)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px;float: left" class="yiding" id="pl">
+                                       <i class="iconfont" style="color: #cacaca;font-size: 10px; line-height: 15px; float: left; margin-top: 6px; margin-right: 5px;">&#xe63a;</i>
+                                        {{item.commentCount|Countfilter}}评论
+                                    </div>
                                 </div>
                             </div>
-                            <div :class="mylikes"   style="margin: 0;margin-top: 20px; background: #eee; height: 40px;line-height: 40px;">
-                                <p @click="answerlike(item,index)" style="display: inline-block; height: 20px; overflow: hidden; line-height: 20px; margin-top: 10px;" class="yiding">
-                                    <img :src="'/static/img/x1.png'" alt="" v-if="mylikes[index]==1" class="xinzan">
-                                    <img :src="'/static/img/x.png'" alt="" class="xinzan" v-else>{{item.likeCount|Countfilter}}个赞
-                                </p>
 
 
-                            </div>
+
+
+
                         </div>
 
                     </div>
@@ -43,19 +473,144 @@
             </div>
         </div> <!--tab-wrap-->
 
-
+            <div class="morebtn" @click="getQuestions()">加载更多</div>
 
 
 
 
         </div> <!-- col-md-8-->
-        <aside class="col-md-4"> <!-- right-->
+        <aside class="col-md-4 rightimg"> <!-- right-->
             <img src="/static/img/987654.jpg" alt="" class="tup">
         </aside> <!-- col-md-4-->
     </div> <!--row -->
 </div> <!--blog-->
+    <div class="loader" style="background: #fff; z-index: 99999;margin: 0;" v-if="loading==1">
 
+        <div class="loading-2">
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+        </div>
+    </div>
+    <!--详情页弹层-->
+    <div class="moreRelitivityBg" id="fastwinbg" style="z-index: 999999;display:none;"></div>
+    <div class="moreRelitivity" id="fastwin" style="display:none;">
+
+
+        <div class="mainContent" v-if="fastwinshow==1">
+            <div class="closeTanceng" @click="openOrclose(1)">
+                关闭
+            </div>
+            <div class="main">
+                <div class="header">
+                    <a href="">
+                        <h2 class="title">{{fastwindata.q.title}}</h2>
+                    </a>
+                    <div class="abstract" v-html="fastwindata.q.content"></div>
+
+                    <div class="question-bottom">
+                        <a href="" target="_blank" data-log="Visit_Question|From_" class="answer-count"><span>全部 {{fastwindata.q.answerCount}}个回答></span>
+
+                        </a>
+                    </div>
+                </div>
+                <div class="answer">
+                    <div class="answer-user user-action">
+                        <div class="self-info" @click="answerlike(fastwindata.a,fastwindata.index)">
+                            <i> · </i>
+                            {{fastwindata.a.likeCount|Countfilter}}赞
+                        </div>
+                        <a href="" target="_blank" data-log="Visit_Profile|From_" class="answer-user-avatar">
+                            <img v-bind:src="fastwindata.a.author.avatar" alt="">
+                        </a>
+                        <a href="" target="_blank" data-log="Visit_Profile|From_" class="answer-user-name"><span class="name">
+                        {{fastwindata.a.author.name.first}}
+                        <i class="iconfont icon-all_newv" style="font-size: 13px; color: rgb(255, 196, 28);"></i>
+                    </span>
+                            <span class="intro"></span>
+                        </a>
+                        <span class="create-time">{{fastwindata.a.createTime|LocaleTime}}</span>
+                    </div>
+                    <div class="content rich-text" v-html="fastwindata.a.content">
+
+
+                    </div> <!---->
+                    <!--评论信息-->
+                    <div class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;" @click="answerlike(fastwindata.a,fastwindata.index)">
+                        <i class="iconfont" style="color: #FF6534!important;" v-if="mylikes[fastwindata.index]==1">&#xe616;</i>
+                        <i class="iconfont" style="color: #cacaca;"  v-else>&#xe616;</i>
+
+                        {{fastwindata.a.likeCount|Countfilter}}赞
+                    </div>
+                    <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px;float: left" class="yiding" id="pl">
+                        <i class="iconfont" style="color: #cacaca;font-size: 10px; line-height: 15px; float: left; margin-top: 6px; margin-right: 5px;">&#xe63a;</i>
+                        {{fastwindata.a.commentCount|Countfilter}}评论
+                    </div>
+
+
+                </div>
+                <!-- div class="goto-question">
+                    <div class="line"></div>
+                    <a href="javascript:;" class="goto-question-title">其他标题</a>
+                    <a href="javascript:;" class="goto-question-btn">
+                        <div class="box">
+                            <i class="iconfont icon-ask_write pen"></i>
+                            <span>我要回答</span>
+                        </div>
+                    </a>
+                </div-->
+                <!--评论区-->
+                <div class="comment">
+                    <div>
+                        <div class="comment-widget detail" style="min-height: 170px;">
+                            <div class="comment-info with-comment">
+                            <span class="comment-count">
+                                <i class="iconfont icon-ask_comment"></i>
+                                <span></span>
+                                <span></span>
+                            </span> <!---->
+                            </div> <!---->
+                            <div class="my-comment">
+                                <div class="comment-avatar">
+                                    <img v-bind:src="user.avatar" alt="">
+                                </div>
+                                <div class="comment-area" >
+                                    <input data-node="comment-edit" name="name" placeholder="写下你的评论..." rows="8" :id="'writecomment'+fastwindata.a._id" style="width: 100%;height: 100%;padding: 0 10px;border: none;"></input>
+                                    <a @click="sendComment(fastwindata.a)" data-node="post" class="submit-button disabled">发表</a>
+                                </div>
+                            </div>
+                            <ul class="comment-list">
+                                <li class="comment-item" v-for="c in fastwindata.a.comments">
+                                    <div class="comment-avatar">
+                                        <a href="" target="_blank">
+                                            <img v-bind:src="c.author.avatar" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="comment-content">
+                                        <a href="" target="_blank" class="uname">{{c.author.name.first}}</a>
+
+                                        <div class="content-text">
+                                            {{c.content}}
+                                        </div>
+                                        <div class="tools">
+                                            <span>{{c.createTime|LocaleTime}}</span>
+
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--详情页弹层-->
 </section>
+
 
 {% endblock %}
 
@@ -66,43 +621,68 @@
 <script src="/corlate/js/wow.min.js"></script>
 <script>
 $(document).ready(function () {
-    function getUrlParam(name){
-
-            var reg=new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-            var r= window.location.search.substr(1).match(reg);
-
-            if(r != null) {
-                return r[2];
-            }
-            return null;
-    }
 
   var myVue = new Vue({
-    el: '#blog',
+    el: '#mainlist',
 	data:{
         questions:[],
         mylikes:[],
+        loading:1,
+        user:{'id':'<%= user.id%>','avatar':'<%=user.avatar%>','name':'<%=user.name%>',}, //swig templates by express
+        fastwindata:{q:""},
+        fastwinshow:0,
     },
     created () {
     	this.getQuestions()
   	},
     methods: {
+        //控制首页弹层开启和关闭
+        openOrclose(e){
+            if(e==0)
+            {
+
+                $("#fastwinbg").show()
+                $("#fastwin").show()
+                this.fastwinshow = 1
+            }
+            else if(e == 1)
+            {
+                $("#fastwin").hide()
+                $("#fastwinbg").hide()
+                this.fastwinshow = 0
+            }
+        },
         getQuestions(){
+            var that = this
+            var offset = ""
+            if (that.questions.length > 0){
+              offset = "?starttime=" + that.questions[that.questions.length-1].updateTime
+            }
             var tag = decodeURI(getUrlParam("tag"))
 
             var that = this
             $.ajax({url:"/zlj/listquestion?tag="+tag,
+
                 type: 'GET',
                 success: function(data){
-                    that.questions = data.questions
-                    that.mylikes = data.userlikes
-                    console.log(that.questions)
+
+                    var q = that.questions
+                    var l = that.mylikes
+
+                    that.questions = q.concat(data.questions)
+                    that.mylikes = l.concat(data.userlikes)
+
+                    that.loading=0
+
+
                 }
             })//ajax
         },
         answerlike (a,index) {
             var that = this;
-            console.log(a._id);
+            if (!that.user.id){
+                window.location.href = "/zlj/login.html"
+            }
 
             if (that.mylikes[index] == 1){
                 that.mylikes[index] = 0
@@ -117,14 +697,155 @@ $(document).ready(function () {
                     a.likeCount = data.updatedObject.likeCount
                 }
             })//ajax
+        }, //answerlike
+        answercomment(a,index,q){
+            var that = this;
+            if (!that.user.id){
+                window.location.href = "/zlj/login.html"
+            }
+            else {
+                window.location.href= "/zlj/question.html?questionid=" + q._id
+            }
+        }, //answercomment
+        qafastwindow(q,a,index){ //question and answer
+            var that = this;
+            if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端
+                window.location.href="/zlj/question.html?questionid=" +q._id
+            }
+            else
+            {
+                console.log(q)
+                that.fastwindata.q = q
+                that.fastwindata.a = a
+                that.fastwindata.index = index
+                that.openOrclose(0)
+                that.commentStart(a,q)
+            }
+
+        },
+        commentStart(a,b){
+            var that = this;
+                $.ajax({url:"/zlj/listcomment?answerid=" +a._id,
+                    type: 'GET',
+                    success: function(data){
+                        that.fastwindata.a = a
+                        that.fastwindata.a.comments = data.lists
+                    }
+                })//ajax
+
+
+
+
+        },
+        sendComment(a){
+            var content1 = $("#writecomment"+a._id).val()
+            var that = this
+            $.ajax({
+                type:"POST",
+                url:"/zlj/comment",
+                data:{
+                  answerid:a._id+"",
+                  content: content1
+                  },
+                success: function(data){
+                    console.log(data)
+                    $("#writecomment"+a._id).val("")
+                    that.fastwindata.a.commentCount += 1
+                    that.commentStart(a)
+
+                }
+            })//ajax
         },
     },
   });
 
+  Vue.filter('Countfilter',function(count){
+      console.log(count)
+      if (!count||count < 0){
+          return 0
+      } else {
+          return count
+      }
+  })
+
   function HtmltoText(str){
-      return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+      var text =  str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+      if (text.length>200){
+          return text.slice(0,200) + '...'
+      } else{
+          return text
+      }
   }
   Vue.filter('HtmltoText',HtmltoText)
+
+  function toLocaleString(str){
+      var d = new Date(str)
+      return d.toLocaleString()
+  }
+  Vue.filter('LocaleTime',toLocaleString)
+
+  var VueMenu = new Vue({
+    el: '#header',
+   data:{
+       active_index : "active",
+    },
+  })
+
+//wxshare
+
+    function share( ){
+        var url = encodeURIComponent(window.location.href.split("#"));
+        var shareurl = window.location.href.split("#")[0]
+
+        $.ajax({url:"/wxmp/getconfig?url=" +url,
+            type: 'GET',
+            success: function(data){
+                var params = data
+
+                params.jsApiList = [
+                    'updateAppMessageShareData',
+                    'updateTimelineShareData',
+                    'hideOptionMenu'
+                ];
+                params.debug = false
+                var share_desc = '<%= sysconf.share_desc%>'
+                if (share_desc.length < 5){
+                    share_desc = '有趣的心灵总会相遇。'
+                }
+                wx.config(params)
+                wx.ready(function(){
+                    // 分享给好友，或者群
+                    wx.updateAppMessageShareData({
+                        title: '【战略家】运筹帷幄,决胜千里', // 分享标题
+                        desc: share_desc, // 分享描述
+                        link: shareurl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: 'http://www.zhanluejia.net.cn/static/img/logo.jpg', // 分享图标
+                        success: function () {
+                        // 设置成功
+                        }
+                    })
+                    //分享给朋友圈
+                    wx.updateTimelineShareData({
+                        title: '【战略家】运筹帷幄,决胜千里', // 分享标题
+                        link: shareurl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: 'http://www.zhanluejia.net.cn/static/img/logo.jpg', // 分享图标
+                        success: function () {
+                          // 设置成功
+                        }
+                    })//updateTimelineShareData
+
+                })
+
+            }//success
+        })//ajax
+
+    } //share
+    share()
+
+
 })
+
 </script>
+
+
 {% endblock %}
