@@ -69,7 +69,7 @@
                     </div>
                 </form>
             </div>
-            <h3 class="answer-count-h" v-if="answer.question.answers"><span>{{answer.question.answers.length}}个回答</span></h3>
+            <h3 class="answer-count-h" v-if="answer.question.answers"><span><a :href="'/zlj/question.html?questionid='+answer.question._id" style="color:#7091ce;">{{answer.question.answers.length}}个回答 </a></span></h3> 
                     <!-- answers -->
                     <div class="tab-wrap" >
                         <div class="huidalist" style="padding: 20px">
