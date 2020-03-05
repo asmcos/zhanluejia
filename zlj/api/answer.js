@@ -5,6 +5,18 @@ var rediscmd =  require('../../redis/command')
 
 updateQuesionbyNewAnswer = question.updateQuesionbyNewAnswer
 
+var img = require("./mkjson");
+
+var urlpath = "/zlj/img/thumbnail/"
+
+function randthumbnail(img){
+	var length = img.length - 1;
+
+	var rand = Math.floor(Math.random() * Math.floor(length));
+
+	return img[rand]
+}
+
 var imgUrlFun = function(str){
         var data = '';
         if ( str ){
@@ -14,6 +26,7 @@ var imgUrlFun = function(str){
         }
         return data
 }
+
 
 
 
@@ -33,6 +46,11 @@ function create(req, res) {
 
       if (thumbnail) {
           item.thumbnail = thumbnail
+      } else {
+          
+          var imglist = img.getImgList(__dirname + "/../www/img/thumbnail/")
+          item.thumbnail = urlpath + randthumbnail(imglist)
+
       }
       item.createTime = item.updateTime = new Date()
 
