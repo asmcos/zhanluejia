@@ -14,9 +14,9 @@ body {
     display: block;
     float: left;
     padding: 15px 15px;
-    height: 124px;
+    height: 164px;
 }
-.rightimgLi img{width: 100%;}
+.rightimgLi img{max-width: 100%; height: 100%; width: 200px;vertical-align: middle; border-radius: 10px;}
 .remen{width: 100%; height: auto; overflow: hidden; font-size: 14px;padding: 3px 5px;
 color: #000;
 text-transform: uppercase;
