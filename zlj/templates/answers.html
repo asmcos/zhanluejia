@@ -81,8 +81,12 @@
 
 
         </div> <!-- col-md-8-->
-        <aside class="col-md-4"> <!-- right-->
-            <img src="/static/img/987654.jpg" alt="" class="tup" style="margin-top: 80px;">
+        <aside class="col-md-4 rightimg" style="background: #fff; padding: 6px 8px;; border: 1px solid #eee; margin-top: 12px;"> <!-- right-->
+            <div class="remen">热门话题</div>
+            <div class="rightimgLi" v-for="a in hotanswers">
+                <a :href="'/zlj/question.html?questionid='+a.question._id"><img :src="a.thumbnail" alt=""></a>
+            </div>
+
         </aside> <!-- col-md-4-->
     </div> <!--row -->
 </div> <!--blog-->
@@ -119,10 +123,12 @@
 
                 answers:[],
                 mylikes:[],
+                hotanswers:[],
                 s:0,
             },
             created () {
                 this.getanswers()
+                this.getHotAnswers()
             },
             methods: {
                 getanswers(){
@@ -140,6 +146,19 @@
 
                         }
                     })//ajax
+                },
+                getHotAnswers(){
+
+                        var that = this
+
+                        $.ajax({url:"/zlj/answers?limit=6&sort=-likeCount",
+                            type: 'GET',
+                            success: function(data){
+
+                              that.hotanswers = data.answers
+
+                            }
+                        })//ajax
                 },
                 answerlike (a,index) {
                     var that = this;

@@ -9,3 +9,17 @@ body {
 
     border-radius: 5px;
 }
+.rightimgLi{
+    width: 50%;
+    display: block;
+    float: left;
+    padding: 15px 15px;
+}
+.rightimgLi img{width: 100%;}
+.remen{width: 100%; height: auto; overflow: hidden; font-size: 14px;padding: 3px 5px;
+color: #000;
+text-transform: uppercase;
+margin-bottom: 10px;
+margin-top: 0;
+font-weight: 700;
+}

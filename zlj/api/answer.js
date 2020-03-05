@@ -96,7 +96,7 @@ function del(req,res){
       //0 删除，1正常
 
       answer.model.findOneAndUpdate({_id:answerid,author:authorid},{status:0},{},function(err, updatedObject){
-          
+
           if (err){
               return res.json({code:-1,message:"update question err"})
           }
@@ -120,6 +120,7 @@ function list(req,res){
 
     var l = 10
     var s = 0
+    var sort = '-updateTime'
     if (req.query.limit){
       l = req.query.limit
     }
@@ -131,10 +132,14 @@ function list(req,res){
     }
     s = parseInt(s)
 
+    if (req.query.sort){
+        sort = req.query.sort
+    }
+    console.log(sort)
     answer.model.find({status:1})
                 .skip(s)
                 .limit(l)
-                .sort('-updateTime')
+                .sort(sort)
                 .populate({path: 'author', select: {'name':1,'avatar':1}})
                 .populate({path: 'question', select:{'title':1,'answerCount':1} })
                 .exec(async function (err, answers) {

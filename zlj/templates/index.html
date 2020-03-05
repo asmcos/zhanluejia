@@ -421,20 +421,6 @@
         .newshow1{display: none !important;}
 
     }
-    .rightimgLi{
-        width: 50%;
-        display: block;
-        float: left;
-        padding: 15px 15px;
-    }
-    .rightimgLi img{width: 100%;}
-.remen{width: 100%; height: auto; overflow: hidden; font-size: 14px;padding: 3px 5px;
-    color: #000;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    margin-top: 0;
-    font-weight: 700;
-}
 
 
 </style>
@@ -496,24 +482,10 @@
         </div> <!-- col-md-7-->
         <aside class="col-md-4 rightimg" style="background: #fff; padding: 6px 8px;; border: 1px solid #eee; margin-top: 12px;"> <!-- right-->
             <div class="remen">热门话题</div>
-            <div class="rightimgLi">
-                <img src="/static/img/987654.jpg" alt="">
+            <div class="rightimgLi" v-for="a in answers">
+                <a :href="'/zlj/question.html?questionid='+a.question._id"><img :src="a.thumbnail" alt=""></a>
             </div>
-            <div class="rightimgLi">
-                <img src="/static/img/987654.jpg" alt="">
-            </div>
-            <div class="rightimgLi">
-                <img src="/static/img/987654.jpg" alt="">
-            </div>
-            <div class="rightimgLi">
-                <img src="/static/img/987654.jpg" alt="">
-            </div>
-            <div class="rightimgLi">
-                <img src="/static/img/987654.jpg" alt="">
-            </div>
-            <div class="rightimgLi">
-                <img src="/static/img/987654.jpg" alt="">
-            </div>
+
         </aside> <!-- col-md-4-->
     </div> <!--row -->
 </div> <!--blog-->
@@ -660,6 +632,7 @@ $(document).ready(function () {
 	data:{
         questions:[],
         mylikes:[],
+        answers:[],
         loading:1,
         user:{'id':'<%= user.id%>','avatar':'<%=user.avatar%>','name':'<%=user.name%>',}, //swig templates by express
         fastwindata:{q:""},
@@ -667,6 +640,7 @@ $(document).ready(function () {
     },
     created () {
     	this.getQuestions()
+        this.getHotAnswers()
   	},
     methods: {
         //控制首页弹层开启和关闭
@@ -706,6 +680,19 @@ $(document).ready(function () {
 
                 }
             })//ajax
+        },
+        getHotAnswers(){
+
+                var that = this
+
+                $.ajax({url:"/zlj/answers?limit=6&sort=-likeCount",
+                    type: 'GET',
+                    success: function(data){
+
+                      that.answers = data.answers
+
+                    }
+                })//ajax
         },
         answerlike (a,index) {
             var that = this;
