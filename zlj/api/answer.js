@@ -4,6 +4,7 @@ var question = require('./question')
 var rediscmd =  require('../../redis/command')
 
 updateQuesionbyNewAnswer = question.updateQuesionbyNewAnswer
+updateQuesionbyDelAnswer = question.updateQuesionbyDelAnswer
 
 var img = require("./mkjson");
 
@@ -47,7 +48,7 @@ function create(req, res) {
       if (thumbnail) {
           item.thumbnail = thumbnail
       } else {
-          
+
           var imglist = img.getImgList(__dirname + "/../www/img/thumbnail/")
           item.thumbnail = urlpath + randthumbnail(imglist)
 
@@ -95,15 +96,20 @@ function del(req,res){
       //0 删除，1正常
 
       answer.model.findOneAndUpdate({_id:answerid,author:authorid},{status:0},{},function(err, updatedObject){
-          console.log(err,updatedObject)
+          
           if (err){
               return res.json({code:-1,message:"update question err"})
           }
           if (updatedObject != null){
-              return res.json({code:0,message:'delete success'})
+              updateQuesionbyDelAnswer(req,res,updatedObject,function(){
+                  return res.json({code:0,message:'delete success'})
+              })
+
+          } else {
+              return res.json({code:-2,message:"delete failed"})
           }
 
-          return res.json({code:-2,message:"delete failed"})
+
       })
 
 

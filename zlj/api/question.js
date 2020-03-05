@@ -334,11 +334,28 @@ function updateQuesionbyNewAnswer(req,res,answer,callback){
     })
 }
 
+function updateQuesionbyDelAnswer(req,res,answer,callback){
+    var question  = keystone.list( "Question" )
+    var updateDocument = {
+        $inc:{"answerCount":-1},
+        $pull:{"answers":answer._id},
+    }
+    question.model.findOneAndUpdate({_id:answer.question},updateDocument,{},function(err, updatedObject){
+        
+            if (err){
+                return res.json({code:-1,message:"update question err"})
+            }
+
+            callback()
+    })
+}
+
 module.exports = {
 	create:create,
     list:list,
     del:del,
     listanswer:listanswer,
     myquestions:myquestions,
-    updateQuesionbyNewAnswer:updateQuesionbyNewAnswer
+    updateQuesionbyNewAnswer:updateQuesionbyNewAnswer,
+    updateQuesionbyDelAnswer:updateQuesionbyDelAnswer
 }
