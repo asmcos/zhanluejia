@@ -62,7 +62,12 @@ exports.callback = module.exports.callback = function(req,res){
             	U.model.findOne({wxunionId:result1['unionid']},function(err,newU){
                 	keystone.session.signinWithUser(newU, req, res, function () {
 
-                    	return res.json({result:true,name:result1['nickname'],headimgurl:result1['headimgurl']})
+						keystone.callHook(newU, 'post:signin', req, function (err) {
+									if (err) return res.status(500).json({ error: 'post:signin error', detail: err });
+
+									return res.json({result:true,name:result1['nickname'],headimgurl:result1['headimgurl']})
+								})//callHook
+
 
                 	}) //keystone.session
 

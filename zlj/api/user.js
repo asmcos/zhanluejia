@@ -55,11 +55,16 @@ exports.login = module.exports.login = function(req,res){
 		U.model.findOneAndUpdate({phoneNum:req.body.phone},profile,{upsert:true,returnNewDocument:true},function(err, updatedObject){
 			 U.model.findOne({phoneNum:req.body.phone},function(err,newU){
 
-				newU.password = ""
+
 
 			 	keystone.session.signinWithUser(newU, req, res, function () {
-                        return res.json(data)
-                })
+					keystone.callHook(newU, 'post:signin', req, function (err) {
+                                if (err) return res.status(500).json({ error: 'post:signin error', detail: err });
+
+                                return res.json(data)
+							})//callHook
+				})//signiWithUser
+
 			})//findOne
 		})//U.model
 
@@ -81,10 +86,19 @@ exports.loginpw = module.exports.loginpw = function(req,res){
 	   var ret = bcrypt.compareSync(req.body.password,newU.password)
 
 	   if (ret){
-		   newU.password = ""
-		   keystone.session.signinWithUser(newU, req, res, function () {
-				   return res.json({code:0,message:"登录成功"})
-		   })
+
+		   keystone.callHook(newU, 'pre:signin', req, function (err) {
+			   if (err) return res.status(500).json({ error: 'pre:signin error', detail: err });
+		       keystone.session.signinWithUser(newU, req, res, function () {
+			       keystone.callHook(newU, 'post:signin', req, function (err) {
+							  if (err) return res.status(500).json({ error: 'post:signin error', detail: err });
+
+							   return res.json({code:0,message:"登录成功"})
+					   })//callHook
+				})//signinWithUser
+
+
+		   })//pre:signin
 	   } else {
 		   return res.json({code:-1,message:"密码或者账号不存在"})
 	   }
@@ -121,10 +135,17 @@ exports.register = module.exports.register = function(req,res){
 		U.model.findOneAndUpdate({phoneNum:req.body.phone},profile,{upsert:true,returnNewDocument:true},function(err, updatedObject){
 
 			 U.model.findOne({phoneNum:req.body.phone},function(err,newU){
-				newU.password = ""
-				keystone.session.signinWithUser(newU, req, res, function () {
-						return res.json(data)
-				})
+
+				keystone.callHook(newU, 'pre:signin', req, function (err) {
+					if (err) return res.status(500).json({ error: 'pre:signin error', detail: err });
+					keystone.session.signinWithUser(newU, req, res, function () {
+						keystone.callHook(newU, 'post:signin', req, function (err) {
+                                if (err) return res.status(500).json({ error: 'post:signin error', detail: err });
+
+                                return res.json(data)
+							})//callHook post:signin
+				    })//signinWithUser
+			    })//pre:signin
 
 			})//findOne
 		})//U.model
