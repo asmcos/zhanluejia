@@ -131,6 +131,7 @@ async function list(req, res) {
                       .populate({ path: 'answers',
                           options: {sort: {'likeCount':-1},
                           limit: 1,status:1},
+                          match: { status: 1 },
                           populate: {path: 'author', select: {'name':1,'avatar':1}}
                       })
                       .exec(async function (err, questions) {
@@ -158,6 +159,7 @@ async function list(req, res) {
                       .populate({ path: 'answers',
                           options: {sort: {'likeCount':-1},
                           limit: 1,status:1},
+                          match: { status: 1 },
                           populate: {path: 'author', select: {'name':1,'avatar':1}}
                       })
                       .exec(async function (err, questions) {
@@ -227,6 +229,7 @@ async function myquestions(req, res) {
                       .populate({ path: 'answers',
                           options: {sort: {'likeCount':-1},
                           limit: 1,status:1},
+                          match: { status: 1 },
                           populate: {path: 'author', select: {'name':1,'avatar':1}}
                       })
                       .exec(async function (err, questions) {
@@ -254,6 +257,7 @@ async function myquestions(req, res) {
                       .populate({ path: 'answers',
                           options: {sort: {'likeCount':-1},
                           limit: 1,status:1},
+                          match: { status: 1 },
                           populate: {path: 'author', select: {'name':1,'avatar':1}}
                       })
                       .exec(async function (err, questions) {
@@ -295,6 +299,7 @@ async function listanswer(req, res) {
                     .populate({ path: 'answers',
                         options: {sort: {'updateTime':-1},
                         limit: 20,status:1},
+                        match: { status: 1 },
                         populate: {path: 'author',select: {'name':1,'avatar':1}}
                     })
                     .exec(async function (err, questionDoc) {
