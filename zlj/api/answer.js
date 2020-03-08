@@ -238,9 +238,14 @@ async function updateanswer(req,res){
     }
 
     var  thumbnail = imgUrlFun(req.body.content)
+		if (thumbnail){
+			var options = {content:req.body.content,thumbnail:thumbnail}
+		} else {
+			var options = {content:req.body.content}
+		}
 
 
-    answer.model.findOneAndUpdate({_id:answerid,author:req.user.id},{content:req.body.content,thumbnail:thumbnail},{},function(err, updatedObject){
+    answer.model.findOneAndUpdate({_id:answerid,author:req.user.id},options,{},function(err, updatedObject){
             if (err){
                 return res.json({code:-1,message:"update answer err"})
             }
