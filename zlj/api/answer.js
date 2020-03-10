@@ -135,7 +135,7 @@ function list(req,res){
     if (req.query.sort){
         sort = req.query.sort
     }
-    console.log(sort)
+    
     answer.model.find({status:1})
                 .skip(s)
                 .limit(l)

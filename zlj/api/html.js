@@ -239,6 +239,28 @@ function answers (req,res){
     })
 }
 
+function investments (req,res){
+
+	var tasklist = [
+
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
+        var content =  swig.renderFile(temppath + 'investments.html',
+            data
+        );
+
+        res.send(content)
+    })
+}
+
+
 
 exports = module.exports={
     index:index,
@@ -249,4 +271,5 @@ exports = module.exports={
 	updateanswer:updateanswer, //编辑回答
 	answers:answers, //all answers
 	gather:gather,
+	investments:investments,
 }

@@ -94,6 +94,7 @@ exports = module.exports = function (app) {
     app.use('/zlj/answer.html', routes.zlj.html.answer);   // question title + a answer.html
     app.use('/zlj/updateanswer.html', routes.zlj.html.updateanswer);   // updateanswer.html
     app.use('/zlj/answers.html', routes.zlj.html.answers); //list all answers
+    app.use('/zlj/investments.html', routes.zlj.html.investments); //list all investments
 
     app.use('/zlj/uploadimage',routes.zlj.upload.uploadimage);
 
@@ -116,6 +117,10 @@ exports = module.exports = function (app) {
     //comment
     app.use('/zlj/comment', routes.zlj.comment.create);
     app.use('/zlj/listcomment', routes.zlj.comment.list);
+
+
+    //investment
+    app.use('/zlj/listinvestment', routes.zlj.investment.list);
 
     app.use('/corlate', keystone.express.static(path.join(__dirname, '../theme/corlate')))
 
