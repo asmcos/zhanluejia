@@ -57,7 +57,7 @@
             <div class="center">
                 <h2>{{answer.question.title}}</h2>
                 <p> <div v-html="answer.question.content"></div></p>
-                <form  v-on:submit.prevent="sendAnswer" style="margin-top: 20px; position: relative">
+                <form  v-on:submit.prevent="sendAnswer" style="margin-top: 20px; position: relative;display:none;">
                     <div id="Editcontent">
 
                     </div>
