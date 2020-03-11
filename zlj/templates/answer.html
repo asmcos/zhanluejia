@@ -54,10 +54,10 @@
 <div class="blog">
     <div class="row">
         <div class="col-md-8"> <!--main-->
-            <div class="center">
+            <div class="center" style="padding-bottom: 0">
                 <h2>{{answer.question.title}}</h2>
                 <p> <div v-html="answer.question.content"></div></p>
-                <form  v-on:submit.prevent="sendAnswer" style="margin-top: 20px; position: relative;display:none;">
+                <form  v-on:submit.prevent="sendAnswer" style="margin-top: 20px; position: relative; display: none;margin-bottom: 30px; overflow: hidden">
                     <div id="Editcontent">
 
                     </div>
