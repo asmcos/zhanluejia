@@ -206,6 +206,20 @@ exports.updateuser = module.exports.updateuser = function(req,res){
 	  })
 
 }
+
+exports.listTop = module.exports.listTop = function (req,res){
+	var user  = keystone.list( "User" )
+
+	user.model.find({isAdmin:{ $ne: true}})
+				.limit(10)
+				.sort({"score":-1})
+				.select("name avatar score")
+				.exec(function (err, users) {
+					if (err) return res.json(err);
+					res.json({users})
+				})
+}
+
 /*
     name: { type: Types.Name, required: true, index: true }, //firstname is weapp nickname
     email: { type: Types.Email, initial: true, required: true },

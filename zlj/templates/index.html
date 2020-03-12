@@ -484,6 +484,16 @@
             <div class="rightimgLi" v-for="a in answers">
                 <a :href="'/zlj/question.html?questionid='+a.question._id"><img :src="a.thumbnail" alt="" class="img-responsive"></a>
             </div>
+            </aside>
+            <aside class="col-md-4 rightimg" style="width:30%;background: #fff; padding: 6px 8px;; border: 1px solid #eee; margin-top: 12px;">
+            <div class="remen">魅力排行</div>
+            <div class="" v-for="u in users">
+                <p><img :src="u.avatar" style="width:40px;height:40px;"></p>
+                <p>{{u.name.first}}
+                </p>
+                <p>{{u.score}}</p>
+
+            </div>
 
         </aside> <!-- col-md-4-->
     </div> <!--row -->
@@ -632,6 +642,7 @@ $(document).ready(function () {
         questions:[],
         mylikes:[],
         answers:[],
+        users:[],
         loading:1,
         user:{'id':'<%= user.id%>','avatar':'<%=user.avatar%>','name':'<%=user.name%>',}, //swig templates by express
         fastwindata:{q:""},
@@ -640,6 +651,7 @@ $(document).ready(function () {
     created () {
     	this.getQuestions()
         this.getHotAnswers()
+        this.getTop10()
   	},
     methods: {
         //控制首页弹层开启和关闭
@@ -690,6 +702,17 @@ $(document).ready(function () {
 
                       that.answers = data.answers
 
+                    }
+                })//ajax
+        },
+        getTop10(){
+
+                var that = this
+
+                $.ajax({url:"/zlj/listTop",
+                    type: 'GET',
+                    success: function(data){
+                      that.users = data.users
                     }
                 })//ajax
         },

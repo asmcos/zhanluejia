@@ -81,6 +81,7 @@ exports = module.exports = function (app) {
 	app.use('/zlj/my', routes.zlj.user.my);
     app.use('/zlj/updateuser', routes.zlj.user.updateuser);
     app.use('/zlj/uploadavatar', routes.zlj.user.uploadavatar);
+    app.use('/zlj/listTop',routes.zlj.user.listTop);
 
     // redirect ,wechat jssdk domain is www.zhanluejia.net.cn/zlj
     app.get('/', function(req,res){
