@@ -71,3 +71,8 @@ font-weight: 700;
     margin-right: 20px;
     line-height: 50px;
 }
+
+@media screen and (max-width: 751px)
+.col-md-4 {
+    width: 100% !important;
+}
