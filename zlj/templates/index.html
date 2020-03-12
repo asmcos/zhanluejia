@@ -405,6 +405,10 @@
             clear: both;
             width: 100%;
         }
+        .col-md-4
+        {
+            width: 100% !important;
+        }
 
     }
     @media (max-width: 640px)
@@ -485,7 +489,7 @@
                 <a :href="'/zlj/question.html?questionid='+a.question._id"><img :src="a.thumbnail" alt="" class="img-responsive"></a>
             </div>
             </aside>
-            <aside class="col-md-4 rightimg" style="width:30%;background: #fff; padding: 6px 8px;; border: 1px solid #eee; margin-top: 12px;">
+            <aside class="col-md-4 " style="width:30%;background: #fff; padding: 6px 8px;; border: 1px solid #eee; margin-top: 12px;">
             <div class="remen">魅力排行</div>
             <div class="jifen" v-for="u in users">
                 <p><img :src="u.avatar" style="width:40px;height:40px;"></p>
