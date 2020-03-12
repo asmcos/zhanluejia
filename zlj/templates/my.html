@@ -135,6 +135,7 @@
              <div class="input-group mb-3" style="text-align: center;margin: 0 auto;">
                  <div class="input-group-prepend" v-if="changeOrbtn==0">
                      <span class="input-group-text" style="padding:10px;font-size: 24px;vertical-align: middle; margin-top: 20px;display: block;line-height: 36px;">{{userinfo.nickname}}</span>
+                      <span class="input-group-text" style="padding:10px;font-size: 16px;vertical-align: middle; display: block;line-height: 18px;">积分：{{userinfo.score}}</span>
                  </div>
                  <input type="text" class="form-control" placeholder="Username" v-model="userinfo.nickname" style="text-align: center;margin-top: 20px;" v-if="changeOrbtn==1">
              </div>
@@ -290,6 +291,7 @@ $(document).ready(function () {
                     }
 					that.userinfo.avatar = data.avatar
 					that.userinfo.nickname = data.name.first
+                    that.userinfo.score = data.score
 
                     that.getQuestions()
                     that.getAnswers()

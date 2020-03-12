@@ -2,9 +2,12 @@
 var keystone = require('keystone')
 var question = require('./question')
 var rediscmd =  require('../../redis/command')
+var score = require('./score')
 
 updateQuesionbyNewAnswer = question.updateQuesionbyNewAnswer
 updateQuesionbyDelAnswer = question.updateQuesionbyDelAnswer
+updateScorebyAnswer = score.updateScorebyAnswer
+updateScorebylike= score.updateScorebylike
 
 var img = require("./mkjson");
 
@@ -65,7 +68,8 @@ function create(req, res) {
               item.save(function (err) {
                   if (err) return res.json(err);
                   updateQuesionbyNewAnswer(req,res,item,function(){
-                      return res.json({code:0,message:"success"})
+                       //return res.json({code:0,message:"success"})
+					   updateScorebyAnswer(res,req.user,item._id)
                   })
               })
 
@@ -135,7 +139,7 @@ function list(req,res){
     if (req.query.sort){
         sort = req.query.sort
     }
-    
+
     answer.model.find({status:1})
                 .skip(s)
                 .limit(l)
@@ -305,7 +309,11 @@ async function like(req, res) {
             var l = new like.model({user:req.user,answer:answerid,status:likestatus})
 
             l.save(function(err){
-                return res.json({code:0,message:"like ok",updatedObject})
+				if (likestatus == 1){
+						updateScorebylike(res,updatedObject.author,req.user,answerid,updatedObject)
+				}else {
+					return res.json({code:0,message:"like ok",updatedObject})
+				}
             })
     })
 

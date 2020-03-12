@@ -21,7 +21,7 @@ Investment.add({
   round:{type:Types.Text}, //pre-A,A,B 轮次
   capital:{type:Types.Text}, //投资方
   industry:{type:Types.Text}, //行业，类别
-  createTime: { type: Types.Date }, //入库时间
+  createTime: { type: Types.Datetime,default: Date.now }, //入库时间
   isTop: { type:Types.Number,default:0}, //0,未置顶, 1,置顶且排序靠后，2,置顶且排序优先于1
   pageviews: {type:Number,default:0}, //浏览量
   status: {type: Number,default:1} //1 正常，0 删除

@@ -28,8 +28,8 @@ Answer.add({
   question: { type: Types.Relationship, ref: 'Question' },
   content:  { type: Types.Html, wysiwyg: true },
   thumbnail: { type:Types.Text }, //image address
-  createTime: { type: Types.Date },
-  updateTime: { type: Types.Date }, //最后回答的时间
+  createTime: { type: Types.Datetime,default: Date.now },
+  updateTime: { type: Types.Datetime }, //最后回答的时间
   tags: {type: Types.Relationship, ref: 'Tag' ,many: true},
   author: { type: Types.Relationship, ref: 'User' },
   hidenStatus: { type: Types.Number },

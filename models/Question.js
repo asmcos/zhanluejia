@@ -29,8 +29,8 @@ Question.add({
   thumbnail: { type:Types.Text }, //image address
   content:  { type: Types.Html, wysiwyg: true },
   type:  { type: Types.Text}, //提问，知识，心得，辩论
-  createTime: { type: Types.Date },
-  updateTime: { type: Types.Date }, //最后回答的时间
+  createTime: { type: Types.Datetime,default: Date.now },
+  updateTime: { type: Types.Datetime }, //最后回答的时间
   answerCount: { type: Types.Number,default:0 }, //回答的数目
   tags: {type: Types.Relationship, ref: 'Tag' ,many: true},
   author: { type: Types.Relationship, ref: 'User' },

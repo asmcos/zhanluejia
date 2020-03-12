@@ -11,13 +11,14 @@ User.add({
 	name: { type: Types.Name, required: true, index: true }, //firstname is weapp nickname
 	email: { type: Types.Email, initial: true, required: true },
 	password: { type: Types.Password, initial: true, required: true },
+	createTime: { type: Types.Datetime, default: Date.now},
 	avatar: {type:Types.Text},
 	weappopenId: {type:Types.Text},                 // weapp openId
 	wxunionId: {type:Types.Text},                   // weapp unionId
 	phoneNum: {type:Types.Number},
 	wxmpopenId: {type:Types.Text},
 	registerType: {type:Types.Number,default:0}, // 0:keystone orginal,1:weapp,2:wxmp
-	score:{ type:Types.Number,default:0}, //用户积分
+	score:{ type:Types.Number,default:0}, //用户积分 总分
 	intro:{ type:Types.Text }, //介绍
 	levelnick:{type:Types.Text},//等级昵称
 	status: {type: Number,default:1} //1 正常，0 被封
