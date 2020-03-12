@@ -29,3 +29,44 @@ margin-bottom: 10px;
 margin-top: 0;
 font-weight: 700;
 }
+.jifen
+{
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: hidden;
+}
+.jifen p:nth-child(1)
+{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    display: block;
+    /*border: 2px solid #FF6534;*/
+    float: left;
+}
+.jifen p:nth-child(1) img
+{
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 100%;
+    display: block;
+}
+.jifen p:nth-child(2)
+{
+    width: 150px;
+    height: auto;
+    display: block;
+   float: left;
+    margin-left: 15px;
+    line-height: 30px;
+}
+.jifen p:nth-child(3)
+{
+    width: auto;
+    height: auto;
+    display: inline-block;
+    float: right;
+    margin-left: 10px;
+    line-height: 30px;
+}
