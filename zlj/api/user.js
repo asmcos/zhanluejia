@@ -156,7 +156,7 @@ exports.register = module.exports.register = function(req,res){
 
 exports.my = module.exports.my = function(req,res){
 
-	if (req.user){
+	if (req.user && req.user.isAdmin != true){
 		req.user.password = ""
 		return res.json(req.user)
 	}

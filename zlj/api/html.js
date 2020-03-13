@@ -57,7 +57,7 @@ function seoanswers(data,cb){
 function getData(req,res,data,tasklist,setData) {
 
 
-	if (req.user){
+	if (req.user && req.user.isAdmin != true){
 		var user = {
 			id:req.user._id+"",
 			name:req.user.name.first,
