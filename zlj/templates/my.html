@@ -112,6 +112,7 @@
 
     }
 
+
 </style>
 
 {% endblock %}
@@ -123,7 +124,7 @@
             <div class="weui-uploader__input-box" style="width: 108px; height: 108px;margin: 0 auto;">
                 <label  class="btn btn-default" for="uploaderInput" style="padding: 0;border-radius: 100%; display: block; position: relative" v-if="changeOrbtn==1">
                     <img v-bind:src="userinfo.avatar"  style="width: 100%; height: auto; overflow: hidden; border-radius: 100%; display: block" />
-                    <div style="width: 100%; height: 100%; overflow: hidden; border-radius: 100%; display: block; background: #000; position: absolute; top: 0; left: 0; opacity: 0.8; color: #fff; padding-top: 42px;">
+                    <div style="width: 100%; height: 100%; overflow: hidden; border-radius: 100%; display: block; background: #000; position: absolute; top: 0; left: 0; opacity: 0.3; color: #fff; padding-top: 42px;">
                         编辑
                     </div>
                 </label>
@@ -200,10 +201,10 @@
             </div>
 
 
+        </div> <!--rightContent-->
 
 
-
-    </div>
+    </div> <!-- contentwen -->
 
 
 
@@ -216,8 +217,8 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-          <img id="preview1" style="max-width:100%; padding:20px;"  />
+      <div class="modal-body" style="display:inline-block;max-width:700px；height: auto;height: 100%;" >
+          <img id="preview1" style="max-width:700px; padding:20px;"  />
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -350,21 +351,25 @@ $(document).ready(function () {
       		var reader = new FileReader();
       		reader.onload = function (e) {
         		$('#preview1').attr('src', e.target.result);
-                $("#modifyinfo").show()
-                $('#mymodal').modal('show')
+            $("#modifyinfo").show()
+            $('#mymodal').modal('show')
+
 
     			jQuery(function($) {
-    			  $('#preview1').Jcrop({
-    				aspectRatio:1,
-    				minSize:[120,120],
-    				maxSize:[240,240],
-            		onSelect: that.showCoords,
-            		onChange: that.showCoords
-          		  })
-                });
 
-			}
-      		reader.readAsDataURL(target.files[0]);
+    			  $('#preview1').Jcrop({
+      				aspectRatio:1,
+      				minSize:[120,120],
+      				maxSize:[240,240],
+              onSelect: that.showCoords,
+              onChange: that.showCoords
+          	})
+
+
+          }); //jquery
+
+			} //onload
+      reader.readAsDataURL(target.files[0]);
 
 			this.loadfile = 1
 
@@ -413,7 +418,7 @@ $(document).ready(function () {
 		var context = canvas.getContext('2d')
         canvas.width = w
         canvas.height = h
-		context.drawImage(img,this.x,this.y,w,h,0,0,w,h)
+		    context.drawImage(img,this.x,this.y,w,h,0,0,w,h)
        },
 	},//methods
   })
