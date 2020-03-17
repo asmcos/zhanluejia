@@ -281,6 +281,47 @@ function newdy (req,res){
     })
 }
 
+function pushevents (req,res){
+
+	var tasklist = [
+
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
+        var content =  swig.renderFile(temppath + 'pushevents.html',
+            data
+        );
+
+        res.send(content)
+    })
+}
+
+function mypusheventexs (req,res){
+
+	var tasklist = [
+
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
+        var content =  swig.renderFile(temppath + 'mypusheventexs.html',
+            data
+        );
+
+        res.send(content)
+    })
+}
 
 
 exports = module.exports={
@@ -294,4 +335,6 @@ exports = module.exports={
 	gather:gather,
 	investments:investments,
 	newdy:newdy,
+	pushevents:pushevents,
+	mypusheventexs:mypusheventexs,
 }

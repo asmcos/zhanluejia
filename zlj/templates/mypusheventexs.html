@@ -1,0 +1,287 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style>
+    @font-face {
+        font-family: 'iconfont';  /* project id 1595395 */
+        src: url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.eot');
+        src: url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.eot?#iefix') format('embedded-opentype'),
+        url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.woff2') format('woff2'),
+        url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.woff') format('woff'),
+        url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.ttf') format('truetype'),
+        url('//at.alicdn.com/t/font_1595395_kp2r7ia8t9i.svg#iconfont') format('svg');
+    }
+    .iconfont{ font-family:"iconfont"
+    !important; font-size:14px;font-style:normal; -webkit-font-smoothing: antialiased; -webkit-text-stroke-width: 0.2px; -moz-osx-font-smoothing: grayscale;}
+    .yiding{margin-left: 10px;}
+    .yiding:hover {
+        color: #999;
+        opacity: 0.5;
+        background: none;
+    }
+    .yiding:nth-child(1){margin-left: 15px !important;}
+    .morebtn{width: 100%; height: 40px; background: #0d6aad; color: #fff; text-align: center; line-height: 40px; margin: 0 auto; border-radius: 10px;}
+    @media (max-width: 640px)
+    {
+    .tab-wrap .media .media-body {
+     width: 100%;
+     clear: none !important;
+    }
+    }
+</style>
+<div id="app">
+<section id="blog" class="container">
+
+
+<div class="blog">
+    <div class="row">
+        <div class="col-md-8"> <!--main-->
+
+            <div class="tab-wrap">
+
+
+             <div class="panel panel-default">
+              <!-- Default panel contents -->
+                <div class="panel-heading">最新发布请求</div>
+              </div>
+              <!-- Table -->
+              <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>发起人</th>
+                       <th>事件</th>
+                       <th>昵称</th>
+                      <th>目标平台</th>
+                      <th>日期</th>
+                      <th>..</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <tr v-for= "(pee,index) in pusheventexs">
+                        <th scope="row">{{index+1}}</th>
+                        <td>{{pee.author.name.first}}({{pee.nickname}})</td>
+                        <td><a :href="pee|linkAddress" style="color: rgb(112, 145, 206);" target="_blank">{{pee.pushevent.eventType|eventName}}了</a></td>
+
+                        <td>{{pee.pushevent.nickname}}的</td>
+                            <td>{{pee.pushevent.platform|platformname}}</td>
+                        <td>{{pee.createTime|LocaleTime}}</td>
+
+                        <td><a @click="Iconfirm(pee)">{{pee.confirm|exchangeStatus}}</a></td>
+                      </tr>
+
+                    </tbody>
+
+              </table>
+
+            </div> <!--tab-wrap-->
+
+
+            <div class="morebtn" @click="getpusheventexs()">加载更多</div>
+
+
+
+
+        </div> <!-- col-md-8-->
+        <!--aside class="col-md-4 rightimg" style="width:30%;background: #fff; padding: 6px 8px;; border: 1px solid #eee; margin-top: 12px;">
+            <div class="remen">热门话题</div>
+
+
+        </aside--> <!-- col-md-4-->
+    </div> <!--row -->
+</div> <!--blog-->
+
+</section>
+    <hr>
+
+</div>
+{% endblock %}
+
+
+{% block externjs %}
+
+
+
+
+        <script>
+
+        function getUrlParam(name){
+
+                var reg=new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r= window.location.search.substr(1).match(reg);
+
+                if(r != null) {
+                    return unescape(r[2]);
+                }
+                return null;
+        }
+
+        $(document).ready(function () {
+          var myVue = new Vue({
+            el: '#app',
+        	data:{
+
+                pusheventexs:[],
+
+                s:0,
+            },
+            created () {
+                this.getpusheventexs()
+
+            },
+            methods: {
+                getpusheventexs(){
+                    var that = this
+                    that.s = that.pusheventexs.length
+                    $.ajax({url:"/zlj/mypusheventexs?skip="+that.s,
+                        type: 'GET',
+                        success: function(data){
+                            var  a = that.pusheventexs
+                            that.pusheventexs = a.concat(data.pusheventexs)
+
+                        }
+                    })//ajax
+
+                },
+                Iconfirm(pee){
+                    var that = this
+
+                    $.ajax({url:"/zlj/confirmpushex",
+                        type: 'POST',
+                        data:{
+                            pusheventexid:pee._id,
+                        },
+                        success: function(data){
+                            if (data.code==0){
+                                alert("已经确认")
+                            } else {
+                                alert(data.message)
+                            }
+
+                        }
+                    })//ajax
+                },
+
+
+            },
+          });// Vue
+
+
+      }) //ready
+
+
+        Vue.filter('Countfilter',function(count){
+            if (count < 0){
+                return 0
+            } else {
+                return count
+            }
+        })
+
+        Vue.filter('exchangeStatus',function(s){
+
+            if (s == "0"){
+                return "待确认"
+            } else if(s == "1"){
+                return "已确认"
+            }
+
+        })
+
+        var VueMenu = new Vue({
+          el: '#header',
+         data:{
+
+          },
+        })
+
+        function toLocaleString(str){
+            var d = new Date(str)
+            return d.toLocaleString()
+        }
+        Vue.filter('LocaleTime',toLocaleString)
+
+        function toLocaleYMD(str){
+
+            return str.split("T")[0]
+        }
+        Vue.filter('tolocalYMD',toLocaleYMD)
+
+        Vue.filter('platformname',function(s){
+            if (s == 1){
+                return "抖音"
+            }
+        })
+
+        Vue.filter('eventName',function(s){
+            if (s == 1){
+                return "关注"
+            } else if (s == 2){
+                return "点赞"
+            }
+        })
+
+        Vue.filter('linkAddress',function(pee){
+            if (pee.pushevent.platform == 1){
+                // 抖音
+
+                if(pee.pushevent.eventType == 1){ //关注
+                    return "snssdk1128://user/profile/"+pee.pushevent.eventId
+                } else if(pee.pushevent.eventType == 2){//视频
+                    return "snssdk1128://aweme/detail/" + pee.pushevent.eventId
+                }
+            }
+
+        })
+        //wxshare
+
+            function share( ){
+                var url = encodeURIComponent(window.location.href.split("#"));
+                var shareurl = window.location.href.split("#")[0]
+
+                $.ajax({url:"/wxmp/getconfig?url=" +url,
+                    type: 'GET',
+                    success: function(data){
+                        var params = data
+
+                        params.jsApiList = [
+                            'updateAppMessageShareData',
+                            'updateTimelineShareData',
+                            'hideOptionMenu'
+                        ];
+                        params.debug = false
+                        var share_desc = '<%= sysconf.share_desc%>'
+                        if (share_desc.length < 5){
+                            share_desc = '有趣的心灵总会相遇。'
+                        }
+                        wx.config(params)
+                        wx.ready(function(){
+                            // 分享给好友，或者群
+                            wx.updateAppMessageShareData({
+                                title: '【战略家】最新融资信息', // 分享标题
+                                desc: share_desc, // 分享描述
+                                link: shareurl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                imgUrl: 'http://www.zhanluejia.net.cn/static/img/logo.jpg', // 分享图标
+                                success: function () {
+                                // 设置成功
+                                }
+                            })
+                            //分享给朋友圈
+                            wx.updateTimelineShareData({
+                                title: '【战略家】最新融资信息', // 分享标题
+                                link: shareurl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                imgUrl: 'http://www.zhanluejia.net.cn/static/img/logo.jpg', // 分享图标
+                                success: function () {
+                                  // 设置成功
+                                }
+                            })//updateTimelineShareData
+
+                        })
+
+                    }//success
+                })//ajax
+
+            } //share
+            share()
+        </script>
+{% endblock %}

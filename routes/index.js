@@ -97,6 +97,8 @@ exports = module.exports = function (app) {
     app.use('/zlj/answers.html', routes.zlj.html.answers); //list all answers
     app.use('/zlj/investments.html', routes.zlj.html.investments); //list all investments
     app.use('/zlj/newdy.html', routes.zlj.html.newdy);  //获取抖音uid
+    app.use('/zlj/pushevents.html', routes.zlj.html.pushevents);  //获取抖音uid
+    app.use('/zlj/mypusheventexs.html', routes.zlj.html.mypusheventexs);  //别人完成了我的任务
 
     app.use('/zlj/uploadimage',routes.zlj.upload.uploadimage);
 
@@ -125,7 +127,12 @@ exports = module.exports = function (app) {
     app.use('/zlj/listinvestment', routes.zlj.investment.list);
 
     //angelcustomers
-    app.use('/zlj/createdy', routes.zlj.angelcustomers.createdy);
+    app.use('/zlj/createdy', routes.zlj.angelcustomers.createdy); //创建一个抖音请求
+    app.use('/zlj/listpushevent',routes.zlj.angelcustomers.listpushevent); //列出所有的请求
+    app.use('/zlj/createpushex',routes.zlj.angelcustomers.createpushex); //提交一个完成交易事件
+    app.use('/zlj/confirmpushex',routes.zlj.angelcustomers.confirmpushex); //确认交易真实完成
+    app.use('/zlj/listpusheventex',routes.zlj.angelcustomers.listpusheventex);//列出最近的交易事件
+    app.use('/zlj/mypusheventexs',routes.zlj.angelcustomers.mypusheventexs);//我的事件
 
     app.use('/corlate', keystone.express.static(path.join(__dirname, '../theme/corlate')))
 

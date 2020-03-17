@@ -7,6 +7,7 @@ const hmgetAsync = promisify(redis.hmget).bind(redis);
 /*
     answerlike:"Answerlike" + userid (hash)| answerid (field)= like status 0 or 1
     commentlike:"Commentlike" + userid (hash)| answerid (field)= like status 0 or 1
+    pushevent:"Pushevent" + userid(hash) |pusheventid(field) = done status 0 or 1
 */
 function answerlike_hset(userid,answerid){
     var hash = "Answerlike"+userid
@@ -78,6 +79,33 @@ async function commentlike_hmget(userid,commentidlist){
     return liked
 }
 
+// 0 表示 已经提交
+// 1 表示 对方已经确认
+function pushevent_hset(userid,pusheventid,value){
+    var hash = "Pushevent"+userid
+    var field = pusheventid
+    
+    redis.hset(hash,field,value)
+
+}
+
+async function pushevent_hget(userid,pusheventid){
+    var hash = "Pushevent"+userid
+    var field = pusheventid
+
+    var confirm = await hgetAsync(hash,field)
+
+    return confirm
+}
+
+async function pushevent_hmget(userid,pusheventidlist){
+    var hash = "Pushevent"+userid
+    var field = pusheventidlist
+
+    var confirm = await hmgetAsync(hash,field)
+
+    return confirm
+}
 
 exports = module.exports={
     answerlike_hset:answerlike_hset,
@@ -86,6 +114,9 @@ exports = module.exports={
     commentlike_hset:commentlike_hset,
     commentlike_hget:commentlike_hget,
     commentlike_hmget:commentlike_hmget,
+    pushevent_hset:pushevent_hset,
+    pushevent_hget:pushevent_hget,
+    pushevent_hmget:pushevent_hmget,
 }
 /*test*/
 /*answerlike_hset (432,678)

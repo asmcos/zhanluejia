@@ -15,5 +15,5 @@ Tag.schema.pre('save', function (next) {
   return next();
 });
 
-Tag.defaultColumns = 'title,type,url,level';
+Tag.defaultColumns = 'name';
 Tag.register();
