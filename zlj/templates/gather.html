@@ -480,7 +480,7 @@
 
         </div> <!-- col-md-8-->
         <aside class="col-md-4 rightimg"> <!-- right-->
-            <img src="/static/img/987654.jpg" alt="" class="tup">
+            <img src="/static/img/right0313.png" alt="" class="tup">
         </aside> <!-- col-md-4-->
     </div> <!--row -->
 </div> <!--blog-->
@@ -800,10 +800,18 @@ $(document).ready(function () {
   }
 
 
+  function ishot(keyword){
+        if(escape(getUrlParam("menu"))==encodeURI(keyword)){
+            return "active"
+        }
+        return ""
+    }
+
   var VueMenu = new Vue({
     el: '#header',
    data:{
        active_aboutme : isactive("关于我们"),
+       active_h: ishot("热门")
     },
   })
 
