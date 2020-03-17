@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div id="app">
+        <div class="contentwen container">
+
+
+        <form v-on:submit.prevent="sendDyInfo" style="margin-top: 20px;">
+
+            <div class="input-group" style="width: 80%; margin-bottom: 20px;">
+              <i style="font-style: normal;display: block; float: left;; line-height: 30px;">请输任何抖音视频的文本链接</i>
+            </div>
+            <input type="radio" name="eventType" value="1" checked>关注
+            <input type="radio" name="eventType" value="2">点赞
+            <input id="content" style="width:80%;" >
+
+
+            <button  class="btn btn-primary" style="float: right"> 确认</button>
+        </form>
+        <div v-if="uid">
+            <a :href=uid class="btn btn-success">打开你的抖音</a>
+        </div>
+        <div v-if="itemId">
+            <a :href=itemId class="btn btn-success">打开你的视频</a>
+        </div>
+        </div>
+
+</div>
+{% endblock %}
+
+
+{% block externjs %}
+
+
+    <script src="/wangEditor/wangEditor.min.js"> </script>
+
+    <script>
+
+
+        $(document).ready(function () {
+              var myVue = new Vue({
+                el: '#app',
+                data:{
+                    uid:"", //用户id
+                    itemId:"", //视频id
+                },
+                methods: {
+
+                    sendDyInfo () {
+
+
+                      var content1 = $("#content").val()
+                      var eventType = $("input[name='eventType']:checked").val();
+
+                      var that = this
+                      console.log(content1)
+                      $.ajax({
+                          type:"POST",
+                          url:"/zlj/createdy",
+                          data:{
+                            content: content1,
+                            eventType:eventType
+                            },
+                        success:function(data){
+                            if (eventType == "1"){
+                                that.uid = "snssdk1128://user/profile/"+data.data['uid']
+                            } else {
+                                that.itemId = "snssdk1128://aweme/detail/" + data.data['itemId']
+                            }
+
+                        }
+                      }) //ajax
+
+                    }, //sendQuestion
+                }, //methods
+              });// Vue
+
+        })
+
+
+    </script>
+{% endblock %}

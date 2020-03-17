@@ -96,6 +96,7 @@ exports = module.exports = function (app) {
     app.use('/zlj/updateanswer.html', routes.zlj.html.updateanswer);   // updateanswer.html
     app.use('/zlj/answers.html', routes.zlj.html.answers); //list all answers
     app.use('/zlj/investments.html', routes.zlj.html.investments); //list all investments
+    app.use('/zlj/newdy.html', routes.zlj.html.newdy);  //获取抖音uid
 
     app.use('/zlj/uploadimage',routes.zlj.upload.uploadimage);
 
@@ -122,6 +123,9 @@ exports = module.exports = function (app) {
 
     //investment
     app.use('/zlj/listinvestment', routes.zlj.investment.list);
+
+    //angelcustomers
+    app.use('/zlj/createdy', routes.zlj.angelcustomers.createdy);
 
     app.use('/corlate', keystone.express.static(path.join(__dirname, '../theme/corlate')))
 
