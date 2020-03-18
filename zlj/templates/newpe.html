@@ -1,0 +1,158 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div id="app">
+<section id="blog" class="container">
+
+
+<div class="blog">
+    <div class="row">
+        <div class="col-md-8"> <!--main-->
+        <form v-on:submit.prevent="sendPeInfo" style="margin-top: 20px;">
+
+            <div class="input-group" style="width: 80%; margin-bottom: 20px;">
+              <i style="font-style: normal;display: block; float: left;; line-height: 30px;">请粘贴任何抖音/快手视频的文本链接</i>
+            </div>
+            <input type="radio" name="eventType" value="1" checked>关注
+            <input type="radio" name="eventType" value="2">点赞
+            <input type="radio" name="platform" value="1" checked>抖音
+            <input type="radio" name="platform" value="2">快手
+            <input id="content" style="width:80%;" >
+
+
+            <button  class="btn btn-primary" style="float: right"> 确认</button>
+        </form>
+
+
+
+        <div class="tab-wrap" style="margin-top:60px;">
+
+         <div class="panel panel-default">
+          <!-- Default panel contents -->
+            <div class="panel-heading">
+                <a href="/zlj/pusheventexs.html">交易广场</a>|
+                <a style="color:#FF0000">我的需求</a>|
+                <a href="/zlj/mypushdone.html">我完成的</a>|
+                <a href="/zlj/mypusheventexs.html">我的消息</a>|
+                <a href="/zlj/newpe.html">我要发布</a>
+
+            </div>
+          </div>
+          <!-- Table -->
+          <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>发起人</th>
+                  <th>目标平台</th>
+                  <th>昵称</th>
+                  <th>名称</th>
+                  <th>时间</th>
+                  <th>事件</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr v-for= "(pe,index) in pushevents">
+                    <th scope="row">{{index+1}}</th>
+                    <td>{{pe.author.name.first}}</td>
+                    <td>{{pe.platform|platformname}}用户</td>
+                    <td>{{pe.nickname}}</td>
+                    <td><a :href="pe|linkAddresspe" style="color: rgb(112, 145, 206);" target="_blank">求{{pe.eventType|eventName}}</a></td>
+                    <td>{{pe.createTime|LocaleTime}}</td>
+
+                    <td>..</td>
+                  </tr>
+
+                </tbody>
+
+          </table>
+
+        </div> <!--tab-wrap-->
+
+
+        <div class="morebtn" @click="getpushevents()">加载更多</div>
+
+       </div> <!--col md 8 -->
+    </div><!-- row -->
+</div> <!--blog-->
+</section>
+
+</div> <!-- app id-->
+{% endblock %}
+
+
+{% block externjs %}
+
+
+    <script src="/wangEditor/wangEditor.min.js"> </script>
+
+    <script>
+
+
+        $(document).ready(function () {
+              var myVue = new Vue({
+                el: '#app',
+                data:{
+                    uid:"", //用户id
+                    itemId:"", //视频id
+                    pushevents:[],
+                    s:0,
+                },
+                created () {
+                    this.getpushevents()
+
+                },
+                methods: {
+
+                    sendPeInfo () {
+
+
+                      var content1 = $("#content").val()
+                      var eventType = $("input[name='eventType']:checked").val();
+                      var platform = $("input[name='platform']:checked").val();
+                      var that = this
+                      console.log(content1)
+                      $.ajax({
+                          type:"POST",
+                          url:"/zlj/createpe",
+                          data:{
+                            content: content1,
+                            eventType:eventType,
+                            platform:platform
+                            },
+                        success:function(data){
+                            if(data.code != 0){
+                                alert(data.message)
+                            } else {
+                                alert(data)
+                            }
+
+                        }
+                      }) //ajax
+
+                    }, //sendDyInfo
+
+                    getpushevents(){
+                        var that = this
+                        that.s = that.pushevents.length
+                        $.ajax({url:"/zlj/listpushevent?myevent=1&skip="+that.s,
+                            type: 'GET',
+                            success: function(data){
+                                var  a = that.pushevents
+
+                                that.pushevents = a.concat(data.pushevents)
+
+                            }
+                        })//ajax
+
+                    },
+                }, //methods
+              });// Vue
+
+              new Vfilter();
+
+        })
+
+
+    </script>
+{% endblock %}

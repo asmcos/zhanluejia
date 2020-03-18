@@ -8,7 +8,7 @@ var rediscmd =  require('../../redis/command')
 // 求关注抖音号
 // 求点抖音视频
 
-function createdy(req, res) {
+function createpe(req, res) {
 
 	if (!req.user){
 		return res.json({code:-1,message:"Your need login"})
@@ -17,45 +17,53 @@ function createdy(req, res) {
 
 	var content = req.body.content
 	var eventType = req.body.eventType
-
-	cmd = 'python3 ./dy.py "' + content +'" ' + eventType
+	var platform = req.body.platform
 
 	var pushevent = keystone.list( "Pushevent")
-	// 1 抖音
-	var p = new pushevent.model({author:req.user,platform:1,
+	// 1 抖音 2 快手
+	var p = new pushevent.model({author:req.user,platform:platform,
 		eventType:parseInt(eventType)})
 
+	if (platform == "1"){
+		cmd = 'python3 ./dy.py "' + content +'" ' + eventType
+	} else if(platform == "2"){
+		cmd = 'python3 ./ks.py "' + content +'" ' + eventType
+	}
 	child.exec(cmd, function(err, result) {
 
-    	ret = result.split("\n")
+			ret = result.split("\n")
 
+			if (ret.length<3){
+				return res.json({code:-1,message:"是否选错平台？或者粘贴错误"})
+			}
 
-		p.nickname = ret[0]
-		p.eventId = ret[1]
-		// 查找库里是否提交过
-		pushevent.model.findOne({author:req.user,
-			platform:1,
-			eventType:parseInt(eventType),
-			eventId:ret[1]
-		},function(err,doc){
+			p.nickname = ret[0]
+			p.eventId = ret[1]
+			// 查找库里是否提交过
+			pushevent.model.findOne({author:req.user,
+				platform:platform,
+				eventType:parseInt(eventType),
+				eventId:ret[1]
+			},function(err,doc){
 
-			if(doc){
-				return res.json({code:-1,message:"你已经提交过"})
-			} else {
-				//没提交存库，存库
-				p.save(function(){
-					if (eventType == "1"){
+				if(doc){
+					return res.json({code:-1,message:"你已经提交过"})
+				} else {
+					//没提交存库，存库
+					p.save(function(){
+						if (eventType == "1"){
 
-						return res.json({code:0,message:"ok",data:{name:ret[0],uid:ret[1]}})
-					} else{
+							return res.json({code:0,message:"ok",data:{name:ret[0],uid:ret[1]}})
+						} else{
 
-						return res.json({code:0,message:"ok",data:{name:ret[0],itemId:ret[1]}})
-					}
-				}) //save
-			} //else
-		}) //findOne
+							return res.json({code:0,message:"ok",data:{name:ret[0],videoid:ret[1]}})
+						}
+					}) //save
+				} //else
+			}) //findOne
 
-	})
+		})
+
 }
 
 // 已经完成了一个交易
@@ -271,7 +279,7 @@ function mypusheventexs(req,res){
 
 
 module.exports = {
-	createdy:createdy,
+	createpe:createpe,
 	createpushex:createpushex,
 	confirmpushex:confirmpushex,
 	listpushevent:listpushevent,

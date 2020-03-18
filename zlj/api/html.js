@@ -260,7 +260,7 @@ function investments (req,res){
     })
 }
 
-function newdy (req,res){
+function newpe (req,res){
 
 	var tasklist = [
 
@@ -273,7 +273,7 @@ function newdy (req,res){
 	var data = {}
 
     getData(req,res,data,tasklist,function(data){
-        var content =  swig.renderFile(temppath + 'newdy.html',
+        var content =  swig.renderFile(temppath + 'newpe.html',
             data
         );
 
@@ -376,7 +376,7 @@ exports = module.exports={
 	answers:answers, //all answers
 	gather:gather,
 	investments:investments,
-	newdy:newdy,
+	newpe:newpe,
 	pushevents:pushevents,
 	mypusheventexs:mypusheventexs,
 	mypushdone:mypushdone,

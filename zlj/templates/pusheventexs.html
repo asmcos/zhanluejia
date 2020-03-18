@@ -43,8 +43,8 @@
              <div class="panel panel-default">
               <!-- Default panel contents -->
                 <div class="panel-heading">
-                    <a href="/zlj/pusheventexs.html">交易广场</a>|
-                    <a href="/zlj/pushevents.html" style="color:#FF0000">需求广场</a>|
+                    <a href="/zlj/pusheventexs.html" style="color:#FF0000">交易广场</a>|
+                    <a href="/zlj/pushevents.html">需求广场</a>|
                     <a href="/zlj/mypushdone.html">我完成的</a>|
                     <a href="/zlj/mypusheventexs.html">我的消息</a>|
                     <a href="/zlj/newpe.html">我要发布</a>
@@ -57,23 +57,24 @@
                     <tr>
                       <th>#</th>
                       <th>发起人</th>
+                       <th>事件</th>
+                       <th>昵称</th>
                       <th>目标平台</th>
-                      <th>昵称</th>
-                      <th>名称</th>
-                      <th>时间</th>
-                      <th>事件</th>
+                      <th>日期</th>
+                      <th>..</th>
                     </tr>
                   </thead>
                   <tbody>
-                      <tr v-for= "(pe,index) in pushevents">
+                      <tr v-for= "(pee,index) in pusheventexs">
                         <th scope="row">{{index+1}}</th>
-                        <td>{{pe.author.name.first}}</td>
-                        <td>{{pe.platform|platformname}}用户</td>
-                        <td>{{pe.nickname}}</td>
-                        <td><a :href="pe|linkAddresspe" style="color: rgb(112, 145, 206);" target="_blank">求{{pe.eventType|eventName}}</a></td>
-                        <td>{{pe.createTime|LocaleTime}}</td>
+                        <td>{{pee.author.name.first}}({{pee.nickname}})</td>
+                        <td><a :href="pee|linkAddress" style="color: rgb(112, 145, 206);" target="_blank">{{pee.pushevent.eventType|eventName}}了</a></td>
 
-                        <td><a @click="Idone(pe,index)">{{userpushevents[index]|exchangeStatus}}</a></td>
+                        <td>{{pee.pushevent.nickname}}的</td>
+                        <td>{{pee.pushevent.platform|platformname}}</td>
+                        <td>{{pee.createTime|LocaleTime}}</td>
+
+                        <td></td>
                       </tr>
 
                     </tbody>
@@ -83,7 +84,7 @@
             </div> <!--tab-wrap-->
 
 
-            <div class="morebtn" @click="getpushevents()">加载更多</div>
+            <div class="morebtn" @click="getpusheventexs()">加载更多</div>
 
 
 
@@ -127,63 +128,37 @@
             el: '#app',
         	data:{
 
-                pushevents:[],
-                userpushevents:[],
+                pusheventexs:[],
 
                 s:0,
             },
             created () {
-                this.getpushevents()
+                this.getpusheventexs()
 
             },
             methods: {
-                getpushevents(){
+                getpusheventexs(){
                     var that = this
-                    that.s = that.pushevents.length
-                    $.ajax({url:"/zlj/listpushevent?skip="+that.s,
+                    that.s = that.pusheventexs.length
+                    $.ajax({url:"/zlj/listpusheventex?&skip="+that.s,
                         type: 'GET',
                         success: function(data){
-                            var  a = that.pushevents
-                            var b = that.userpushevents
-                            that.pushevents = a.concat(data.pushevents)
-                            that.userpushevents = b.concat(data.userpushevents)
+                            var  a = that.pusheventexs
+                            that.pusheventexs = a.concat(data.pusheventexs)
 
                         }
                     })//ajax
 
                 },
-                Idone(pe){
-                    var that = this
-
-                    $.ajax({url:"/zlj/createpushex",
-                        type: 'POST',
-                        data:{
-                            pusheventid:pe._id,
-                            platform:pe.platform,
-                            targetUser:pe.author._id
-                        },
-                        success: function(data){
-                            if (data.code==0){
-                                alert("已经告知作者")
-                            } else {
-                                alert(data.message)
-                            }
-
-
-                        }
-                    })//ajax
-                },
-
 
             },
           });// Vue
 
 
-            new Vfilter();
       }) //ready
 
 
-
+      new Vfilter();
 
 
         var VueMenu = new Vue({
@@ -192,6 +167,9 @@
 
           },
         })
+
+
+        //wxshare
 
 
         new Share()
