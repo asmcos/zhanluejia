@@ -98,7 +98,10 @@ exports = module.exports = function (app) {
     app.use('/zlj/investments.html', routes.zlj.html.investments); //list all investments
     app.use('/zlj/newdy.html', routes.zlj.html.newdy);  //获取抖音uid
     app.use('/zlj/pushevents.html', routes.zlj.html.pushevents);  //获取抖音uid
-    app.use('/zlj/mypusheventexs.html', routes.zlj.html.mypusheventexs);  //别人完成了我的任务
+    app.use('/zlj/mypusheventexs.html', routes.zlj.html.mypusheventexs);  //别人完成了我的任务，我得到的消息
+    app.use('/zlj/mypushdone.html', routes.zlj.html.mypushdone); //我完成的
+    app.use('/zlj/pusheventexs.html', routes.zlj.html.pusheventexs);//交易广场
+
 
     app.use('/zlj/uploadimage',routes.zlj.upload.uploadimage);
 

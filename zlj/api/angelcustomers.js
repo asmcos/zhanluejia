@@ -158,8 +158,13 @@ function listpushevent(req,res){
 	if (req.query.sort){
 		sort = req.query.sort
 	}
+	if (req.query.myevent){
+		var options = {status:1,author:req.user}
+	} else {
+		var options = {status:1}
+	}
 
-	pushevent.model.find({status:1})
+	pushevent.model.find(options)
 				.skip(s)
 				.limit(l)
 				.sort(sort)
@@ -243,7 +248,13 @@ function mypusheventexs(req,res){
 		sort = req.query.sort
 	}
 
-	pusheventex.model.find({status:1,targetUser:req.user})
+	if(req.query.mydone){
+		var options = {status:1,author:req.user}
+	} else {
+		var options = {status:1,targetUser:req.user}
+	}
+
+	pusheventex.model.find(options)
 				.skip(s)
 				.limit(l)
 				.sort(sort)

@@ -42,7 +42,13 @@
 
              <div class="panel panel-default">
               <!-- Default panel contents -->
-                <div class="panel-heading">最新发布请求</div>
+                <div class="panel-heading">
+                    <a href="/zlj/pusheventexs.html">交易广场</a>|
+                    <a href="/zlj/pushevents.html" >需求广场</a>|
+                    <a href="/zlj/mypushdone.html">我完成的</a>|
+                    <a href="/zlj/mypusheventexs.html" style="color:#FF0000">我的消息</a>|
+                    <a href="/zlj/newdy.html">我要发布</a>
+                </div>
               </div>
               <!-- Table -->
               <table class="table">
@@ -64,7 +70,7 @@
                         <td><a :href="pee|linkAddress" style="color: rgb(112, 145, 206);" target="_blank">{{pee.pushevent.eventType|eventName}}了</a></td>
 
                         <td>{{pee.pushevent.nickname}}的</td>
-                            <td>{{pee.pushevent.platform|platformname}}</td>
+                        <td>{{pee.pushevent.platform|platformname}}</td>
                         <td>{{pee.createTime|LocaleTime}}</td>
 
                         <td><a @click="Iconfirm(pee)">{{pee.confirm|exchangeStatus}}</a></td>
@@ -133,7 +139,7 @@
                 getpusheventexs(){
                     var that = this
                     that.s = that.pusheventexs.length
-                    $.ajax({url:"/zlj/mypusheventexs?skip="+that.s,
+                    $.ajax({url:"/zlj/mypusheventexs?&skip="+that.s,
                         type: 'GET',
                         success: function(data){
                             var  a = that.pusheventexs
@@ -145,7 +151,10 @@
                 },
                 Iconfirm(pee){
                     var that = this
-
+                    if (pee.confirm == 1){
+                        alert("已经确认了，无需重复确认")
+                        return
+                    }
                     $.ajax({url:"/zlj/confirmpushex",
                         type: 'POST',
                         data:{
@@ -153,7 +162,7 @@
                         },
                         success: function(data){
                             if (data.code==0){
-                                alert("已经确认")
+                                alert("确认成功")
                             } else {
                                 alert(data.message)
                             }
@@ -181,9 +190,9 @@
         Vue.filter('exchangeStatus',function(s){
 
             if (s == "0"){
-                return "待确认"
+                return "我要确认"
             } else if(s == "1"){
-                return "已确认"
+                return "我已确认"
             }
 
         })

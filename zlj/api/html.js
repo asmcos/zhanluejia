@@ -323,6 +323,48 @@ function mypusheventexs (req,res){
     })
 }
 
+function mypushdone (req,res){
+
+	var tasklist = [
+
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
+        var content =  swig.renderFile(temppath + 'mypushdone.html',
+            data
+        );
+
+        res.send(content)
+    })
+}
+
+function pusheventexs (req,res){
+
+	var tasklist = [
+
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
+        var content =  swig.renderFile(temppath + 'pusheventexs.html',
+            data
+        );
+
+        res.send(content)
+    })
+}
+
 
 exports = module.exports={
     index:index,
@@ -337,4 +379,6 @@ exports = module.exports={
 	newdy:newdy,
 	pushevents:pushevents,
 	mypusheventexs:mypusheventexs,
+	mypushdone:mypushdone,
+	pusheventexs:pusheventexs,
 }
