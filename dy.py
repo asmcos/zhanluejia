@@ -21,12 +21,12 @@ if(len(sys.argv)) > 1:
 resp = req.get(url,headers=header)
 resp.encoding = "utf-8"
 
-
 uid = re.findall(u'uid: "(\d+)"',resp.text)
 if(len(uid)):
 	uid = uid[0]
 
-nickname = re.findall(u'authorName: "(.*?)"',resp.text)
+#nickname = re.findall(u'authorName: "(.*?)"',resp.text)
+nickname = re.findall(u'<p class="user-info-name">(.*?)</p>',resp.text)
 if(len(nickname)):
 	nickname = nickname[0]
 
@@ -36,7 +36,8 @@ if(len(itemId)):
 
 userscheme = "snssdk1128://user/profile/%s?refer=web&gd_label=click_wap_download_follow&type=need_follow&needlaunchlog=1"
 
-print(nickname.encode('latin-1').decode('unicode_escape'))
+print(nickname)
+
 if sys.argv[2] == "1":
 	print(uid)
 else:
