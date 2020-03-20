@@ -99,10 +99,12 @@ font-weight: 700;
     width: 50px;
     height: 50px;
 }
-.pel1 span,a{
+.pel1 span{
     margin-left:5px;
 }
+
 .pel1 a{
+    margin-left:5px;
     font-size:12px;
 }
 .pel2 {
@@ -151,4 +153,9 @@ border-radius: 10px;
 input[type="radio"] {
     margin-right: 4px;
 }
-    .muBlock{width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: red; z-index: 99999;opacity: 0;}
+.muBlock{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0; left: 0; background: red;
+  z-index: 99999;opacity: 0;}
