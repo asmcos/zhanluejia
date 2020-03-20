@@ -221,7 +221,7 @@ function listpusheventex(req,res){
 				.limit(l)
 				.sort(sort)
 				.populate({path: 'author', select: {'name':1,'avatar':1}})
-				.populate({path: 'pushevent', select: {'nickname':1,'platform':1,'eventType':1,'author':1}})
+				.populate({path: 'pushevent', select: {'nickname':1,'platform':1,'eventType':1,'author':1,'eventId':1}})
 				.exec(async function (err, pusheventexs) {
 					if (err) return res.json(err);
 
