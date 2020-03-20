@@ -5,7 +5,7 @@
         <div class="contentwen container">
 
 
-        <form v-on:submit.prevent="sendQuestion" style="margin-top: 20px;">
+        <form v-on:submit.prevent="sendQuestion" style="margin-top: 20px;max-width:900px;">
 
             <div class="input-group" style="width: 100%; margin-bottom: 20px;">
               <i style="font-style: normal;display: block; float: left;width: 10%; line-height: 30px;">请输入问题：</i><input type="text" class="form-control"  id="title" style="float: left; width: 90%;">
@@ -14,9 +14,9 @@
 
             </div>
 
-            </textarea>
+
             <i class="wenzi">分享你的真实观点和经验，通过汇编、洗稿的等方式拼凑的回答将会被折叠</i>
-            <button  class="btn btn-primary" style="float: right"> 确认</button>
+            <button  class="btn btn-primary" style="float: right;margin-top:10px !important;"> 确认</button>
         </form>
         </div>
 </div>
@@ -68,7 +68,7 @@
 
                 // 19CAAD    8CC7B5    A0EEE1    BEE7E9    BEEDC7
                 // D6D5B7    D1BA74    E6CEAC    ECAD9E    F4606C
-                
+
 
                editor.create()
 
