@@ -50,6 +50,12 @@
              } else if(pee.pushevent.eventType == 2){//视频
                  return "snssdk1128://aweme/detail/" + pee.pushevent.eventId
              }
+         }else if (pee.pushevent.platform == 2){
+             if(pee.pushevent.eventType == 1){ //关注
+                 return "kwai://profile/"+pee.pushevent.eventId
+             } else if(pee.pushevent.eventType == 2){//视频
+                 return "kwai://work/" + pee.pushevent.eventId
+             }
          }
 
      })
