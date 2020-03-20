@@ -22,6 +22,7 @@
 
 
             <button  class="btn btn-primary" style="float: right"> 确认</button>
+            <div class="muBlock" v-if="user.id =='' || user.id == null || user.id == undefined" @click="goLogin()"> </div>
         </form>
 
 
@@ -107,6 +108,7 @@
                     modalcontent:"换行",
                     modalok:"",
                     modalCall:"",
+                    user:{'id':'<%= user.id%>','avatar':'<%=user.avatar%>','name':'<%=user.name%>',},
                 },
                 created () {
                     this.getpushevents()
@@ -141,12 +143,13 @@
                                 window.location.reload()
                             }
 
-
                         }
                       }) //ajax
 
                     }, //sendDyInfo
-
+                    goLogin(){
+                        window.location.href="/zlj/login.html"
+                    },
                     getpushevents(){
                         var that = this
                         that.s = that.pushevents.length
