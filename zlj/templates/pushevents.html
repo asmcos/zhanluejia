@@ -52,12 +52,12 @@
                 </div>
               </div>
               <!-- Table -->
-              
+
               <div class="jifen" v-for="(pe,index) in pushevents">
                   <p><img :src="pe.author.avatar" style="width:80px;height:80px;"></p>
                   <p>{{pe.platform|platformname}}-{{pe.nickname|nicknameshort}}
                   </p>
-                  <p><a :href="pe|linkAddresspe" :class="userpushevents[index]|exchangeStatusClass">{{userpushevents[index]|isexchange}}{{pe.eventType|eventName}}</a></p>
+                  <p><a @click="DoWork(pe)" :class="userpushevents[index]|exchangeStatusClass">{{userpushevents[index]|isexchange}}{{pe.eventType|eventName}}</a></p>
               </div>
 
             </div> <!--tab-wrap-->
@@ -76,6 +76,23 @@
 
 </section>
     <hr>
+    <div class="modal" tabindex="-1" role="dialog" id="mymodal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{modaltitle}}</h5>
+
+          </div>
+          <div class="modal-body">
+            <p>{{modalcontent}}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" @click="sendOK" v-if="modalok">{{modalok}}</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </div>
 {% endblock %}
@@ -108,6 +125,11 @@
                 userpushevents:[],
 
                 s:0,
+
+                modaltitle:"提示",
+                modalcontent:"换行",
+                modalok:"",
+                modalCall:"",
             },
             created () {
                 this.getpushevents()
@@ -141,14 +163,38 @@
                         },
                         success: function(data){
                             if (data.code==0){
-                                alert("已经告知作者")
+                                that.modalcontent = ""
+                                that.modalok = ""
+                                that.modalarg = ""
+                                that.modalCall = ""
+                                $("#mymodal").modal("hide")
                             } else {
-                                alert(data.message)
+                                
+                                that.modalcontent = data.message
+                                $("#mymodal").modal("show")
                             }
 
 
                         }
                     })//ajax
+                },
+                sendOK(){
+                    console.log("ok")
+                    this.modalCall(this.modalarg)
+
+                },
+                DoWork(pe){
+                    var that = this
+                    var href = this.$options.filters.linkAddresspe(pe)
+                    setTimeout(function(){
+                        that.modalcontent = "你是否已经关注或者点赞"
+                        that.modalok = "是的"
+                        that.modalarg = pe
+                        that.modalCall = that.Idone
+                        $("#mymodal").modal("show")
+                    },2000);
+                    //跳转到抖音
+                    window.location.href = href
                 },
 
 
