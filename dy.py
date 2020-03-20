@@ -26,7 +26,7 @@ if(len(uid)):
 	uid = uid[0]
 
 #nickname = re.findall(u'authorName: "(.*?)"',resp.text)
-nickname = re.findall(u'<p class="user-info-name">(.*?)</p>',resp.text)
+nickname = re.findall(u'<p class="user-info-name">@(.*?)</p>',resp.text)
 if(len(nickname)):
 	nickname = nickname[0]
 
