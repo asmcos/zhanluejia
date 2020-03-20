@@ -57,6 +57,28 @@
 </div> <!--blog-->
 </section>
 
+
+
+<div class="modal" tabindex="-1" role="dialog" id="mymodal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{modaltitle}}</h5>
+
+      </div>
+      <div class="modal-body">
+        <p>{{modalcontent}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" @click="sendOK" v-if="modalok">{{modalok}}</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 </div> <!-- app id-->
 {% endblock %}
 
@@ -80,12 +102,21 @@
                     itemId:"", //视频id
                     pushevents:[],
                     s:0,
+
+                    modaltitle:"提示",
+                    modalcontent:"换行",
+                    modalok:"",
+                    modalCall:"",
                 },
                 created () {
                     this.getpushevents()
 
                 },
                 methods: {
+                    sendOK(){
+                        console.log("ok")
+                        this.modalCall()
+                    },
 
                     sendPeInfo () {
 
@@ -104,10 +135,12 @@
                             },
                         success:function(data){
                             if(data.code != 0){
-                                alert(data.message)
+                                that.modalcontent = data.message
+                                $("#mymodal").modal("show")
                             } else {
-                                alert(data)
+                                window.location.reload()
                             }
+
 
                         }
                       }) //ajax

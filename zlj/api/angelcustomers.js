@@ -151,7 +151,7 @@ function listpushevent(req,res){
 
 	var l = 10
 	var s = 0
-	var sort = '-updateTime'
+	var sort = '-createTime'
 	if (req.query.limit){
 	  l = req.query.limit
 	}
@@ -200,7 +200,7 @@ function listpusheventex(req,res){
 
 	var l = 10
 	var s = 0
-	var sort = '-updateTime'
+	var sort = '-createTime'
 	if (req.query.limit){
 	  l = req.query.limit
 	}
@@ -250,7 +250,7 @@ function mypusheventexs(req,res){
 
 	var l = 10
 	var s = 0
-	var sort = '-updateTime'
+	var sort = '-createTime'
 	if (req.query.limit){
 	  l = req.query.limit
 	}
