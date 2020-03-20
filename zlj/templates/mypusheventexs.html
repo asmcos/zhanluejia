@@ -51,34 +51,21 @@
                 </div>
               </div>
               <!-- Table -->
-              <table class="table">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>发起人</th>
-                       <th>事件</th>
-                       <th>昵称</th>
-                      <th>目标平台</th>
-                      <th>日期</th>
-                      <th>..</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      <tr v-for= "(pee,index) in pusheventexs">
-                        <th scope="row">{{index+1}}</th>
-                        <td>{{pee.author.name.first}}({{pee.nickname}})</td>
-                        <td><a :href="pee|linkAddress" style="color: rgb(112, 145, 206);" target="_blank">{{pee.pushevent.eventType|eventName}}了</a></td>
+              <div class="peex" v-for="(pee,index) in pusheventexs">
+                  <div class="pe_avatar">
+                      <p><img :src="pee.author.avatar" ></p>
+                 </div>
+                 <div class="pe_info">
+                        <p class="pel1"><span >{{pee.nickname|nicknameshort}}</span><a style="color:#7091ce;">{{pee.pushevent.eventType|eventName}}了</a>
+                        <span>{{pee.pushevent.nickname|nicknameshort}}</span></p>
+                        <p class="pel2"><span >时间：{{pee.createTime|LocaleTime}}</span>
+                        </p>
+                      <p class="pel2"><span >平台：{{pee.pushevent.platform|platformname}}</span>
+                           <a @click="Iconfirm(pee)" class="btn btn-warning wego"> {{pee.confirm|exchangeStatus}}</a>
+                      </p>
+                 </div> <!--pe_info-->
+             </div> <!--peex-->
 
-                        <td>{{pee.pushevent.nickname}}的</td>
-                        <td>{{pee.pushevent.platform|platformname}}</td>
-                        <td>{{pee.createTime|LocaleTime}}</td>
-
-                        <td><a @click="Iconfirm(pee)">{{pee.confirm|exchangeStatus}}</a></td>
-                      </tr>
-
-                    </tbody>
-
-              </table>
 
             </div> <!--tab-wrap-->
 

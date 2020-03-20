@@ -78,3 +78,76 @@ font-weight: 700;
     }
 }
 .morebtn{width: 100%; height: 40px; background: #0d6aad; color: #fff; text-align: center; line-height: 40px; margin: 0 auto; border-radius: 10px;}
+
+
+.peex
+{
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: hidden;
+    border-bottom:  1px solid #eee;
+    margin-bottom: 15px;
+}
+
+.peex p:nth-child(1) img
+{
+    border-radius: 100%;
+    display: block;
+    margin-left: 10px;
+    margin-top:15px;
+    width: 50px;
+    height: 50px;
+}
+.pel1 span,a{
+    margin-left:5px;
+}
+.pel1 a{
+    font-size:12px;
+}
+.pel2 {
+
+    margin-left:5px;
+    font-size: 12px;
+    line-height: 16px;
+}
+.pel2 a{
+    float:right;
+    margin-right:20px;
+    padding:1px;
+    font-size:12px;
+    line-height: 16px;
+}
+.pel3{
+    font-size: 12px;
+    margin-left:5px;
+    line-height: 16px;
+}
+.badge1{
+display: inline-block;
+min-width: 10px;
+padding: 3px 7px;
+font-size: 12px;
+font-weight: bold;
+line-height: 1;
+color: #fff;
+text-align: center;
+white-space: nowrap;
+vertical-align: baseline;
+background-color: #999;
+border-radius: 10px;
+
+}
+.pe_avatar{
+    float:left;
+}
+.pe_info{
+    margin-left:70px;
+}
+.peevent{
+    padding:3px;
+    font-size: 12px;
+}
+input[type="radio"] {
+    margin-right: 4px;
+}

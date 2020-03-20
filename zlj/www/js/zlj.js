@@ -33,6 +33,14 @@
          }
      })
 
+     Vue.filter('nicknameshort',function(s){
+         if (s.length>10){
+             return s.slice(0,8) + '..'
+         } else{
+             return s
+         }
+     })
+
      Vue.filter('linkAddress',function(pee){
          if (pee.pushevent.platform == 1){
              // 抖音
@@ -76,9 +84,33 @@
      Vue.filter('exchangeStatus',function(s){
 
          if (s == "0"){
-             return "我要确认"
+             return "未确认"
          } else if(s == "1"){
-             return "我已确认"
+             return "已确认"
+         }
+
+     })
+
+     Vue.filter('isexchange',function(s){
+
+         if (s == "0"){
+             return "已"
+         } else if(s == "1"){
+             return "已"
+         } else {
+             return "去"
+         }
+
+     })
+
+     Vue.filter('exchangeStatusClass',function(s){
+         console.log(s)
+         if (s == "0"){
+             return "btn btn-info"
+         } else if(s == "1"){
+             return "btn btn-default"
+         } else {
+             return "btn btn-warning"
          }
 
      })

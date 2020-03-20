@@ -35,7 +35,7 @@
 
 <div class="blog">
     <div class="row">
-        <div class="col-md-8"> <!--main-->
+        <div class="col-md-4"> <!--main-->
 
             <div class="tab-wrap">
 
@@ -52,33 +52,13 @@
                 </div>
               </div>
               <!-- Table -->
-              <table class="table">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>发起人</th>
-                      <th>目标平台</th>
-                      <th>昵称</th>
-                      <th>名称</th>
-                      <th>时间</th>
-                      <th>事件</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      <tr v-for= "(pe,index) in pushevents">
-                        <th scope="row">{{index+1}}</th>
-                        <td>{{pe.author.name.first}}</td>
-                        <td>{{pe.platform|platformname}}用户</td>
-                        <td>{{pe.nickname}}</td>
-                        <td><a :href="pe|linkAddresspe" style="color: rgb(112, 145, 206);" target="_blank">求{{pe.eventType|eventName}}</a></td>
-                        <td>{{pe.createTime|LocaleTime}}</td>
-
-                        <td><a @click="Idone(pe,index)">{{userpushevents[index]|exchangeStatus}}</a></td>
-                      </tr>
-
-                    </tbody>
-
-              </table>
+              
+              <div class="jifen" v-for="(pe,index) in pushevents">
+                  <p><img :src="pe.author.avatar" style="width:80px;height:80px;"></p>
+                  <p>{{pe.platform|platformname}}-{{pe.nickname|nicknameshort}}
+                  </p>
+                  <p><a :href="pe|linkAddresspe" :class="userpushevents[index]|exchangeStatusClass">{{userpushevents[index]|isexchange}}{{pe.eventType|eventName}}</a></p>
+              </div>
 
             </div> <!--tab-wrap-->
 
@@ -89,11 +69,8 @@
 
 
         </div> <!-- col-md-8-->
-        <!--aside class="col-md-4 rightimg" style="width:30%;background: #fff; padding: 6px 8px;; border: 1px solid #eee; margin-top: 12px;">
-            <div class="remen">热门话题</div>
 
 
-        </aside--> <!-- col-md-4-->
     </div> <!--row -->
 </div> <!--blog-->
 

@@ -225,7 +225,17 @@ function listpusheventex(req,res){
 				.exec(async function (err, pusheventexs) {
 					if (err) return res.json(err);
 
-					return res.json({pusheventexs})
+
+					var userpushevents = []
+					if (req.user&&pusheventexs.length>0){
+						pusheventlist = pusheventexs.map(function(a){
+							return a.pushevent._id + ""
+						})
+						userpushevents = await rediscmd.pushevent_hmget(req.user._id,pusheventlist)
+					}
+
+
+					return res.json({pusheventexs,userpushevents})
 				})
 
 }

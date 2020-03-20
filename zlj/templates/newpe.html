@@ -10,14 +10,15 @@
         <div class="col-md-8"> <!--main-->
         <form v-on:submit.prevent="sendPeInfo" style="margin-top: 20px;">
 
-            <div class="input-group" style="width: 80%; margin-bottom: 20px;">
-              <i style="font-style: normal;display: block; float: left;; line-height: 30px;">请粘贴任何抖音/快手视频的文本链接</i>
+            <div class="input-group" style="width: 90%; margin-bottom: 20px;">
+              <i style="font-style: normal;display: block; float: left;; line-height: 30px;width:100% !important;">直接粘贴抖音/快手视频的文本链接<span style="color:#ff0000">请勿改动</span></i>
             </div>
             <input type="radio" name="eventType" value="1" checked>关注
             <input type="radio" name="eventType" value="2">点赞
             <input type="radio" name="platform" value="1" checked>抖音
             <input type="radio" name="platform" value="2">快手
-            <input id="content" style="width:80%;" >
+            <textarea class="form-control" id="content" style="width:95%;" rows=3></textarea>
+
 
 
             <button  class="btn btn-primary" style="float: right"> 确认</button>
@@ -39,33 +40,12 @@
             </div>
           </div>
           <!-- Table -->
-          <table class="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>发起人</th>
-                  <th>目标平台</th>
-                  <th>昵称</th>
-                  <th>名称</th>
-                  <th>时间</th>
-                  <th>事件</th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr v-for= "(pe,index) in pushevents">
-                    <th scope="row">{{index+1}}</th>
-                    <td>{{pe.author.name.first}}</td>
-                    <td>{{pe.platform|platformname}}用户</td>
-                    <td>{{pe.nickname}}</td>
-                    <td><a :href="pe|linkAddresspe" style="color: rgb(112, 145, 206);" target="_blank">求{{pe.eventType|eventName}}</a></td>
-                    <td>{{pe.createTime|LocaleTime}}</td>
-
-                    <td>..</td>
-                  </tr>
-
-                </tbody>
-
-          </table>
+          <div class="jifen" v-for="(pe,index) in pushevents">
+              <p><img :src="pe.author.avatar" style="width:80px;height:80px;"></p>
+              <p>{{pe.platform|platformname}}-{{pe.nickname|nicknameshort}}
+              </p>
+              <p><a :href="pe|linkAddresspe" >求{{pe.eventType|eventName}}</a></p>
+          </div>
 
         </div> <!--tab-wrap-->
 
@@ -90,6 +70,9 @@
 
 
         $(document).ready(function () {
+ 
+
+
               var myVue = new Vue({
                 el: '#app',
                 data:{
@@ -105,7 +88,6 @@
                 methods: {
 
                     sendPeInfo () {
-
 
                       var content1 = $("#content").val()
                       var eventType = $("input[name='eventType']:checked").val();
