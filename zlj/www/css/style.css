@@ -153,6 +153,9 @@ border-radius: 10px;
 input[type="radio"] {
     margin-right: 4px;
 }
+.btn-primary {
+    margin-top: 0px !important;
+}
 .muBlock{
   width: 100%;
   height: 100%;
