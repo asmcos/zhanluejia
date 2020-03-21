@@ -172,6 +172,10 @@ function listpushevent(req,res){
 		var options = {status:1}
 	}
 
+	if (req.query.peid){
+		options._id = req.query.peid
+	}
+
 	pushevent.model.find(options)
 				.skip(s)
 				.limit(l)

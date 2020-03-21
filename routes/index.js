@@ -97,7 +97,8 @@ exports = module.exports = function (app) {
     app.use('/zlj/answers.html', routes.zlj.html.answers); //list all answers
     app.use('/zlj/investments.html', routes.zlj.html.investments); //list all investments
     app.use('/zlj/newpe.html', routes.zlj.html.newpe);  //获取抖音uid
-    app.use('/zlj/pushevents.html', routes.zlj.html.pushevents);  //获取抖音uid
+    app.use('/zlj/pushevents.html', routes.zlj.html.pushevents);  //获取所有关注点赞列表
+    app.use('/zlj/pushevent.html', routes.zlj.html.pushevent);  //获取某一个关注点赞事件
     app.use('/zlj/mypusheventexs.html', routes.zlj.html.mypusheventexs);  //别人完成了我的任务，我得到的消息
     app.use('/zlj/mypushdone.html', routes.zlj.html.mypushdone); //我完成的
     app.use('/zlj/pusheventexs.html', routes.zlj.html.pusheventexs);//交易广场

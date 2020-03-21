@@ -302,6 +302,27 @@ function pushevents (req,res){
     })
 }
 
+function pushevent (req,res){
+
+	var tasklist = [
+
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
+        var content =  swig.renderFile(temppath + 'pushevent.html',
+            data
+        );
+
+        res.send(content)
+    })
+}
+
 function mypusheventexs (req,res){
 
 	var tasklist = [
@@ -378,6 +399,7 @@ exports = module.exports={
 	investments:investments,
 	newpe:newpe,
 	pushevents:pushevents,
+	pushevent:pushevent,
 	mypusheventexs:mypusheventexs,
 	mypushdone:mypushdone,
 	pusheventexs:pusheventexs,

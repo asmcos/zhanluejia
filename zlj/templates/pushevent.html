@@ -55,7 +55,7 @@
 
               <div class="jifen" v-for="(pe,index) in pushevents">
                   <p><img :src="pe.author.avatar" style="width:80px;height:80px;"></p>
-                  <p><a :href="'/zlj/pushevent.html?peid='+pe._id">{{pe.platform|platformname}}-{{pe.nickname|nicknameshort}}</a>
+                  <p>{{pe.platform|platformname}}-{{pe.nickname|nicknameshort}}
                   </p>
                   <p><a @click="DoWork(pe)" :class="userpushevents[index]|exchangeStatusClass">{{userpushevents[index]|isexchange}}{{pe.eventType|eventName}}</a></p>
               </div>
@@ -139,7 +139,8 @@
                 getpushevents(){
                     var that = this
                     that.s = that.pushevents.length
-                    $.ajax({url:"/zlj/listpushevent?skip="+that.s,
+                    var peid = getUrlParam("peid")
+                    $.ajax({url:"/zlj/listpushevent?peid="+peid,
                         type: 'GET',
                         success: function(data){
                             var  a = that.pushevents
