@@ -23,14 +23,17 @@ if(len(sys.argv)) > 1:
 resp = req.get(url,headers=header)
 resp.encoding = "utf-8"
 
-
 uid = re.findall(u'"kwai://profile/(\d+)"',resp.text)
 if(len(uid)):
 	uid = uid[0]
 
-nickname = re.findall(u'<div class="auth-name">(.*?)</div>',resp.text)
+nickname = re.findall(u'<div class="name">(.*?)</div>',resp.text)
 if(len(nickname)):
 	nickname = nickname[0]
+else:
+        nickname = re.findall(u'<div class="auth-name">(.*?)</div>',resp.text)
+        if(len(nickname)):
+            nickname = nickname[0]
 
 photoId = re.findall(u'"kwai://work/(\d+)',resp.text)
 if(len(photoId)):
