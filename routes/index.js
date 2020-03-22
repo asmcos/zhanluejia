@@ -21,6 +21,7 @@
 var keystone = require('keystone');
 var importRoutes = keystone.importer(__dirname);
 var path = require('path');
+var bodyParser = require('body-parser');
 
 // Import Route Controllers
 var routes = {
@@ -33,6 +34,10 @@ var routes = {
 // Setup Route Bindings
 exports = module.exports = function (app) {
     // Views
+
+    //add for max post
+    app.use(bodyParser.json({limit:'50mb'}));
+    app.use(bodyParser.urlencoded({limit:'50mb',extended:true}));
 
     app.get('/admin/api/index', routes.api.index);
     app.get('/admin/api/get/:list', routes.api.get);
