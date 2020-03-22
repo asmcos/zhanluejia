@@ -92,7 +92,7 @@ async function createpushex(req, res) {
 
 	if (!p){
 		 var retmessage = {code:0,message:"你没有登记该平台信息,请尽快发布"}
-		 var nickname = req.user.nickname.first
+		var nickname = req.user.name.first
 	} else {
 		var nickname = p.nickname
 	}
