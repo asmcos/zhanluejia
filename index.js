@@ -8,6 +8,7 @@ keystone.init({
   'auth': true,
   'user model': 'User',
   'auto update': true,
+  'file limit': '50mb',
 });
 
 
