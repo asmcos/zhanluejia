@@ -136,7 +136,13 @@
                             platform:platform
                             },
                         success:function(data){
-                            if(data.code != 0){
+                            if (data.code == -1){
+                              that.modalcontent = data.message
+                              that.modalok = "去登录"
+                              that.modalCall = that.goLogin()
+                              $("#mymodal").modal("show")
+
+                            } else if(data.code != 0){
                                 that.modalcontent = data.message
                                 $("#mymodal").modal("show")
                             } else {

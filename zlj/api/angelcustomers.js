@@ -34,7 +34,7 @@ function createpe(req, res) {
 			ret = result.split("\n")
 
 			if (ret.length<3){
-				return res.json({code:-1,message:"是否选错平台？或者粘贴错误"})
+				return res.json({code:-2,message:"是否选错平台？或者粘贴错误"})
 			}
 
 			p.nickname = ret[0]
@@ -47,7 +47,7 @@ function createpe(req, res) {
 			},function(err,doc){
 
 				if(doc){
-					return res.json({code:-1,message:"你已经提交过"})
+					return res.json({code:-2,message:"你已经提交过"})
 				} else {
 					//没提交存库，存库
 					p.save(function(){
@@ -91,10 +91,13 @@ async function createpushex(req, res) {
 	.sort({ _id: -1 })
 
 	if (!p){
-		return res.json({code:-4,message:"你没有登记该平台，不能操作此项"})
+		 var retmessage = {code:0,message:"你没有登记该平台信息,请尽快发布"}
+		 var nickname = req.user.nickname.first
+	} else {
+		var nickname = p.nickname
 	}
 
-	var nickname = p.nickname
+
 
 	var pe = pusheventex.model()
 
@@ -109,7 +112,8 @@ async function createpushex(req, res) {
 			pe.targetUser = req.body.targetUser
 			pe.save(function(){
 				rediscmd.pushevent_hset(req.user._id,req.body.pusheventid,0)
-				return res.json({code:0,message:"提交成功"})
+				if(retmessage) {return res.json(retmessage)}
+				else {return res.json({code:0,message:"提交成功"})}
 			})
 		}
 	})
