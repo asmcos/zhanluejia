@@ -163,12 +163,13 @@
                             targetUser:pe.author._id
                         },
                         success: function(data){
+                          that.modalcontent = ""
+                          that.modalok = ""
+                          that.modalarg = ""
+                          that.modalCall = ""
+                          $("#mymodal").modal("hide")
                             if (data.code==0){
-                                that.modalcontent = ""
-                                that.modalok = ""
-                                that.modalarg = ""
-                                that.modalCall = ""
-                                $("#mymodal").modal("hide")
+                              window.location.reload()
                             }else if (data.code == -1){
 
                                   that.goLogin()
@@ -187,6 +188,7 @@
                 },
                 sendOK(){
                     console.log("ok")
+
                     this.modalCall(this.modalarg)
 
                 },
@@ -195,7 +197,7 @@
                     var href = this.$options.filters.linkAddresspe(pe)
                     if (that.user.id==''){
                       that.goLogin()
-                      return 
+                      return
                     }
                     setTimeout(function(){
                         that.modalcontent = "你是否已经关注或者点赞"
