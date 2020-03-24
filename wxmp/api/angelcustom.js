@@ -21,8 +21,7 @@ angelcustom  = wechat(config,function(req,res){
 	var openId = message.FromUserName
 
 	//wxmpopenId
-	wxapi.getUser(openId,function(err,result1){
-		console.log(result1)
+	mpapi.getUser(openId,function(err,result1){
 		res.reply('欢迎您来战略家-弹朋友');
 	})
 })
