@@ -33,7 +33,7 @@ var Pusheventex= new keystone.List('Pusheventex',{
 	});
 
 Pusheventex.add({
-  pushevent:{type: Types.Relationship, ref: 'Pushevent'}, //对饮的时间
+  pushevent:{type: Types.Relationship, ref: 'Pushevent'}, //
   author:{type: Types.Relationship, ref: 'User' }, //发起人
   nickname:{type:Types.Text}, //author在同平台昵称 ,
   //显示操作者和被操作者在同一个平台的昵称，被操作者的昵称 通过pushevent可以查找
@@ -50,6 +50,7 @@ Pusheventex.defaultColumns = 'author';
 Pusheventex.register();
 
 
+//目前未使用
 //用户在平台的信息
 var Uplatform= new keystone.List('UPlatform',{
 	defaultSort: '-id'

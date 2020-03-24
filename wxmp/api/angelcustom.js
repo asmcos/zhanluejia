@@ -60,13 +60,43 @@ angelcustom  = wechat(config,async function(req,res){
 function do_text(u,req,res){
 	var message = req.weixin;
 	if (message.Content == '弹朋友'){
-		res.reply("稍等，我们马上给你准备一个朋友")
+
+		var T = keystone.list( "Tanpengyou" )
+		var Tex = keystone.list( "Tanpengyouex" )
+		tex.model.find({author:u,platform:3},function(err,texs){
+
+			var listtexs =  texs.map(function(a){
+			    return a._id + ""
+			})
+			//查找没有这些id的二维码
+			T.model.findOne({_id:{$nin:listtexs},platform:3},function(err,ret){
+				if (ret){
+
+					res.reply([{
+					title: '这是我为你精心准备的好朋友',
+					description: '告诉你的朋友，我们这里有好多朋友哦。',
+					picurl: ret.qrcode,
+					url: 'http://www.zhanluejia.net.cn/'
+				   }])
+			  } else {
+				  res.reply("没有新朋友了，你都给你了")
+			  }
+			})
+
+		})
+
 	}
 }
 function do_image(u,req,res){
 	var message = req.weixin;
+	//PicUrl
+	var T = keystone.list( "Tanpengyou" )
 
-	res.reply('收到你的图片了,我们要审核的哦。通过后，才能弹给别人。');
+	T.model.findOneAndUpdate({author:u},{qrcode:message.PicUrl,platform:3},
+		{upsert:true},function(err, updatedObject){
+
+		res.reply('收到你的图片了,我们要审核的哦。通过后，才能弹给别人。');
+	})
 }
 
 function do_message(u,req,res){
@@ -77,8 +107,10 @@ function do_message(u,req,res){
 		do_text (u,req,res)
 	} else if (message.MsgType === 'image'){
 		do_image (u,req,res)
+	} else {
+		res.reply('欢迎您来战略家-"弹朋友" 功能上线');
 	}
-	res.reply('欢迎您来战略家-弹朋友');
+
 }
 
 exports = module.exports={
