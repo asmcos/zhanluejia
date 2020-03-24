@@ -14,7 +14,7 @@ angelcustom  = wechat(config,async function(req,res){
 	var message = req.weixin;
 
 	if (message.ToUserName != 'gh_26c05261879e'){
-		return res.json({message:'公众号号码不对'})
+		return res.reply({message:'公众号号码不对'})
 	}
 
     var U = keystone.list( "User" )
@@ -33,7 +33,7 @@ angelcustom  = wechat(config,async function(req,res){
 		mpapi.getUser(openId,function(err,result1){
 			if (err){
 				console.log(err)
-				return res.replay("从微信获取你的信息失败,要不你1分钟后再发一次？")
+				return res.reply("从微信获取你的信息失败,要不你1分钟后再发一次？")
 			}
 			//save 用户信息
 			var profile = {
