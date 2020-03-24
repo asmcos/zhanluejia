@@ -24,7 +24,7 @@ angelcustom  = wechat(config,function(req,res){
 	wxapi.getUser(openId,function(err,result1){
 		console.log(result1)
 		res.reply('欢迎您来战略家-弹朋友');
-	}
+	})
 })
 
 exports = module.exports={
