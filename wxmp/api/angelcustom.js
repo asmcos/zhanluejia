@@ -64,27 +64,28 @@ function do_text(u,req,res){
 		var T = keystone.list( "Tanpengyou" )
 		var Tex = keystone.list( "Tanpengyouex" )
 		Tex.model.find({author:u,platform:3},function(err,texs){
-			console.log(err,texs)
+
 
 			var listtexs =  texs.map(function(a){
 			    return a._id + ""
 			})
-			console.log(listtexs)
-			if  (listtexs){
-				listtexs = []
-			}
+
 			//查找没有这些id的二维码
 			T.model.findOne({_id:{$nin:listtexs},platform:3,status:1},function(err,ret){
 				if (ret){
+					//save a  exchange event
+					var tex  = new Tex.model({author:u,tanpengyou:ret,platorm:3})
+						tex.save(function(){
+							res.reply({
+								type: "image",
+								content: {
+								  mediaId: ret.mediaId
+							    }
+						    })
+						})
 
-					res.reply([{
-					title: '这是我为你精心准备的好朋友',
-					description: '告诉你的朋友，我们这里有好多朋友哦。',
-					picurl: ret.qrcode,
-					url: 'http://www.zhanluejia.net.cn/'
-				   }])
 			  } else {
-				  res.reply("没有新朋友了，你都给你了")
+				  res.reply("没有新朋友了，都给你了")
 			  }
 			})
 
@@ -99,7 +100,7 @@ function do_image(u,req,res){
 	//PicUrl
 	var T = keystone.list( "Tanpengyou" )
 
-	T.model.findOneAndUpdate({author:u},{qrcode:message.PicUrl,platform:3,status:0},
+	T.model.findOneAndUpdate({author:u},{qrcode:message.PicUrl,platform:3,status:0,mediaId:message.MediaId},
 		{upsert:true},function(err, updatedObject){
 
 		res.reply('收到你的图片了,我们要审核的哦。通过后，才能弹给别人。');

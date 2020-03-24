@@ -15,6 +15,7 @@ Tanpengyou.add({
   createTime: { type: Types.Datetime,default: Date.now }, //入库时间
   isTop: { type:Types.Number,default:0}, //0,未置顶, 1,置顶且排序靠后，2,置顶且排序优先于1
   qrcode: {type:Types.Text}, //网址
+  mediaId: {type:Types.Text}, // 微信mediaId
   platform:{type:Types.Number,default:3},//1 抖音，2快手，3微信，4微博。。。
   status: {type: Number,default:1} //1 正常，0 删除
 });
