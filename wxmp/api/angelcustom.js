@@ -25,14 +25,17 @@ angelcustom  = wechat(config,async function(req,res){
 	var u = await U.model.findOne({wxmpopenId: openId})
 
 	if (u) { //isExist
-		console.log("old user",u)
+
 		do_message(u,req,res)
 	} else {
 		// create new user
 
 		//wxmpopenId
 		mpapi.getUser(openId,function(err,result1){
-
+			if (err){
+				console.log(err)
+				return res.replay("从微信获取你的信息失败,要不你1分钟后再发一次？")
+			}
 			//save 用户信息
 			var profile = {
 					 wxmpopenId: result1['openid'],
@@ -45,7 +48,7 @@ angelcustom  = wechat(config,async function(req,res){
 			U.model.findOneAndUpdate({wxunionId:result1['unionid']},profile,{upsert:true,returnNewDocument:true},function(err, updatedObject){
 
 					U.model.findOne({wxunionId:result1['unionid']},function(err,newU){
-						console.log(newU,err,"newuser")
+
 						do_message(newU,req,res)
 					}) //findOne
 				})//findandupdate
