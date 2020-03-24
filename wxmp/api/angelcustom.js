@@ -13,8 +13,18 @@ var config = {
 angelcustom  = wechat(config,function(req,res){
 	var message = req.weixin;
 	console.log(message);
-	res.reply('欢迎您来战略家-弹朋友');
 
+	if (message.ToUserName != 'gh_26c05261879e'){
+		return res.json({message:'你不是我的公众号'})
+	}
+
+	var openId = message.FromUserName
+
+	//wxmpopenId
+	wxapi.getUser(openId,function(err,result1){
+		console.log(result1)
+		res.reply('欢迎您来战略家-弹朋友');
+	}
 })
 
 exports = module.exports={
