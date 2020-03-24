@@ -63,7 +63,7 @@ function do_text(u,req,res){
 
 		var T = keystone.list( "Tanpengyou" )
 		var Tex = keystone.list( "Tanpengyouex" )
-		tex.model.find({author:u,platform:3},function(err,texs){
+		Tex.model.find({author:u,platform:3},function(err,texs){
 			console.log(err,texs)
 
 			var listtexs =  texs.map(function(a){
@@ -90,6 +90,8 @@ function do_text(u,req,res){
 
 		})
 
+	} else {
+		res.reply('欢迎您来战略家-"弹朋友" 功能上线');
 	}
 }
 function do_image(u,req,res){
