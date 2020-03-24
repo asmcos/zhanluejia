@@ -64,12 +64,17 @@ function do_text(u,req,res){
 		var T = keystone.list( "Tanpengyou" )
 		var Tex = keystone.list( "Tanpengyouex" )
 		tex.model.find({author:u,platform:3},function(err,texs){
+			console.log(err,texs)
 
 			var listtexs =  texs.map(function(a){
 			    return a._id + ""
 			})
+			console.log(listtexs)
+			if  (listtexs){
+				listtexs = []
+			}
 			//查找没有这些id的二维码
-			T.model.findOne({_id:{$nin:listtexs},platform:3},function(err,ret){
+			T.model.findOne({_id:{$nin:listtexs},platform:3,status:1},function(err,ret){
 				if (ret){
 
 					res.reply([{
@@ -92,7 +97,7 @@ function do_image(u,req,res){
 	//PicUrl
 	var T = keystone.list( "Tanpengyou" )
 
-	T.model.findOneAndUpdate({author:u},{qrcode:message.PicUrl,platform:3},
+	T.model.findOneAndUpdate({author:u},{qrcode:message.PicUrl,platform:3,status:0},
 		{upsert:true},function(err, updatedObject){
 
 		res.reply('收到你的图片了,我们要审核的哦。通过后，才能弹给别人。');
