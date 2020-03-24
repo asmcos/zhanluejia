@@ -67,7 +67,7 @@ function do_text(u,req,res){
 
 
 			var listtexs =  texs.map(function(a){
-			    return a._id + ""
+			    return a.tanpengyou + ""
 			})
 
 			//查找没有这些id的二维码
