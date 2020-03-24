@@ -20,7 +20,8 @@ angelcustom  = wechat(config,async function(req,res){
 
     var U = keystone.list( "User" )
 	var openId = message.FromUserName
-	//1. find old user
+	//1. find old user ,实际上应该查找UnionId才对，不过后来采用的是update
+	//也不会有BUG
 	var u = await U.model.findOne({wxmpopenId: openId})
 
 	if (u) { //isExist
@@ -39,12 +40,15 @@ angelcustom  = wechat(config,async function(req,res){
 					 avatar: result1['headimgurl'],
 					 wxunionId: result1['unionid'],
 					 password: "wxmp",
+
 				}
-			u = new U.model(profile)
-			u.save(function(err){
-				console.log("new user",u)
-				do_message(u,req,res)
-			})
+			U.model.findOneAndUpdate({wxunionId:result1['unionid']},profile,{upsert:true,returnNewDocument:true},function(err, updatedObject){
+
+					U.model.findOne({wxunionId:result1['unionid']},function(err,newU){
+						console.log(newU,err,"newuser")
+						do_message(newU,req,res)
+					}) //findOne
+				})//findandupdate
 		}) //getUser
 	} //else
 
