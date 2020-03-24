@@ -12,7 +12,6 @@ var config = {
 
 angelcustom  = wechat(config,async function(req,res){
 	var message = req.weixin;
-	console.log(message);
 
 	if (message.ToUserName != 'gh_26c05261879e'){
 		return res.json({message:'公众号号码不对'})
@@ -58,8 +57,27 @@ angelcustom  = wechat(config,async function(req,res){
 
 })
 
-function do_message(u,req,res){
+function do_text(u,req,res){
 	var message = req.weixin;
+	if (message.Content == '弹朋友'){
+		res.reply("稍等，我们马上给你准备一个朋友")
+	}
+}
+function do_image(u,req,res){
+	var message = req.weixin;
+
+	res.reply('收到你的图片了,我们要审核的哦。通过后，才能弹给别人。');
+}
+
+function do_message(u,req,res){
+
+	console.log(message)
+
+	if (message.MsgType === 'text'){
+		do_text (u,req,res)
+	} else if (message.MsgType === 'image'){
+		do_image (u,req,res)
+	}
 	res.reply('欢迎您来战略家-弹朋友');
 }
 
