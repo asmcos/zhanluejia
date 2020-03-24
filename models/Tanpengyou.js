@@ -22,7 +22,7 @@ Tanpengyou.add({
 
 
 
-Tanpengyou.defaultColumns = 'author,platform';
+Tanpengyou.defaultColumns = 'author,platform,status';
 Tanpengyou.register();
 
 
