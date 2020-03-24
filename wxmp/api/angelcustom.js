@@ -70,7 +70,7 @@ function do_image(u,req,res){
 }
 
 function do_message(u,req,res){
-
+	var message = req.weixin;
 	console.log(message)
 
 	if (message.MsgType === 'text'){
