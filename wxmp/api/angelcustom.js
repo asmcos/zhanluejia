@@ -85,7 +85,7 @@ function do_text(u,req,res){
 						})
 
 			  } else {
-				  res.reply("没有新朋友了，都给你了")
+				  res.reply("没有新朋友了，都给你了\n你要是拉一个人来,我就会再给你哦。")
 			  }
 			})
 
