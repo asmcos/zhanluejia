@@ -92,7 +92,7 @@ function do_text(u,req,res){
 		})
 
 	} else {
-		res.reply('欢迎您来战略家-"弹朋友" 功能上线');
+		res.reply("欢迎您来战略家-'弹朋友' 功能上线\n1.输入:'弹朋友' 可以获取他人二维码\n2.直接上传自己的二维码可获取更多好友！");
 	}
 }
 function do_image(u,req,res){
@@ -116,7 +116,7 @@ function do_message(u,req,res){
 	} else if (message.MsgType === 'image'){
 		do_image (u,req,res)
 	} else {
-		res.reply('欢迎您来战略家-"弹朋友" 功能上线');
+		res.reply("欢迎您来战略家-'弹朋友' 功能上线\n1.输入:'弹朋友' 可以获取他人二维码\n2.直接上传自己的二维码可获取更多好友！");
 	}
 
 }
