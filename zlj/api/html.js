@@ -40,6 +40,7 @@ function seoquestions(data ,cb){
 	questions.model.find({status:1})
 	.limit(10)
 	.select("title")
+	.sort('-_id')
 	.exec(function(err,result){
 
 		data.questions = result
