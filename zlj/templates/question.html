@@ -55,8 +55,8 @@
     <div class="row">
         <div class="col-md-8"> <!--main-->
             <div class="center">
-                <h2>{{question.title}}</h2>
-                <p> <div v-html="question.content"></div></p>
+                <h2><%= question.title %></h2>
+                <p><%= question.content|safe %> <!--div v-html="question.content"></div--></p>
                 <form  v-on:submit.prevent="sendAnswer" style="margin-top: 20px; position: relative">
                     <div id="content">
 

@@ -282,6 +282,7 @@
                             that.userlike = data.userlike
                             that.loading=0
                             share(data.answer)
+                            clickComment(data.answer) //show comment
                             that.$nextTick(function(){
                                 var E = window.wangEditor
                                 window.editor = new E('#Editcontent');

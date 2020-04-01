@@ -30,8 +30,17 @@ function getsysconf(data,cb){
 	})
 }
 
-function seoquestion(data ,cb){
+function seoquestion(req,data ,cb){
+	var question = keystone.list( "Question" )
 
+	question.model.findOne({status:1,_id:req.query.questionid})
+	.select("title content")
+	.exec(function(err,result){
+
+		data.question = result
+		console.log(data.question)
+		cb(null,"seoquestion")
+	})
 }
 function seoquestions(data ,cb){
 
@@ -202,6 +211,9 @@ function updateanswer (req,res){
 function question (req,res){
 	var tasklist = [
 
+		function(callback){
+			seoquestion(req,data,callback);
+		},
 		function(callback){
 			getsysconf(data,callback);
 		},
