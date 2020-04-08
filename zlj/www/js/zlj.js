@@ -4,6 +4,15 @@
 
  function Vfilter(){
 
+     function HtmltoText(str){
+         var text =  str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+         if (text.length>200){
+             return text.slice(0,200) + '...'
+         } else{
+             return text
+         }
+     }
+     Vue.filter('HtmltoText',HtmltoText)
 
      function toLocaleString(str){
          var d = new Date(str)
