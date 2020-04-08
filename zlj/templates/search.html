@@ -451,13 +451,13 @@
                                     <div class="pull-left newshow" style="width:100% !important;height:auto !important;">
                                         <img class="img-responsive" v-bind:src="item.thumbnail||'/static/img/132465.jpg'" style="width: 190px; height: 124px;margin-left: 10px;">
                                     </div>
-                                    <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left" class="yiding">
+                                    <div  style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left" class="yiding">
 
                                         <i class="iconfont" style="color: #FF6534!important;" v-if="mylikes[index]==1">&#xe616;</i>
                                         <i class="iconfont" style="color: #cacaca;"  v-else>&#xe616;</i>
                                         {{item.likeCount|Countfilter}}赞
                                     </div>
-                                    <div @click="answercomment(item,index,q)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px;float: left" class="yiding" id="pl">
+                                    <div  style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px;float: left" class="yiding" id="pl">
                                        <i class="iconfont" style="color: #cacaca;font-size: 10px; line-height: 15px; float: left; margin-top: 6px; margin-right: 5px;">&#xe63a;</i>
                                         {{item.commentCount|Countfilter}}评论
                                     </div>
@@ -495,20 +495,7 @@
 
             </div>
         </aside>
-            <aside class="col-md-4 rightimg" style="width:30%;background: #fff; padding: 6px 8px;; border: 1px solid #eee; margin-top: 12px;"> <!-- right-->
-            <div class="remen">热门话题</div>
-            <div class="rightimgLi" v-for="a in answers">
-                <a :href="'/zlj/question.html?questionid='+a.question._id"><img :src="a.thumbnail" alt="" class="img-responsive"></a>
-            </div>
-            </aside>
-            <aside class="col-md-4 " style="width:30%;background: #fff; padding: 6px 8px;; border: 1px solid #eee; margin-top: 12px;">
-            <div class="remen">魅力排行</div>
-            <div class="jifen" v-for="u in users">
-                <p><img :src="u.avatar" style="width:80px;height:80px;"></p>
-                <p>{{u.name.first}}
-                </p>
-                <p>{{u.score}}</p>
-            </div>
+
 
 
 
@@ -525,121 +512,8 @@
             <i></i>
         </div>
     </div>
-    <!--详情页弹层-->
-    <div class="moreRelitivityBg" id="fastwinbg" style="z-index: 999999;display:none;"></div>
-    <div class="moreRelitivity" id="fastwin" style="display:none;">
 
 
-        <div class="mainContent" v-if="fastwinshow==1">
-            <div class="closeTanceng" @click="openOrclose(1)">
-                关闭
-            </div>
-            <div class="main">
-                <div class="header">
-                    <a href="">
-                        <h2 class="title">{{fastwindata.q.title}}</h2>
-                    </a>
-                    <div class="abstract" v-html="fastwindata.q.content"></div>
-
-                    <div class="question-bottom">
-                        <a href="" target="_blank" data-log="Visit_Question|From_" class="answer-count"><span>全部 {{fastwindata.q.answerCount}}个回答></span>
-
-                        </a>
-                    </div>
-                </div>
-                <div class="answer">
-                    <div class="answer-user user-action">
-                        <div class="self-info" @click="answerlike(fastwindata.a,fastwindata.index)">
-                            <i> · </i>
-                            {{fastwindata.a.likeCount|Countfilter}}赞
-                        </div>
-                        <a href="" target="_blank" data-log="Visit_Profile|From_" class="answer-user-avatar">
-                            <img v-bind:src="fastwindata.a.author.avatar" alt="">
-                        </a>
-                        <a href="" target="_blank" data-log="Visit_Profile|From_" class="answer-user-name"><span class="name">
-                        {{fastwindata.a.author.name.first}}
-                        <i class="iconfont icon-all_newv" style="font-size: 13px; color: rgb(255, 196, 28);"></i>
-                    </span>
-                            <span class="intro"></span>
-                        </a>
-                        <span class="create-time">{{fastwindata.a.createTime|LocaleTime}}</span>
-                    </div>
-                    <div class="content rich-text" v-html="fastwindata.a.content">
-
-
-                    </div> <!---->
-                    <!--评论信息-->
-                    <div class="yiding" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px; float: left;" @click="answerlike(fastwindata.a,fastwindata.index)">
-                        <i class="iconfont" style="color: #FF6534!important;" v-if="mylikes[fastwindata.index]==1">&#xe616;</i>
-                        <i class="iconfont" style="color: #cacaca;"  v-else>&#xe616;</i>
-
-                        {{fastwindata.a.likeCount|Countfilter}}赞
-                    </div>
-                    <div @click="answerlike(item,index)" style="display: inline-block; height: 25px; overflow: hidden; line-height: 25px; border-radius: 3px;float: left" class="yiding" id="pl">
-                        <i class="iconfont" style="color: #cacaca;font-size: 10px; line-height: 15px; float: left; margin-top: 6px; margin-right: 5px;">&#xe63a;</i>
-                        {{fastwindata.a.commentCount|Countfilter}}评论
-                    </div>
-
-
-                </div>
-                <!-- div class="goto-question">
-                    <div class="line"></div>
-                    <a href="javascript:;" class="goto-question-title">其他标题</a>
-                    <a href="javascript:;" class="goto-question-btn">
-                        <div class="box">
-                            <i class="iconfont icon-ask_write pen"></i>
-                            <span>我要回答</span>
-                        </div>
-                    </a>
-                </div-->
-                <!--评论区-->
-                <div class="comment">
-                    <div>
-                        <div class="comment-widget detail" style="min-height: 170px;">
-                            <div class="comment-info with-comment">
-                            <span class="comment-count">
-                                <i class="iconfont icon-ask_comment"></i>
-                                <span></span>
-                                <span></span>
-                            </span> <!---->
-                            </div> <!---->
-                            <div class="my-comment">
-                                <div class="comment-avatar">
-                                    <img v-bind:src="user.avatar" alt="">
-                                </div>
-                                <div class="comment-area" >
-                                    <input data-node="comment-edit" name="name" placeholder="写下你的评论..." rows="8" :id="'writecomment'+fastwindata.a._id" style="width: 100%;height: 100%;padding: 0 10px;border: none;"></input>
-                                    <a @click="sendComment(fastwindata.a)" data-node="post" class="submit-button disabled">发表</a>
-                                </div>
-                            </div>
-                            <ul class="comment-list">
-                                <li class="comment-item" v-for="c in fastwindata.a.comments">
-                                    <div class="comment-avatar">
-                                        <a href="" target="_blank">
-                                            <img v-bind:src="c.author.avatar" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="comment-content">
-                                        <a href="" target="_blank" class="uname">{{c.author.name.first}}</a>
-
-                                        <div class="content-text">
-                                            {{c.content}}
-                                        </div>
-                                        <div class="tools">
-                                            <span>{{c.createTime|LocaleTime}}</span>
-
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <!--详情页弹层-->
 </section>
 
 
@@ -652,6 +526,16 @@
 <script src="/corlate/js/wow.min.js"></script>
 <script>
 $(document).ready(function () {
+    function getUrlParam(name){
+
+            var reg=new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r= window.location.search.substr(1).match(reg);
+
+            if(r != null) {
+                return unescape(r[2]);
+            }
+            return null;
+    }
 
   var myVue = new Vue({
     el: '#mainlist',
@@ -662,46 +546,31 @@ $(document).ready(function () {
         users:[],
         loading:1,
         user:{'id':'<%= user.id%>','avatar':'<%=user.avatar%>','name':'<%=user.name%>',}, //swig templates by express
-        fastwindata:{q:""},
-        fastwinshow:0,
+
     },
     created () {
-    	this.getQuestions()
-        this.getHotAnswers()
-        this.getTop10()
+    	this.getSearchs()
+
   	},
     methods: {
-        //控制首页弹层开启和关闭
-        openOrclose(e){
-            if(e==0)
-            {
 
-                $("#fastwinbg").show()
-                $("#fastwin").show()
-                this.fastwinshow = 1
-            }
-            else if(e == 1)
-            {
-                $("#fastwin").hide()
-                $("#fastwinbg").hide()
-                this.fastwinshow = 0
-            }
-        },
-        getQuestions(){
+        getSearchs(){
             var that = this
             var offset = ""
+            var keyword = getUrlParam("keyword")
             if (that.questions.length > 0){
               offset = "?starttime=" + that.questions[that.questions.length-1].updateTime
+              var p = offset + "&keyword="+keyword
+            } else {
+              p = "?keyword=" + keyword
             }
-            $.ajax({url:"/zlj/listquestion" + offset,
+            $.ajax({url:"/zlj/search" + p,
                 type: 'GET',
                 success: function(data){
 
                     var q = that.questions
-                    var l = that.mylikes
 
                     that.questions = q.concat(data.questions)
-                    that.mylikes = l.concat(data.userlikes)
 
                     that.loading=0
 
@@ -709,108 +578,8 @@ $(document).ready(function () {
                 }
             })//ajax
         },
-        getHotAnswers(){
-
-                var that = this
-
-                $.ajax({url:"/zlj/answers?limit=6&sort=-likeCount",
-                    type: 'GET',
-                    success: function(data){
-
-                      that.answers = data.answers
-
-                    }
-                })//ajax
-        },
-        getTop10(){
-
-                var that = this
-
-                $.ajax({url:"/zlj/listTop",
-                    type: 'GET',
-                    success: function(data){
-                      that.users = data.users
-                    }
-                })//ajax
-        },
-        answerlike (a,index) {
-            var that = this;
-            if (!that.user.id){
-                window.location.href = "/zlj/login.html"
-            }
-
-            if (that.mylikes[index] == 1){
-                that.mylikes[index] = 0
-            } else {
-                that.mylikes[index] = 1
-            }
-
-            $.ajax({url:"/zlj/answerlike?answerid=" +a._id,
-                type: 'GET',
-                success: function(data){
-                    console.log(that)
-                    a.likeCount = data.updatedObject.likeCount
-                }
-            })//ajax
-        }, //answerlike
-        answercomment(a,index,q){
-            var that = this;
-            if (!that.user.id){
-                window.location.href = "/zlj/login.html"
-            }
-            else {
-                window.location.href= "/zlj/question.html?questionid=" + q._id
-            }
-        }, //answercomment
-        qafastwindow(q,a,index){ //question and answer
-            var that = this;
-            if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端
-                window.location.href="/zlj/question.html?questionid=" +q._id
-            }
-            else
-            {
-                console.log(q)
-                that.fastwindata.q = q
-                that.fastwindata.a = a
-                that.fastwindata.index = index
-                that.openOrclose(0)
-                that.commentStart(a,q)
-            }
-
-        },
-        commentStart(a,b){
-            var that = this;
-                $.ajax({url:"/zlj/listcomment?answerid=" +a._id,
-                    type: 'GET',
-                    success: function(data){
-                        that.fastwindata.a = a
-                        that.fastwindata.a.comments = data.lists
-                    }
-                })//ajax
 
 
-
-
-        },
-        sendComment(a){
-            var content1 = $("#writecomment"+a._id).val()
-            var that = this
-            $.ajax({
-                type:"POST",
-                url:"/zlj/comment",
-                data:{
-                  answerid:a._id+"",
-                  content: content1
-                  },
-                success: function(data){
-                    console.log(data)
-                    $("#writecomment"+a._id).val("")
-                    that.fastwindata.a.commentCount += 1
-                    that.commentStart(a)
-
-                }
-            })//ajax
-        },
         sendSearch(){
             var content = $("#searchText").val()
             window.location.href="/zlj/search.html?keyword="+content
@@ -818,30 +587,7 @@ $(document).ready(function () {
     },
   });
 
-  Vue.filter('Countfilter',function(count){
-      console.log(count)
-      if (!count||count < 0){
-          return 0
-      } else {
-          return count
-      }
-  })
 
-  function HtmltoText(str){
-      var text =  str.replace(/<[^>]+>/g,"");//去掉所有的html标记
-      if (text.length>200){
-          return text.slice(0,200) + '...'
-      } else{
-          return text
-      }
-  }
-  Vue.filter('HtmltoText',HtmltoText)
-
-  function toLocaleString(str){
-      var d = new Date(str)
-      return d.toLocaleString()
-  }
-  Vue.filter('LocaleTime',toLocaleString)
 
   var VueMenu = new Vue({
     el: '#header',
@@ -850,56 +596,10 @@ $(document).ready(function () {
     },
   })
 
-//wxshare
+  new Vfilter();
+    //wxshare
 
-    function share( ){
-        var url = encodeURIComponent(window.location.href.split("#"));
-        var shareurl = window.location.href.split("#")[0]
-
-        $.ajax({url:"/wxmp/getconfig?url=" +url,
-            type: 'GET',
-            success: function(data){
-                var params = data
-
-                params.jsApiList = [
-                    'updateAppMessageShareData',
-                    'updateTimelineShareData',
-                    'hideOptionMenu'
-                ];
-                params.debug = false
-                var share_desc = '<%= sysconf.share_desc%>'
-                if (share_desc.length < 5){
-                    share_desc = '有趣的心灵总会相遇。'
-                }
-                wx.config(params)
-                wx.ready(function(){
-                    // 分享给好友，或者群
-                    wx.updateAppMessageShareData({
-                        title: '【战略家】运筹帷幄,决胜千里', // 分享标题
-                        desc: share_desc, // 分享描述
-                        link: shareurl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                        imgUrl: 'http://www.zhanluejia.net.cn/static/img/logo.jpg', // 分享图标
-                        success: function () {
-                        // 设置成功
-                        }
-                    })
-                    //分享给朋友圈
-                    wx.updateTimelineShareData({
-                        title: '【战略家】运筹帷幄,决胜千里', // 分享标题
-                        link: shareurl, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                        imgUrl: 'http://www.zhanluejia.net.cn/static/img/logo.jpg', // 分享图标
-                        success: function () {
-                          // 设置成功
-                        }
-                    })//updateTimelineShareData
-
-                })
-
-            }//success
-        })//ajax
-
-    } //share
-    share()
+    new Share()
 
 
 })

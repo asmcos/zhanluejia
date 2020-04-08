@@ -103,6 +103,7 @@ exports = module.exports = function (app) {
     app.use('/zlj/mypusheventexs.html', routes.zlj.html.mypusheventexs);  //别人完成了我的任务，我得到的消息
     app.use('/zlj/mypushdone.html', routes.zlj.html.mypushdone); //我完成的
     app.use('/zlj/pusheventexs.html', routes.zlj.html.pusheventexs);//交易广场
+    app.use('/zlj/search.html', routes.zlj.html.search);//搜索页面
 
 
     app.use('/zlj/uploadimage',routes.zlj.upload.uploadimage);
@@ -138,6 +139,8 @@ exports = module.exports = function (app) {
     app.use('/zlj/confirmpushex',routes.zlj.angelcustomers.confirmpushex); //确认交易真实完成
     app.use('/zlj/listpusheventex',routes.zlj.angelcustomers.listpusheventex);//列出最近的交易事件
     app.use('/zlj/mypusheventexs',routes.zlj.angelcustomers.mypusheventexs);//我的事件
+
+    app.use('/zlj/search',routes.zlj.search.search);//搜索数据
 
     app.use('/corlate', keystone.express.static(path.join(__dirname, '../theme/corlate')))
 

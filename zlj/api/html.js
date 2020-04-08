@@ -399,6 +399,26 @@ function pusheventexs (req,res){
     })
 }
 
+function search (req,res){
+
+	var tasklist = [
+
+		function(callback){
+			getsysconf(data,callback);
+		},
+
+	]
+
+	var data = {}
+
+    getData(req,res,data,tasklist,function(data){
+        var content =  swig.renderFile(temppath + 'search.html',
+            data
+        );
+
+        res.send(content)
+    })
+}
 
 exports = module.exports={
     index:index,
@@ -416,4 +436,5 @@ exports = module.exports={
 	mypusheventexs:mypusheventexs,
 	mypushdone:mypushdone,
 	pusheventexs:pusheventexs,
+	search:search,
 }
