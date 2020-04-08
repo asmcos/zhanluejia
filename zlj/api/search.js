@@ -25,11 +25,13 @@ async function search(req, res) {
     s = parseInt(s)
 
     var keyword = req.query.keyword
+    keyword = decodeURI(escape(keyword))
     var starttime = new Date()
 
     if (req.query.starttime){
       starttime = new Date(req.query.starttime)
     }
+
 
     var  filter =  [{title: {$regex: keyword}}]
 

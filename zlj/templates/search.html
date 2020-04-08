@@ -558,6 +558,7 @@ $(document).ready(function () {
             var that = this
             var offset = ""
             var keyword = getUrlParam("keyword")
+            
             if (that.questions.length > 0){
               offset = "?starttime=" + that.questions[that.questions.length-1].updateTime
               var p = offset + "&keyword="+keyword
