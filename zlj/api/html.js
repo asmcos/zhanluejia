@@ -1,14 +1,11 @@
 var keystone = require('keystone')
 var swig  = require('swig');
 var async = require('async');
-
-
-
+var HandleRobot = require('./ssr').HandleRobot
 
 var temppath = __dirname +  "/../templates/"
 
 swig.setDefaults({ cache: false,varControls: ['<%=', '%>'] });
-
 
 function getsysconf(data,cb){
 
@@ -58,6 +55,7 @@ function seoquestions(data ,cb){
 	})
 }
 
+
 function seoanswer(data,cb){
 
 }
@@ -82,7 +80,11 @@ function getData(req,res,data,tasklist,setData) {
     })
 }
 
-function index (req,res){
+async function index (req,res){
+
+	if (await HandleRobot(req,res) == 1){
+		return
+	}
 
 	var tasklist = [
 
@@ -108,6 +110,10 @@ function index (req,res){
 }
 
 function gather (req,res){
+	if (await HandleRobot(req,res) == 1){
+		return
+	}
+
 	var tasklist = [
 
 		function(callback){
@@ -171,6 +177,10 @@ function newquestion (req,res){
 
 function answer (req,res){
 
+	if (await HandleRobot(req,res) == 1){
+		return
+	}
+
 	var tasklist = [
 
 		function(callback){
@@ -210,6 +220,10 @@ function updateanswer (req,res){
 }
 
 function question (req,res){
+
+	if (await HandleRobot(req,res) == 1){
+		return
+	}
 	var tasklist = [
 
 		function(callback){
@@ -233,6 +247,10 @@ function question (req,res){
 
 function answers (req,res){
 
+	if (await HandleRobot(req,res) == 1){
+		return
+	}
+
 	var tasklist = [
 
 		function(callback){
@@ -253,6 +271,9 @@ function answers (req,res){
 }
 
 function investments (req,res){
+	if (await HandleRobot(req,res) == 1){
+		return
+	}
 
 	var tasklist = [
 
