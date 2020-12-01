@@ -30,15 +30,17 @@ async function ssr(url) {
 async function HandleRobot(req, res, next){
     var UA = req.headers['user-agent'];
 
-    //var isStaticDir = req.url.indexOf('static/') > -1;
-    // 判断是否是爬虫, 排除资源目录的请求
+    //这是puppeteer chrome头要去掉
+	if (UA.search("HeadlessChrome") != -1){
+        return 0
+    }	
     if(UA && isBot(UA)){
         // 生成本地访问链接
-        console.log(req.originalUrl)
+        console.log(UA)
         
         var requestUrl = req.originalUrl
         
-        requestUrl = "http://www.zhanluejia.net.cn" + requestUrl;
+        requestUrl = "http://127.0.0.1:3090" + requestUrl;
 
         console.log(requestUrl)
          try{
