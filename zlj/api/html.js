@@ -109,7 +109,8 @@ async function index (req,res){
 
 }
 
-function gather (req,res){
+async function gather (req,res){
+	
 	if (await HandleRobot(req,res) == 1){
 		return
 	}
@@ -175,7 +176,7 @@ function newquestion (req,res){
     })
 }
 
-function answer (req,res){
+async function answer (req,res){
 
 	if (await HandleRobot(req,res) == 1){
 		return
@@ -219,7 +220,7 @@ function updateanswer (req,res){
     })
 }
 
-function question (req,res){
+async function question (req,res){
 
 	if (await HandleRobot(req,res) == 1){
 		return
@@ -245,7 +246,7 @@ function question (req,res){
     })
 }
 
-function answers (req,res){
+async function answers (req,res){
 
 	if (await HandleRobot(req,res) == 1){
 		return
@@ -270,7 +271,7 @@ function answers (req,res){
     })
 }
 
-function investments (req,res){
+async function investments (req,res){
 	if (await HandleRobot(req,res) == 1){
 		return
 	}
